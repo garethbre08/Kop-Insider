@@ -53,8 +53,8 @@ const valueProps = [
 
 function PlaceholderImage({ className = "" }: { className?: string }) {
   return (
-    <div className={`w-full bg-ki-sand flex items-center justify-center ${className}`}>
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-ki-charcoal opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <div role="img" aria-label="Article image" className={`w-full bg-ki-sand flex items-center justify-center ${className}`}>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-ki-charcoal opacity-30" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 20.25h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12.75c0 .828.672 1.5 1.5 1.5z" />
       </svg>
     </div>
@@ -104,7 +104,7 @@ export default function AndyAnfieldPage() {
 
       {/* Easter egg reveal */}
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-ki-white border border-ki-sand rounded-xl p-8 flex flex-col items-center text-center gap-4">
+        <div className="bg-ki-white border border-ki-sand rounded-xl p-8 flex flex-col items-center text-center gap-4 animate-reveal-card">
 
           {/* Robot icon */}
           <div className={`h-14 w-14 rounded-full ${accentBg} flex items-center justify-center`}>
@@ -124,8 +124,8 @@ export default function AndyAnfieldPage() {
 
           {/* Value props */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
-            {valueProps.map((v) => (
-              <div key={v.title} className="bg-ki-cream rounded-xl p-4 flex flex-col items-center gap-2 text-center">
+            {valueProps.map((v, i) => (
+              <div key={v.title} className="bg-ki-cream rounded-xl p-4 flex flex-col items-center gap-2 text-center animate-fade-in-up" style={{ animationDelay: `${300 + i * 120}ms` }}>
                 <div className={accentText}>{v.icon}</div>
                 <p className="text-ki-black font-bold text-sm">{v.title}</p>
                 <p className="text-ki-charcoal text-xs opacity-70 leading-relaxed">{v.body}</p>
@@ -134,7 +134,7 @@ export default function AndyAnfieldPage() {
           </div>
 
           {/* Quote */}
-          <div className={`${quoteBg} rounded-xl p-6 w-full transition-colors duration-300`}>
+          <div className={`${quoteBg} rounded-xl p-6 w-full transition-colors duration-300 animate-slide-up`} style={{ animationDelay: "660ms" }}>
             <p className="text-ki-white font-bold text-xl italic text-center leading-snug">
               "The truth about Liverpool, told by someone who actually cares."
             </p>

@@ -78,8 +78,8 @@ const fixtures = [
 
 function PlaceholderImage({ className = "" }: { className?: string }) {
   return (
-    <div className={`w-full bg-ki-sand flex items-center justify-center ${className}`}>
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-ki-charcoal opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <div role="img" aria-label="Article image" className={`w-full bg-ki-sand flex items-center justify-center ${className}`}>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-ki-charcoal opacity-30" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 20.25h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12.75c0 .828.672 1.5 1.5 1.5z" />
       </svg>
     </div>

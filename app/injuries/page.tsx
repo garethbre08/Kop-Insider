@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 
 const injuries = [
@@ -61,6 +62,9 @@ function Avatar() {
 }
 
 export default function Injuries() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { const id = setTimeout(() => setMounted(true), 50); return () => clearTimeout(id); }, []);
+
   const { theme } = useTheme();
   const isHome = theme === "home";
   const pageBg       = isHome ? "bg-ki-gold"    : "bg-ki-cream";
@@ -141,7 +145,7 @@ export default function Injuries() {
               <h2 className="text-ki-black font-bold text-xl">Returning Soon</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {returningSoon.map((p, i) => (
-                  <div key={i} className="bg-ki-white rounded-xl p-4 flex flex-col gap-3">
+                  <div key={i} className="bg-ki-white rounded-xl p-4 flex flex-col gap-3 animate-fade-in-up" style={{ animationDelay: `${i * 100}ms` }}>
                     <div className="flex items-start justify-between gap-2">
                       <p className="text-ki-black font-bold text-sm leading-snug">{p.player}</p>
                       <span className={`text-xs font-semibold rounded px-2 py-0.5 bg-ki-sand shrink-0 ${tableAccentText}`}>
@@ -149,12 +153,12 @@ export default function Injuries() {
                       </span>
                     </div>
                     <p className="text-ki-charcoal text-xs opacity-50">Expected: {p.date}</p>
-                    {/* Progress bar */}
+                    {/* Progress bar — animates from 0 to final value on mount */}
                     <div>
                       <div className="w-full bg-ki-sand rounded-full h-2">
                         <div
-                          className={`${progressFill} h-2 rounded-full transition-all duration-500`}
-                          style={{ width: `${p.progress}%` }}
+                          className={`${progressFill} h-2 rounded-full transition-all duration-700`}
+                          style={{ width: mounted ? `${p.progress}%` : "0%" }}
                         />
                       </div>
                       <p className="text-ki-charcoal text-xs opacity-40 mt-1">{p.progress}% recovered</p>

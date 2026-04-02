@@ -81,8 +81,8 @@ const rumourStyles: Record<string, string> = {
 
 function PlaceholderImage({ className = "" }: { className?: string }) {
   return (
-    <div className={`w-full bg-ki-sand flex items-center justify-center ${className}`}>
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-ki-charcoal opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <div role="img" aria-label="Article image" className={`w-full bg-ki-sand flex items-center justify-center ${className}`}>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-ki-charcoal opacity-30" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 20.25h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12.75c0 .828.672 1.5 1.5 1.5z" />
       </svg>
     </div>
@@ -129,7 +129,11 @@ export default function TransferTalk() {
               <span className={`text-xs font-bold tracking-widest ${accentText}`}>RUMOUR MILL</span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {rumours.map((rumour, i) => (
-                  <div key={i} className="bg-ki-white rounded-xl p-4 flex flex-col gap-2">
+                  <div
+                    key={i}
+                    className={`bg-ki-white rounded-xl p-4 flex flex-col gap-2 animate-slide-in-left ${rumour.status === "Hot" ? "hot-glow" : ""}`}
+                    style={{ animationDelay: `${i * 100}ms` }}
+                  >
                     <div className="flex items-start justify-between gap-2">
                       <p className="text-ki-black font-bold text-sm leading-snug">{rumour.player}</p>
                       <span className={`text-xs font-semibold rounded-full px-2 py-0.5 shrink-0 ${rumourStyles[rumour.status]}`}>

@@ -10,8 +10,8 @@ import { MatchdayProvider } from "@/context/MatchdayContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Kop Insider",
-  description: "Liverpool FC News",
+  title: "Kop Insider — Liverpool FC News",
+  description: "The latest Liverpool FC news, opinion, transfer talk and match analysis from Kop Insider.",
 };
 
 export default function RootLayout({

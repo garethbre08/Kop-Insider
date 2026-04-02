@@ -1,26 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Keyframes ─────────────────────────────────────────────────────────── */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0);     }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+@keyframes reveal-card {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+@keyframes score-pop {
+  0%   { transform: scale(1);   }
+  40%  { transform: scale(1.35);}
+  100% { transform: scale(1);   }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,16,46,0);    }
+  50%       { box-shadow: 0 0 10px 3px rgba(200,16,46,0.25); }
+}
+
+@keyframes border-grow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* ─── Theme tokens ──────────────────────────────────────────────────────── */
+
+@theme {
+  --color-*: initial;
+
+  --color-ki-teal:    #01586B;
+  --color-ki-white:   #FFFFFF;
+  --color-ki-cream:   #F3EEDD;
+  --color-ki-sand:    #E7DFC9;
+  --color-ki-charcoal:#333333;
+  --color-ki-black:   #111111;
+  --color-ki-red:     #C8102E;
+  --color-ki-gold:    #F5E6C8;
+
+  --font-sans: 'Inter', sans-serif;
+
+  /* Custom animation utilities */
+  --animate-fade-in:       fade-in      400ms ease          both;
+  --animate-fade-in-up:    fade-in-up   400ms ease          both;
+  --animate-slide-down:    slide-down   220ms ease          both;
+  --animate-slide-up:      slide-up     400ms ease          both;
+  --animate-slide-in-left: slide-in-left 350ms ease         both;
+  --animate-reveal-card:   reveal-card  600ms ease          both;
+  --animate-score-pop:     score-pop    350ms ease;
+  --animate-glow-pulse:    glow-pulse   2.2s  ease-in-out   infinite;
+}
+
+/* ─── Animation delay utilities ─────────────────────────────────────────── */
+
+@layer utilities {
+  .animation-delay-75  { animation-delay:  75ms; }
+  .animation-delay-150 { animation-delay: 150ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+
+  /* Hot rumour card glow */
+  .hot-glow { animation: var(--animate-glow-pulse); }
+
+  /* Opinion strip left-border grow */
+  .border-grow {
+    transform-origin: top;
+    animation: border-grow 500ms ease both;
   }
 }
 
+/* ─── Global transitions ────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* Smooth colour/bg transitions globally */
+  transition-property: color, background-color, border-color, opacity, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* ─── Base styles ───────────────────────────────────────────────────────── */
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ki-cream);
+  color: var(--color-ki-black);
+  font-family: var(--font-sans);
+}
+
+body {
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+body[data-theme="away"] { background-color: var(--color-ki-cream); }
+body[data-theme="home"]  { background-color: var(--color-ki-gold);  }
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
 }

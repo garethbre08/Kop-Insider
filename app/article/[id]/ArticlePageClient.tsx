@@ -32,6 +32,7 @@ export default function ArticlePageClient({ article, related }: Props) {
   const { theme } = useTheme();
   const isHome = theme === "home";
 
+  const pageBg        = isHome ? "bg-ki-gold"     : "bg-ki-cream";
   const accentText    = isHome ? "text-ki-red"    : "text-ki-teal";
   const accentBg      = isHome ? "bg-ki-red"      : "bg-ki-teal";
   const accentBorder  = isHome ? "border-ki-red"  : "border-ki-teal";
@@ -48,7 +49,7 @@ export default function ArticlePageClient({ article, related }: Props) {
   const dropCapRest  = firstParagraph?.slice(1) ?? "";
 
   return (
-    <div className="min-h-screen">
+    <div className={`${pageBg} min-h-screen transition-colors duration-300`}>
 
       {/* Back button */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-6">

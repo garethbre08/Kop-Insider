@@ -35,12 +35,14 @@ export default function HomeContent({
   const { isMatchday } = useMatchday();
   const { theme } = useTheme();
   const isHome = theme === "home";
-  const accentText   = isHome ? "text-ki-red"   : "text-ki-teal";
-  const accentBg     = isHome ? "bg-ki-red"      : "bg-ki-teal";
+  const pageBg     = isHome ? "bg-ki-gold"   : "bg-ki-cream";
+  const accentText = isHome ? "text-ki-red"  : "text-ki-teal";
+  const accentBg   = isHome ? "bg-ki-red"    : "bg-ki-teal";
 
   const [a0, a1, a2, a3, a4] = latestArticles;
 
   return (
+    <div className={`${pageBg} min-h-screen transition-colors duration-300`}>
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex flex-col lg:flex-row gap-8">
 
@@ -126,6 +128,7 @@ export default function HomeContent({
       <div className="mt-8">
         <OpinionStrip article={opinionArticle} />
       </div>
+    </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ type ArticleCardProps = {
 
 function SkeletonCard({ size }: { size: "hero" | "medium" | "small" }) {
   const imageHeight =
-    size === "hero" ? "h-64 sm:h-80" : size === "medium" ? "h-44" : "h-32";
+    size === "hero" ? "h-64 sm:h-80" : size === "medium" ? "h-48" : "h-32";
   return (
     <div className="bg-ki-white rounded-xl overflow-hidden flex flex-col animate-pulse">
       <div className={`${imageHeight} bg-ki-sand`} />
@@ -39,7 +39,7 @@ export default function ArticleCard({
   if (!article) return <SkeletonCard size={size} />;
 
   const imageHeight =
-    size === "hero" ? "h-64 sm:h-80" : size === "medium" ? "h-44" : "h-32";
+    size === "hero" ? "h-64 sm:h-80" : size === "medium" ? "h-48" : "h-32";
   const headlineSize =
     size === "hero"
       ? "text-xl sm:text-2xl font-bold"
@@ -50,7 +50,7 @@ export default function ArticleCard({
   return (
     <Link href={`/article/${article.id}`} className="block group">
       <article
-        className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-200 animate-fade-in-up h-full"
+        className={`bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-200 animate-fade-in-up h-full${size === "hero" ? " min-h-96" : ""}`}
         style={{ animationDelay: `${delay}ms` }}
       >
         <div className="overflow-hidden">

@@ -158,7 +158,7 @@ export default function AndyAnfieldPage() {
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-colors shrink-0 min-h-[44px] ${
                   activeFilter === f
                     ? `${accentBg} text-ki-white`
-                    : "bg-ki-white text-ki-charcoal border border-ki-sand hover:border-ki-teal"
+                    : `bg-ki-white text-ki-charcoal border border-ki-sand hover:border-ki-charcoal`
                 }`}
               >
                 {f}
@@ -172,7 +172,7 @@ export default function AndyAnfieldPage() {
               <article key={article.id} className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-200">
                 <PlaceholderImage className="h-36" />
                 <div className="p-4 flex flex-col gap-2 flex-1">
-                  <span className="inline-block bg-ki-sand text-ki-teal text-xs font-semibold rounded px-2 py-1 self-start">
+                  <span className={`inline-block bg-ki-sand text-xs font-semibold rounded px-2 py-1 self-start ${accentText}`}>
                     {article.tag}
                   </span>
                   <h3 className="text-ki-black font-bold text-sm leading-snug flex-1">{article.headline}</h3>

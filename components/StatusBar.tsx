@@ -9,25 +9,29 @@ type CrawlStatus = {
   byCategory: Record<string, number>;
 };
 
-export default function StatusBar() {
-  if (process.env.NODE_ENV !== "development") return null;
+const isDev = process.env.NODE_ENV === "development";
 
+export default function StatusBar() {
   const [status, setStatus] = useState<CrawlStatus | null>(null);
 
-  async function fetchStatus() {
-    try {
-      const res = await fetch("/api/crawl-status");
-      if (res.ok) setStatus(await res.json());
-    } catch {
-      // silent — dev tool only
-    }
-  }
-
   useEffect(() => {
+    if (!isDev) return;
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch("/api/crawl-status");
+        if (res.ok) setStatus(await res.json());
+      } catch {
+        // silent — dev tool only
+      }
+    }
+
     fetchStatus();
     const interval = setInterval(fetchStatus, 60_000);
     return () => clearInterval(interval);
   }, []);
+
+  if (!isDev) return null;
 
   if (!status) {
     return (

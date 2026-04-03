@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,7 +8,18 @@ import StatusBar from "@/components/StatusBar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { MatchdayProvider } from "@/context/MatchdayContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Kop Insider — Liverpool FC News",
@@ -21,14 +32,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.className}>
-      <body className="text-ki-black min-h-screen flex flex-col">
+    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`}>
+      <body className="text-ki-black min-h-screen flex flex-col w-full overflow-x-hidden">
         <ThemeProvider>
           <MatchdayProvider>
             <StatusBar />
             <Navbar />
             <LiveScoreBar />
-            <main className="flex-1 animate-fade-in">{children}</main>
+            <main className="flex-1 w-full animate-fade-in">{children}</main>
             <Footer />
           </MatchdayProvider>
         </ThemeProvider>

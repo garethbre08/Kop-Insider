@@ -4,7 +4,9 @@
       "Bash(npm run:*)",
       "Bash(npm install:*)",
       "Skill(claude-api)",
-      "Skill(claude-api:*)"
+      "Skill(claude-api:*)",
+      "Bash(npx tsc:*)",
+      "Bash(taskkill //PID 16908 //F)"
     ]
   }
 }

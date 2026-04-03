@@ -45,21 +45,21 @@ function PitchGraphic({
   );
 
   return (
-    <div className="relative w-full rounded-xl overflow-hidden" style={{ background: "#2d7a3a", minHeight: 200 }}>
+    <div className="relative w-full rounded-xl overflow-hidden bg-ki-teal min-h-48">
       {/* Pitch markings */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         {/* Centre circle */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-16 w-16 rounded-full border border-white/20" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-16 w-16 rounded-full border border-ki-white/20" />
         {/* Centre line */}
-        <div className="absolute top-1/2 left-0 right-0 h-px bg-white/20" />
+        <div className="absolute top-1/2 left-0 right-0 h-px bg-ki-white/20" />
         {/* Penalty box top */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/5 h-10 border-b border-x border-white/20" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/5 h-10 border-b border-x border-ki-white/20" />
         {/* Penalty box bottom */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/5 h-10 border-t border-x border-white/20" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/5 h-10 border-t border-x border-ki-white/20" />
       </div>
 
       {/* Players — rendered bottom (GK) to top (FWD) */}
-      <div className="relative flex flex-col-reverse justify-around h-full py-3 px-2 gap-1" style={{ minHeight: 200 }}>
+      <div className="relative flex flex-col-reverse justify-around h-full py-3 px-2 gap-1 min-h-48">
         {playerRows.map((row, rowIdx) => (
           <div key={rowIdx} className="flex justify-around items-center">
             {row.map((player, pIdx) =>

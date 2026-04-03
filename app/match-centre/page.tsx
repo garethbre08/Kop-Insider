@@ -100,10 +100,10 @@ export default function MatchCentre() {
   return (
     <div className={`${pageBg} min-h-screen transition-colors duration-300`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-          {/* Main content — 70% */}
-          <div className="w-full lg:w-[70%] flex flex-col gap-10">
+          {/* Main content — 2 cols */}
+          <div className="lg:col-span-2 flex flex-col gap-8">
 
             {/* Recent Results */}
             <section>
@@ -186,8 +186,8 @@ export default function MatchCentre() {
 
           </div>
 
-          {/* Sidebar — 30% */}
-          <aside className="w-full lg:w-[30%]">
+          {/* Sidebar — 1 col */}
+          <aside className="flex flex-col gap-6">
             <div className="bg-ki-white rounded-xl p-4">
               <h3 className="text-ki-black font-bold text-base mb-3">Premier League 2024/25</h3>
               <div className="overflow-x-auto">

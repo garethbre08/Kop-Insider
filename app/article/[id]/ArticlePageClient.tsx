@@ -105,12 +105,12 @@ export default function ArticlePageClient({ article, related }: Props) {
         </span>
       </div>
 
-      {/* Body — 70/30 layout */}
+      {/* Body — grid layout */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-        <div className="flex flex-col lg:flex-row gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-          {/* Article body — 70% */}
-          <div className="w-full lg:w-[70%]">
+          {/* Article body — 2 cols */}
+          <div className="lg:col-span-2">
 
             {/* Drop cap first paragraph */}
             {firstParagraph && (
@@ -169,8 +169,8 @@ export default function ArticlePageClient({ article, related }: Props) {
 
           </div>
 
-          {/* Sidebar — 30% */}
-          <aside className="w-full lg:w-[30%] flex flex-col gap-6">
+          {/* Sidebar — 1 col */}
+          <aside className="flex flex-col gap-6">
 
             {/* More from Andy */}
             <div className="flex flex-col gap-3">

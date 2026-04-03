@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { getOpinionArticles } from "@/lib/articles";
+import { timeAgo, formatCategory } from "@/lib/utils";
+import type { Article } from "@/lib/database.types";
 
 const filters = ["All", "Match Reaction", "Transfers", "Player Form", "Tactics", "Club News"];
 
@@ -101,6 +104,15 @@ export default function Opinion() {
   const tableAccent  = isHome ? "text-ki-red"   : "text-ki-teal";
 
   const [activeFilter, setActiveFilter] = useState("All");
+  const [opinionArticles, setOpinionArticles] = useState<Article[]>([]);
+  const [loadingArticles, setLoadingArticles] = useState(true);
+
+  useEffect(() => {
+    getOpinionArticles(5)
+      .then(setOpinionArticles)
+      .catch(console.error)
+      .finally(() => setLoadingArticles(false));
+  }, []);
 
   return (
     <div className={`${pageBg} min-h-screen transition-colors duration-300`}>
@@ -178,32 +190,78 @@ export default function Opinion() {
               </div>
             </article>
 
-            {/* Opinion grid — 2×2 */}
+            {/* Opinion grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {opinionCards.map((card, i) => (
-                <article key={card.id} className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-200 animate-fade-in-up" style={{ animationDelay: `${i * 100}ms` }}>
-                  <PlaceholderImage className="h-40" />
-                  <div className="p-4 flex flex-col gap-2 flex-1">
-                    <span className="inline-block bg-ki-sand text-ki-teal text-xs font-semibold rounded px-2 py-1 self-start">
-                      {card.tag}
-                    </span>
-                    <h3
-                      className="text-ki-black font-bold text-sm leading-snug"
-                      style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                    >
-                      {card.headline}
-                    </h3>
-                    <p className="text-ki-charcoal text-sm opacity-70 line-clamp-2">{card.excerpt}</p>
-                    <div className="flex items-center gap-2 mt-auto pt-2">
-                      <Avatar size="sm" />
-                      <div>
-                        <p className="text-ki-black text-xs font-semibold">Andy Anfield</p>
-                        <p className="text-ki-charcoal text-xs opacity-50">{card.date}</p>
+              {loadingArticles
+                ? Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="bg-ki-white rounded-xl overflow-hidden flex flex-col animate-pulse">
+                      <div className="h-40 bg-ki-sand" />
+                      <div className="p-4 flex flex-col gap-3">
+                        <div className="h-4 w-24 bg-ki-sand rounded" />
+                        <div className="h-5 bg-ki-sand rounded" />
+                        <div className="h-4 bg-ki-sand rounded w-3/4" />
+                        <div className="h-3 w-20 bg-ki-sand rounded mt-2" />
                       </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  ))
+                : opinionArticles.length > 0
+                ? opinionArticles.map((article, i) => (
+                    <article
+                      key={article.id}
+                      className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-200 animate-fade-in-up"
+                      style={{ animationDelay: `${i * 100}ms` }}
+                    >
+                      <PlaceholderImage className="h-40" />
+                      <div className="p-4 flex flex-col gap-2 flex-1">
+                        <span className={`inline-block bg-ki-sand text-xs font-semibold rounded px-2 py-1 self-start uppercase ${accentText}`}>
+                          {formatCategory(article.category)}
+                        </span>
+                        <h3
+                          className="text-ki-black font-bold text-sm leading-snug"
+                          style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                        >
+                          {article.title}
+                        </h3>
+                        <p className="text-ki-charcoal text-sm opacity-70 line-clamp-2">{article.excerpt}</p>
+                        <div className="flex items-center gap-2 mt-auto pt-2">
+                          <Avatar size="sm" />
+                          <div>
+                            <p className="text-ki-black text-xs font-semibold">Andy Anfield</p>
+                            <p className="text-ki-charcoal text-xs opacity-50">{timeAgo(article.created_at)}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  ))
+                : opinionCards.map((card, i) => (
+                    <article
+                      key={card.id}
+                      className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-200 animate-fade-in-up"
+                      style={{ animationDelay: `${i * 100}ms` }}
+                    >
+                      <PlaceholderImage className="h-40" />
+                      <div className="p-4 flex flex-col gap-2 flex-1">
+                        <span className={`inline-block bg-ki-sand text-xs font-semibold rounded px-2 py-1 self-start ${accentText}`}>
+                          {card.tag}
+                        </span>
+                        <h3
+                          className="text-ki-black font-bold text-sm leading-snug"
+                          style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                        >
+                          {card.headline}
+                        </h3>
+                        <p className="text-ki-charcoal text-sm opacity-70 line-clamp-2">{card.excerpt}</p>
+                        <div className="flex items-center gap-2 mt-auto pt-2">
+                          <Avatar size="sm" />
+                          <div>
+                            <p className="text-ki-black text-xs font-semibold">Andy Anfield</p>
+                            <p className="text-ki-charcoal text-xs opacity-50">{card.date}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  ))
+              }
             </div>
 
             {/* Load More */}

@@ -1,6 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { getArticlesByCategory } from "@/lib/articles";
+import { timeAgo, formatCategory } from "@/lib/utils";
+import type { Article } from "@/lib/database.types";
 
 const rumours = [
   {
@@ -100,6 +104,16 @@ function Avatar() {
 }
 
 export default function TransferTalk() {
+  const [transferArticles, setTransferArticles] = useState<Article[]>([]);
+  const [loadingArticles, setLoadingArticles] = useState(true);
+
+  useEffect(() => {
+    getArticlesByCategory("transfers", 4)
+      .then(setTransferArticles)
+      .catch(console.error)
+      .finally(() => setLoadingArticles(false));
+  }, []);
+
   const { theme } = useTheme();
   const isHome = theme === "home";
   const pageBg       = isHome ? "bg-ki-gold"    : "bg-ki-cream";
@@ -151,22 +165,53 @@ export default function TransferTalk() {
             <section className="flex flex-col gap-3">
               <h2 className="text-ki-black font-bold text-xl">Transfer News</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {transferNews.map((article) => (
-                  <article
-                    key={article.id}
-                    className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-200"
-                  >
-                    <PlaceholderImage className="h-40" />
-                    <div className="flex flex-col gap-2 p-4 flex-1">
-                      <span className="inline-block bg-ki-sand text-ki-teal text-xs font-semibold rounded px-2 py-1 self-start">
-                        TRANSFER
-                      </span>
-                      <h3 className="text-ki-black font-bold text-sm leading-snug">{article.headline}</h3>
-                      <p className="text-ki-charcoal text-sm opacity-70 line-clamp-2">{article.excerpt}</p>
-                      <p className="text-ki-charcoal text-xs opacity-50 mt-auto pt-1">{article.meta}</p>
-                    </div>
-                  </article>
-                ))}
+                {loadingArticles
+                  ? Array.from({ length: 4 }).map((_, i) => (
+                      <div key={i} className="bg-ki-white rounded-xl overflow-hidden flex flex-col animate-pulse">
+                        <div className="h-40 bg-ki-sand" />
+                        <div className="p-4 flex flex-col gap-3">
+                          <div className="h-4 w-20 bg-ki-sand rounded" />
+                          <div className="h-5 bg-ki-sand rounded" />
+                          <div className="h-4 bg-ki-sand rounded w-3/4" />
+                        </div>
+                      </div>
+                    ))
+                  : transferArticles.length > 0
+                  ? transferArticles.map((article) => (
+                      <article
+                        key={article.id}
+                        className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+                      >
+                        <PlaceholderImage className="h-40" />
+                        <div className="flex flex-col gap-2 p-4 flex-1">
+                          <span className={`inline-block bg-ki-sand text-xs font-semibold rounded px-2 py-1 self-start uppercase ${accentText}`}>
+                            {formatCategory(article.category)}
+                          </span>
+                          <h3 className="text-ki-black font-bold text-sm leading-snug">{article.title}</h3>
+                          <p className="text-ki-charcoal text-sm opacity-70 line-clamp-2">{article.excerpt}</p>
+                          <p className="text-ki-charcoal text-xs opacity-50 mt-auto pt-1">
+                            Andy Anfield · {timeAgo(article.created_at)}
+                          </p>
+                        </div>
+                      </article>
+                    ))
+                  : transferNews.map((article) => (
+                      <article
+                        key={article.id}
+                        className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-200"
+                      >
+                        <PlaceholderImage className="h-40" />
+                        <div className="flex flex-col gap-2 p-4 flex-1">
+                          <span className={`inline-block bg-ki-sand text-xs font-semibold rounded px-2 py-1 self-start uppercase ${accentText}`}>
+                            Transfer
+                          </span>
+                          <h3 className="text-ki-black font-bold text-sm leading-snug">{article.headline}</h3>
+                          <p className="text-ki-charcoal text-sm opacity-70 line-clamp-2">{article.excerpt}</p>
+                          <p className="text-ki-charcoal text-xs opacity-50 mt-auto pt-1">{article.meta}</p>
+                        </div>
+                      </article>
+                    ))
+                }
               </div>
             </section>
 

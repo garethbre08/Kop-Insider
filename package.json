@@ -6,21 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test-andy": "npx tsx --env-file=.env.local scripts/test-andy.ts",
+    "crawl": "npx tsx --env-file=.env.local scripts/test-crawler.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.82.0",
+    "@supabase/supabase-js": "^2.101.1",
+    "axios": "^1.14.0",
+    "cheerio": "^1.2.0",
     "next": "16.2.2",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "rss-parser": "^3.13.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/cheerio": "^0.22.35",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

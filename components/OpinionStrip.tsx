@@ -2,8 +2,13 @@
 
 import Link from "next/link";
 import { useTheme } from "@/context/ThemeContext";
+import type { Article } from "@/lib/database.types";
 
-export default function OpinionStrip() {
+type OpinionStripProps = {
+  article?: Article | null;
+};
+
+export default function OpinionStrip({ article }: OpinionStripProps = {}) {
   const { theme } = useTheme();
   const isHome = theme === "home";
 
@@ -11,23 +16,25 @@ export default function OpinionStrip() {
   const accentText   = isHome ? "text-ki-red"   : "text-ki-teal";
   const buttonBg     = isHome ? "bg-ki-red"      : "bg-ki-teal";
 
+  const headline = article?.title
+    ?? "Slot has got this wrong and nobody wants to say it. I will.";
+
+  const excerpt = article?.excerpt
+    ?? "Everyone is too busy celebrating the points tally to notice the cracks forming in behind. The system that looked unbreakable in October is starting to show its seams, and the manager needs to hear it.";
+
   return (
     <div className={`bg-ki-white rounded-xl border-l-4 ${accentBorder} p-6 flex flex-col gap-4 animate-fade-in-up`}>
 
-      {/* Label */}
       <span className={`text-xs font-bold tracking-widest uppercase ${accentText}`}>Opinion</span>
 
-      {/* Pull quote */}
       <h2 className="text-ki-black font-bold text-2xl leading-snug" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-        Slot has got this wrong and nobody wants to say it. I will.
+        {headline}
       </h2>
 
-      {/* Excerpt */}
       <p className="text-ki-charcoal text-sm leading-relaxed">
-        Everyone is too busy celebrating the points tally to notice the cracks forming in behind. The system that looked unbreakable in October is starting to show its seams, and the manager needs to hear it.
+        {excerpt}
       </p>
 
-      {/* Footer: author + CTA */}
       <div className="flex items-center justify-between gap-4 pt-2 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-full bg-ki-sand flex items-center justify-center shrink-0">
@@ -41,9 +48,11 @@ export default function OpinionStrip() {
           </div>
         </div>
 
-        <button className={`${buttonBg} text-ki-white rounded-full px-5 py-2 text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-200 shrink-0`}>
-          Read Full Article
-        </button>
+        <Link href={article ? `/article/${article.id}` : "/opinion"}>
+          <button className={`${buttonBg} text-ki-white rounded-full px-5 py-2 text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-200 shrink-0`}>
+            Read Full Article
+          </button>
+        </Link>
       </div>
     </div>
   );

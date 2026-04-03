@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LiveScoreBar from "@/components/LiveScoreBar";
+import StatusBar from "@/components/StatusBar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { MatchdayProvider } from "@/context/MatchdayContext";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="text-ki-black min-h-screen">
         <ThemeProvider>
           <MatchdayProvider>
+            <StatusBar />
             <Navbar />
             <LiveScoreBar />
             <main className="flex-1 animate-fade-in">{children}</main>

@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { getArticlesByCategory } from "@/lib/articles";
+import { timeAgo, formatCategory } from "@/lib/utils";
+import type { Article } from "@/lib/database.types";
 
 const injuries = [
   { player: "Diogo Jota",               position: "FWD", injury: "Knee ligament",  severity: "Serious",  return: "April 2025"   },
@@ -64,6 +67,15 @@ function Avatar() {
 export default function Injuries() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { const id = setTimeout(() => setMounted(true), 50); return () => clearTimeout(id); }, []);
+
+  const [injuryArticles, setInjuryArticles] = useState<Article[]>([]);
+  const [loadingArticles, setLoadingArticles] = useState(true);
+  useEffect(() => {
+    getArticlesByCategory("injuries", 4)
+      .then(setInjuryArticles)
+      .catch(console.error)
+      .finally(() => setLoadingArticles(false));
+  }, []);
 
   const { theme } = useTheme();
   const isHome = theme === "home";
@@ -165,6 +177,50 @@ export default function Injuries() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </section>
+
+            {/* Injury News */}
+            <section className="flex flex-col gap-3">
+              <h2 className="text-ki-black font-bold text-xl">Injury News</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {loadingArticles
+                  ? Array.from({ length: 4 }).map((_, i) => (
+                      <div key={i} className="bg-ki-white rounded-xl overflow-hidden flex flex-col animate-pulse">
+                        <div className="h-36 bg-ki-sand" />
+                        <div className="p-4 flex flex-col gap-3">
+                          <div className="h-4 w-20 bg-ki-sand rounded" />
+                          <div className="h-5 bg-ki-sand rounded" />
+                        </div>
+                      </div>
+                    ))
+                  : injuryArticles.length > 0
+                  ? injuryArticles.map((article) => (
+                      <article
+                        key={article.id}
+                        className="bg-ki-white rounded-xl overflow-hidden flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-200 animate-fade-in-up"
+                      >
+                        <div role="img" aria-label="Article image" className="h-36 bg-ki-sand flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-ki-charcoal opacity-30" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 20.25h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12.75c0 .828.672 1.5 1.5 1.5z" />
+                          </svg>
+                        </div>
+                        <div className="flex flex-col gap-2 p-4 flex-1">
+                          <span className={`inline-block bg-ki-sand text-xs font-semibold rounded px-2 py-1 self-start uppercase ${tableAccentText}`}>
+                            {formatCategory(article.category)}
+                          </span>
+                          <h3 className="text-ki-black font-bold text-sm leading-snug">{article.title}</h3>
+                          <p className="text-ki-charcoal text-sm opacity-70 line-clamp-2">{article.excerpt}</p>
+                          <p className="text-ki-charcoal text-xs opacity-50 mt-auto pt-1">
+                            Andy Anfield · {timeAgo(article.created_at)}
+                          </p>
+                        </div>
+                      </article>
+                    ))
+                  : (
+                      <p className="text-ki-charcoal opacity-50 text-sm col-span-2">No injury articles yet.</p>
+                    )
+                }
               </div>
             </section>
 

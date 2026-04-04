@@ -1,129 +1,63 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useMatchday } from "@/context/MatchdayContext";
-import { useTheme } from "@/context/ThemeContext";
-
-function CrestBadge({ label, variant }: { label: string; variant: "home" | "away" }) {
-  return (
-    <div className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-      variant === "home" ? "bg-ki-teal text-ki-white" : "bg-ki-sand text-ki-charcoal"
-    }`}>
-      {label}
-    </div>
-  );
+type LiveScore = {
+  homeTeam: string
+  awayTeam: string
+  homeCrest: string
+  awayCrest: string
+  homeScore: number
+  awayScore: number
+  minute: number
+  status: string
+  competition: string
+  isHome: boolean
 }
 
-function Countdown({ kickoffTime, kickoffDate }: { kickoffTime: string; kickoffDate: string }) {
-  const [timeLeft, setTimeLeft] = useState("");
-
-  useEffect(() => {
-    const [hours, minutes] = kickoffTime.split(":").map(Number);
-    const target = new Date();
-    target.setHours(hours, minutes, 0, 0);
-    if (target.getTime() < Date.now()) target.setDate(target.getDate() + 1);
-
-    const tick = () => {
-      const diff = target.getTime() - Date.now();
-      if (diff <= 0) { setTimeLeft("KO"); return; }
-      const h = Math.floor(diff / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      setTimeLeft(h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`);
-    };
-
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [kickoffTime, kickoffDate]);
-
-  return <span className="text-ki-white font-bold text-sm tabular-nums">{timeLeft}</span>;
+type Props = {
+  liveScore: LiveScore | null
 }
 
-export default function LiveScoreBar() {
-  const { isMatchday, isPreMatch, isLive, isFullTime, matchData } = useMatchday();
-  const { theme } = useTheme();
-  const isHome = theme === "home";
-
-  if (!isMatchday) return null;
-
-  const {
-    homeTeam, awayTeam, homeCrest, awayCrest,
-    homeScore, awayScore, matchMinute,
-    kickoffTime, kickoffDate, competition,
-  } = matchData;
+export default function LiveScoreBar({ liveScore }: Props) {
+  if (!liveScore) return null
 
   return (
-    <div className="bg-ki-charcoal w-full animate-slide-down">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2">
-        <div className="flex items-center justify-between gap-4 flex-wrap">
+    <div style={{ backgroundColor: '#222222', width: '100%' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '8px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
 
-          {/* Competition */}
-          <span className="ki-score-competition text-ki-white opacity-40 text-xs font-medium hidden sm:block shrink-0">
-            {competition}
+        {/* Competition */}
+        <span className="ki-score-competition" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px', fontWeight: 500, flexShrink: 0 }}>
+          {liveScore.competition}
+        </span>
+
+        {/* Match */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, justifyContent: 'center' }}>
+          <span style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>{liveScore.homeTeam}</span>
+          <span style={{ color: '#fff', fontSize: '20px', fontWeight: 700, letterSpacing: '-0.5px', padding: '0 8px' }}>
+            {liveScore.homeScore} – {liveScore.awayScore}
           </span>
-
-          {/* Match */}
-          <div className="flex items-center gap-3 flex-1 justify-center">
-            {/* Home */}
-            <div className="flex items-center gap-2">
-              <CrestBadge label={homeCrest} variant="home" />
-              <span className="text-ki-white font-semibold text-sm hidden sm:block">{homeTeam}</span>
-            </div>
-
-            {/* Score / countdown */}
-            <div className="flex items-center gap-2 px-3">
-              {isPreMatch ? (
-                <div className="flex flex-col items-center">
-                  <span className="text-ki-white opacity-50 text-xs">KO {kickoffTime}</span>
-                  <Countdown kickoffTime={kickoffTime} kickoffDate={kickoffDate} />
-                </div>
-              ) : (
-                <span className="text-ki-white font-bold text-xl tabular-nums">
-                  {homeScore} – {awayScore}
-                </span>
-              )}
-            </div>
-
-            {/* Away */}
-            <div className="flex items-center gap-2">
-              <span className="text-ki-white font-semibold text-sm hidden sm:block">{awayTeam}</span>
-              <CrestBadge label={awayCrest} variant="away" />
-            </div>
-          </div>
-
-          {/* Status indicator */}
-          <div className="ki-score-venue flex items-center gap-2 shrink-0">
-            {isLive && (
-              <div className="flex items-center gap-1.5">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ki-red opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-ki-red" />
-                </span>
-                <span className="text-xs font-bold text-ki-red">
-                  {matchMinute}&apos;
-                </span>
-              </div>
-            )}
-            {isFullTime && (
-              <span className="text-xs font-bold bg-ki-charcoal border border-ki-white/30 text-ki-white rounded px-2 py-0.5">
-                FT
-              </span>
-            )}
-            {isPreMatch && (
-              <span className="text-ki-white opacity-40 text-xs">{kickoffDate}</span>
-            )}
-          </div>
-
+          <span style={{ color: '#fff', fontSize: '13px', fontWeight: 600 }}>{liveScore.awayTeam}</span>
         </div>
+
+        {/* Live indicator + minute */}
+        <div className="ki-score-venue" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+          <span style={{ position: 'relative', display: 'inline-flex', width: '8px', height: '8px' }}>
+            <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', backgroundColor: '#C8102E', opacity: 0.75, animation: 'ping 1s cubic-bezier(0,0,0.2,1) infinite' }} />
+            <span style={{ position: 'relative', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#C8102E', display: 'inline-block' }} />
+          </span>
+          <span style={{ color: '#C8102E', fontSize: '12px', fontWeight: 700 }}>{liveScore.minute}&apos;</span>
+        </div>
+
       </div>
 
       <style>{`
+        @keyframes ping {
+          75%, 100% { transform: scale(2); opacity: 0; }
+        }
         @media (max-width: 480px) {
           .ki-score-competition { display: none !important; }
           .ki-score-venue { display: none !important; }
         }
       `}</style>
     </div>
-  );
+  )
 }

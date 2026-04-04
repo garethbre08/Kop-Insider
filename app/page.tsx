@@ -1,6 +1,8 @@
 import { getLatestArticles, getFeaturedArticle, getOpinionArticles } from '@/lib/articles'
+import { getPremierLeagueTable, getLiverpoolFixtures, getLiverpoolLiveScore } from '@/lib/football'
 import Link from 'next/link'
 import MobileTabs from '@/components/MobileTabs'
+import LiveScoreBar from '@/components/LiveScoreBar'
 
 function timeAgo(dateString: string): string {
   const now = new Date()
@@ -16,13 +18,19 @@ function timeAgo(dateString: string): string {
 }
 
 export default async function Home() {
-  const featuredArticle = await getFeaturedArticle()
-  const latestArticles = await getLatestArticles(6)
-  const opinionArticles = await getOpinionArticles(1)
+  const [featuredArticle, latestArticles, opinionArticles, tableData, fixtures, liveScore] = await Promise.all([
+    getFeaturedArticle(),
+    getLatestArticles(6),
+    getOpinionArticles(1),
+    getPremierLeagueTable(),
+    getLiverpoolFixtures(),
+    getLiverpoolLiveScore(),
+  ])
   const opinionArticle = opinionArticles[0] || null
 
   return (
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+      <LiveScoreBar liveScore={liveScore} />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
         <div className="ki-home-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '32px', alignItems: 'start' }}>
 
@@ -30,7 +38,7 @@ export default async function Home() {
               On desktop: tab bar is hidden, articles show as default.
               On mobile: tab bar shows (News / Table / Fixtures). */}
           <div className="ki-mobile-tabs-wrapper">
-            <MobileTabs>
+            <MobileTabs tableData={tableData} fixtures={fixtures}>
 
               {/* HERO CARD */}
               {featuredArticle && (
@@ -143,24 +151,24 @@ export default async function Home() {
               <div style={{ fontSize: '14px', fontWeight: 700, color: '#111', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9' }}>
                 Premier League Table
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', fontSize: '10px', color: '#333', opacity: 0.5, marginBottom: '6px', padding: '0 4px' }}>
-                <span>#</span><span>Team</span><span style={{ textAlign: 'right' }}>P</span><span style={{ textAlign: 'right' }}>GD</span><span style={{ textAlign: 'right' }}>Pts</span>
-              </div>
-              {[
-                { pos: 1, team: 'Liverpool',   p: 24, gd: '+38', pts: 58, lfc: true  },
-                { pos: 2, team: 'Arsenal',     p: 24, gd: '+22', pts: 51, lfc: false },
-                { pos: 3, team: 'Man City',    p: 24, gd: '+19', pts: 48, lfc: false },
-                { pos: 4, team: 'Chelsea',     p: 24, gd: '+11', pts: 44, lfc: false },
-                { pos: 5, team: 'Aston Villa', p: 24, gd: '+8',  pts: 40, lfc: false },
-              ].map((row) => (
-                <div key={row.pos} style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', alignItems: 'center', padding: '6px 4px', borderRadius: '6px', backgroundColor: row.lfc ? '#F3EEDD' : 'transparent', marginBottom: '2px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#01586B' : '#333', opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</span>
-                  <span style={{ fontSize: '13px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#01586B' : '#111' }}>{row.team}</span>
-                  <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.p}</span>
-                  <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.gd}</span>
-                  <span style={{ fontSize: '13px', fontWeight: 700, textAlign: 'right', color: row.lfc ? '#01586B' : '#111' }}>{row.pts}</span>
-                </div>
-              ))}
+              {tableData.length === 0 ? (
+                <p style={{ fontSize: '13px', color: '#333', opacity: 0.5 }}>Table unavailable</p>
+              ) : (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', fontSize: '10px', color: '#333', opacity: 0.5, marginBottom: '6px', padding: '0 4px' }}>
+                    <span>#</span><span>Team</span><span style={{ textAlign: 'right' }}>P</span><span style={{ textAlign: 'right' }}>GD</span><span style={{ textAlign: 'right' }}>Pts</span>
+                  </div>
+                  {tableData.slice(0, 5).map((row) => (
+                    <div key={row.pos} style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', alignItems: 'center', padding: '6px 4px', borderRadius: '6px', backgroundColor: row.lfc ? '#F3EEDD' : 'transparent', marginBottom: '2px' }}>
+                      <span style={{ fontSize: '12px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#01586B' : '#333', opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</span>
+                      <span style={{ fontSize: '13px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#01586B' : '#111' }}>{row.shortName || row.team}</span>
+                      <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.p}</span>
+                      <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.gd}</span>
+                      <span style={{ fontSize: '13px', fontWeight: 700, textAlign: 'right', color: row.lfc ? '#01586B' : '#111' }}>{row.pts}</span>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
 
             {/* FIXTURES */}
@@ -168,25 +176,25 @@ export default async function Home() {
               <div style={{ fontSize: '14px', fontWeight: 700, color: '#111', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9' }}>
                 Next Fixtures
               </div>
-              {[
-                { home: 'Liverpool', away: 'Everton',   date: 'Sat 1 Feb',  time: '12:30', isHome: true  },
-                { home: 'Tottenham', away: 'Liverpool', date: 'Sat 8 Feb',  time: '17:30', isHome: false },
-                { home: 'Liverpool', away: 'Wolves',    date: 'Sat 15 Feb', time: '15:00', isHome: true  },
-              ].map((fixture, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < 2 ? '1px solid #F3EEDD' : 'none' }}>
-                  <div>
-                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#111' }}>
-                      {fixture.isHome ? `Liverpool vs ${fixture.away}` : `${fixture.home} vs Liverpool`}
+              {fixtures.length === 0 ? (
+                <p style={{ fontSize: '13px', color: '#333', opacity: 0.5 }}>Fixtures unavailable</p>
+              ) : (
+                fixtures.map((fixture, i) => (
+                  <div key={fixture.id ?? i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < fixtures.length - 1 ? '1px solid #F3EEDD' : 'none' }}>
+                    <div>
+                      <div style={{ fontSize: '13px', fontWeight: 600, color: '#111' }}>
+                        {fixture.isHome ? `Liverpool vs ${fixture.opponent}` : `${fixture.opponent} vs Liverpool`}
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#333', opacity: 0.5, marginTop: '2px' }}>
+                        {fixture.date} · {fixture.time}
+                      </div>
                     </div>
-                    <div style={{ fontSize: '11px', color: '#333', opacity: 0.5, marginTop: '2px' }}>
-                      {fixture.date} · {fixture.time}
-                    </div>
+                    <span style={{ fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#E7DFC9' : '#333', color: fixture.isHome ? '#01586B' : '#fff' }}>
+                      {fixture.isHome ? 'Home' : 'Away'}
+                    </span>
                   </div>
-                  <span style={{ fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#E7DFC9' : '#333', color: fixture.isHome ? '#01586B' : '#fff' }}>
-                    {fixture.isHome ? 'Home' : 'Away'}
-                  </span>
-                </div>
-              ))}
+                ))
+              )}
             </div>
 
           </div>

@@ -471,24 +471,77 @@ body[data-theme="home"]  { background-color: var(--color-ki-gold);  }
 
 /* ─── Mobile ─────────────────────────────────────────────────────────────── */
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .ki-page-layout {
     grid-template-columns: 1fr;
   }
-
-  .ki-grid-2 {
-    grid-template-columns: 1fr;
-  }
-
-  .ki-grid-3 {
-    grid-template-columns: 1fr;
-  }
-
   .ki-sidebar {
     position: static;
   }
+}
 
+@media (max-width: 768px) {
   .ki-container {
     padding: 16px;
+  }
+  .ki-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .ki-grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ki-page-title {
+    font-size: 22px;
+  }
+  .ki-headline-hero {
+    font-size: 18px;
+  }
+  .ki-opinion-strip {
+    padding: 16px;
+  }
+  .ki-opinion-title {
+    font-size: 16px;
+  }
+  .ki-opinion-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .ki-sidebar-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ki-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .ki-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .ki-page-layout {
+    gap: 16px;
+  }
+  .ki-main {
+    gap: 12px;
+  }
+  .ki-card-img-hero {
+    height: 160px;
+  }
+  .ki-card-img-medium {
+    height: 130px;
+  }
+  .ki-card-img-small {
+    height: 90px;
+  }
+  .ki-headline-hero {
+    font-size: 16px;
+  }
+  .ki-headline-medium {
+    font-size: 14px;
+  }
+  .ki-btn-primary {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 }

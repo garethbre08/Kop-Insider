@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer style={{ backgroundColor: '#333333', width: '100%', marginTop: '64px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '48px 24px 32px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', marginBottom: '40px' }}>
+        <div className="ki-footer-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', marginBottom: '40px' }}>
 
           <div>
             <div style={{ color: '#fff', fontWeight: 700, fontSize: '18px', marginBottom: '12px' }}>Kop Insider</div>
@@ -24,11 +24,11 @@ export default function Footer() {
           <div>
             <div style={{ color: '#fff', fontWeight: 600, fontSize: '14px', marginBottom: '16px' }}>Navigation</div>
             {[
-              { label: 'Home', href: '/' },
-              { label: 'Match Centre', href: '/match-centre' },
+              { label: 'Home',          href: '/'             },
+              { label: 'Match Centre',  href: '/match-centre' },
               { label: 'Transfer Talk', href: '/transfer-talk' },
-              { label: 'Injuries', href: '/injuries' },
-              { label: 'Opinion', href: '/opinion' },
+              { label: 'Injuries',      href: '/injuries'     },
+              { label: 'Opinion',       href: '/opinion'      },
             ].map((link) => (
               <Link key={link.href} href={link.href} style={{ textDecoration: 'none' }}>
                 <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '13px', marginBottom: '10px', cursor: 'pointer' }}>
@@ -50,7 +50,7 @@ export default function Footer() {
 
         </div>
 
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="ki-footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px' }}>
             © 2025 Kop Insider. All rights reserved.
           </span>
@@ -59,6 +59,13 @@ export default function Footer() {
           </span>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .ki-footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .ki-footer-bottom { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+        }
+      `}</style>
     </footer>
   )
 }

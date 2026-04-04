@@ -59,7 +59,7 @@ export default function LiveScoreBar() {
         <div className="flex items-center justify-between gap-4 flex-wrap">
 
           {/* Competition */}
-          <span className="text-ki-white opacity-40 text-xs font-medium hidden sm:block shrink-0">
+          <span className="ki-score-competition text-ki-white opacity-40 text-xs font-medium hidden sm:block shrink-0">
             {competition}
           </span>
 
@@ -93,14 +93,14 @@ export default function LiveScoreBar() {
           </div>
 
           {/* Status indicator */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="ki-score-venue flex items-center gap-2 shrink-0">
             {isLive && (
               <div className="flex items-center gap-1.5">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ki-red opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-ki-red" />
                 </span>
-                <span className={`text-xs font-bold ${isHome ? "text-ki-red" : "text-ki-red"}`}>
+                <span className="text-xs font-bold text-ki-red">
                   {matchMinute}&apos;
                 </span>
               </div>
@@ -117,6 +117,13 @@ export default function LiveScoreBar() {
 
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 480px) {
+          .ki-score-competition { display: none !important; }
+          .ki-score-venue { display: none !important; }
+        }
+      `}</style>
     </div>
   );
 }

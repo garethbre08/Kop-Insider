@@ -5,6 +5,14 @@ const headers = {
   'X-Auth-Token': API_KEY || '',
 }
 
+function getCompetitionLabel(name: string): string {
+  if (name.includes('Champions League') || name.includes('UEFA Champions')) return 'UCL'
+  if (name.includes('FA Cup')) return 'FAC'
+  if (name.includes('Carabao') || name.includes('League Cup') || name.includes('EFL Cup')) return 'CC'
+  if (name.includes('Premier League')) return 'PL'
+  return name.substring(0, 3).toUpperCase()
+}
+
 export async function getPremierLeagueTable() {
   try {
     const res = await fetch(`${BASE_URL}/competitions/PL/standings`, {
@@ -41,7 +49,7 @@ export async function getLiverpoolFixtures() {
     })
     if (!res.ok) throw new Error('Failed to fetch fixtures')
     const data = await res.json()
-    return data.matches.slice(0, 3).map((match: any) => {
+    return data.matches.slice(0, 5).map((match: any) => {
       const isHome = match.homeTeam.name.includes('Liverpool')
       const opponent = isHome ? match.awayTeam.name : match.homeTeam.name
       const opponentCrest = isHome ? match.awayTeam.crest : match.homeTeam.crest
@@ -56,7 +64,9 @@ export async function getLiverpoolFixtures() {
         time: formattedTime,
         isHome,
         competition: match.competition.name,
+        competitionLabel: getCompetitionLabel(match.competition.name),
         venue: isHome ? 'Anfield' : opponent,
+        timestamp: date.getTime() / 1000,
       }
     })
   } catch (error) {
@@ -95,15 +105,83 @@ export async function getLiverpoolLiveScore() {
   }
 }
 
+export async function getLiverpoolCupFixtures() {
+  try {
+    const CUP_API_KEY = process.env.API_FOOTBALL_KEY
+    const LIVERPOOL_ID = 40
+    const SEASON = 2025
+
+    const competitions = [
+      { id: 45, name: 'FA Cup', short: 'FAC' },
+      { id: 48, name: 'Carabao Cup', short: 'CC' },
+    ]
+
+    const allFixtures = await Promise.all(
+      competitions.map(async (comp) => {
+        const res = await fetch(
+          `https://v3.football.api-sports.io/fixtures?team=${LIVERPOOL_ID}&season=${SEASON}&league=${comp.id}&status=NS`,
+          {
+            headers: { 'x-apisports-key': CUP_API_KEY || '' },
+            next: { revalidate: 3600 },
+          }
+        )
+        if (!res.ok) return []
+        const data = await res.json()
+        return (data.response || []).map((item: any) => {
+          const isHome = item.teams.home.id === LIVERPOOL_ID
+          const opponent = isHome ? item.teams.away.name : item.teams.home.name
+          const opponentCrest = isHome ? item.teams.away.logo : item.teams.home.logo
+          const date = new Date(item.fixture.date)
+          const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
+          const formattedTime = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+          return {
+            id: item.fixture.id,
+            opponent,
+            opponentCrest,
+            date: formattedDate,
+            time: formattedTime,
+            isHome,
+            competition: comp.name,
+            competitionLabel: comp.short,
+            venue: isHome ? 'Anfield' : opponent,
+            timestamp: item.fixture.timestamp,
+          }
+        })
+      })
+    )
+
+    return allFixtures.flat().sort((a, b) => a.timestamp - b.timestamp).slice(0, 5)
+  } catch (error) {
+    console.error('Cup fixtures fetch error:', error)
+    return []
+  }
+}
+
+export async function getAllLiverpoolFixtures() {
+  try {
+    const [leagueFixtures, cupFixtures] = await Promise.all([
+      getLiverpoolFixtures(),
+      getLiverpoolCupFixtures(),
+    ])
+
+    return [...leagueFixtures, ...cupFixtures]
+      .sort((a: any, b: any) => a.timestamp - b.timestamp)
+      .slice(0, 5)
+  } catch (error) {
+    console.error('All fixtures fetch error:', error)
+    return []
+  }
+}
+
 export async function getRecentResults() {
   try {
-    const res = await fetch(`${BASE_URL}/teams/64/matches?status=FINISHED&limit=3`, {
+    const res = await fetch(`${BASE_URL}/teams/64/matches?status=FINISHED&limit=5`, {
       headers,
       next: { revalidate: 3600 },
     })
     if (!res.ok) throw new Error('Failed to fetch results')
     const data = await res.json()
-    return data.matches.slice(0, 3).map((match: any) => {
+    return data.matches.slice(0, 5).map((match: any) => {
       const isHome = match.homeTeam.name.includes('Liverpool')
       const lfcScore = isHome ? match.score.fullTime.home : match.score.fullTime.away
       const oppScore = isHome ? match.score.fullTime.away : match.score.fullTime.home
@@ -117,6 +195,7 @@ export async function getRecentResults() {
         isHome,
         result,
         competition: match.competition.name,
+        competitionLabel: getCompetitionLabel(match.competition.name),
         date: new Date(match.utcDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
       }
     })

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test-andy": "npx tsx --env-file=.env.local scripts/test-andy.ts",
-    "crawl": "npx tsx --env-file=.env.local scripts/test-crawler.ts"
+    "crawl": "npx tsx --env-file=.env.local scripts/test-crawler.ts",
+    "test-cups": "npx tsx --env-file=.env.local scripts/test-cups.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.82.0",

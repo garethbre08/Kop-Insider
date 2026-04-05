@@ -1,5 +1,5 @@
 import { getLatestArticles, getFeaturedArticle, getOpinionArticles } from '@/lib/articles'
-import { getPremierLeagueTable, getLiverpoolFixtures, getLiverpoolLiveScore } from '@/lib/football'
+import { getPremierLeagueTable, getAllLiverpoolFixtures, getLiverpoolLiveScore } from '@/lib/football'
 import Link from 'next/link'
 import MobileTabs from '@/components/MobileTabs'
 import LiveScoreBar from '@/components/LiveScoreBar'
@@ -23,7 +23,7 @@ export default async function Home() {
     getLatestArticles(6),
     getOpinionArticles(1),
     getPremierLeagueTable(),
-    getLiverpoolFixtures(),
+    getAllLiverpoolFixtures(),
     getLiverpoolLiveScore(),
   ])
   const opinionArticle = opinionArticles[0] || null
@@ -185,8 +185,8 @@ export default async function Home() {
                       <div style={{ fontSize: '13px', fontWeight: 600, color: '#111' }}>
                         {fixture.isHome ? `Liverpool vs ${fixture.opponent}` : `${fixture.opponent} vs Liverpool`}
                       </div>
-                      <div style={{ fontSize: '11px', color: '#333', opacity: 0.5, marginTop: '2px' }}>
-                        {fixture.date} · {fixture.time}
+                      <div style={{ fontSize: '10px', color: '#333', opacity: 0.5, marginTop: '2px' }}>
+                        {fixture.date} · {fixture.time} · {(fixture as any).competitionLabel}
                       </div>
                     </div>
                     <span style={{ fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#E7DFC9' : '#333', color: fixture.isHome ? '#01586B' : '#fff' }}>

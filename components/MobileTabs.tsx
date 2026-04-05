@@ -20,6 +20,7 @@ type Fixture = {
   time: string
   isHome: boolean
   competition?: string
+  competitionLabel?: string
 }
 
 type Props = {
@@ -113,8 +114,8 @@ export default function MobileTabs({ children, tableData, fixtures }: Props) {
                   <div style={{ fontSize: '14px', fontWeight: 600, color: '#111', marginBottom: '4px' }}>
                     {fixture.isHome ? `Liverpool vs ${fixture.opponent}` : `${fixture.opponent} vs Liverpool`}
                   </div>
-                  <div style={{ fontSize: '12px', color: '#333', opacity: 0.5 }}>
-                    {fixture.date} · {fixture.time}
+                  <div style={{ fontSize: '10px', color: '#333', opacity: 0.5 }}>
+                    {fixture.date} · {fixture.time} · {fixture.competitionLabel}
                   </div>
                 </div>
                 <span style={{ fontSize: '10px', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#E7DFC9' : '#333', color: fixture.isHome ? '#01586B' : '#fff' }}>

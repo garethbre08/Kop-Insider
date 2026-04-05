@@ -1,5 +1,6 @@
 import { getLatestArticles, getFeaturedArticle, getOpinionArticles } from '@/lib/articles'
 import { getPremierLeagueTable, getAllLiverpoolFixtures, getLiverpoolLiveScore } from '@/lib/football'
+import { getArticleImages } from '@/lib/images'
 import Link from 'next/link'
 import MobileTabs from '@/components/MobileTabs'
 import LiveScoreBar from '@/components/LiveScoreBar'
@@ -28,6 +29,9 @@ export default async function Home() {
   ])
   const opinionArticle = opinionArticles[0] || null
 
+  const allArticles = [featuredArticle, ...latestArticles, ...opinionArticles].filter(Boolean)
+  const imageMap = await getArticleImages(allArticles)
+
   return (
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
       <LiveScoreBar liveScore={liveScore} />
@@ -44,8 +48,12 @@ export default async function Home() {
               {featuredArticle && (
                 <Link href={`/article/${featuredArticle.id}`} style={{ textDecoration: 'none', display: 'block', marginBottom: '16px' }}>
                   <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }}>
-                    <div style={{ backgroundColor: '#E7DFC9', height: '220px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <span style={{ color: '#01586B', opacity: 0.2, fontSize: '28px', fontWeight: 700 }}>KOP INSIDER</span>
+                    <div style={{ backgroundColor: '#E7DFC9', height: '220px', width: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {imageMap[featuredArticle.id] ? (
+                        <img src={imageMap[featuredArticle.id]} alt={featuredArticle.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ color: '#01586B', opacity: 0.2, fontSize: '28px', fontWeight: 700 }}>KOP INSIDER</span>
+                      )}
                     </div>
                     <div style={{ padding: '20px' }}>
                       <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '10px' }}>
@@ -70,7 +78,11 @@ export default async function Home() {
                 {latestArticles.slice(0, 2).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
                     <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%' }}>
-                      <div style={{ backgroundColor: '#E7DFC9', height: '150px', width: '100%' }} />
+                      <div style={{ backgroundColor: '#E7DFC9', height: '150px', width: '100%', overflow: 'hidden' }}>
+                        {imageMap[article.id] && (
+                          <img src={imageMap[article.id]} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )}
+                      </div>
                       <div style={{ padding: '16px' }}>
                         <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
                           {article.category}
@@ -92,7 +104,11 @@ export default async function Home() {
                 {latestArticles.slice(2, 5).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
                     <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%' }}>
-                      <div style={{ backgroundColor: '#E7DFC9', height: '100px', width: '100%' }} />
+                      <div style={{ backgroundColor: '#E7DFC9', height: '100px', width: '100%', overflow: 'hidden' }}>
+                        {imageMap[article.id] && (
+                          <img src={imageMap[article.id]} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )}
+                      </div>
                       <div style={{ padding: '12px' }}>
                         <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '6px' }}>
                           {article.category}

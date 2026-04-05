@@ -92,10 +92,14 @@ export default function ArticlePageClient({ article, related }: Props) {
       </header>
 
       {/* Hero image */}
-      <div className="w-full h-96 bg-ki-sand flex items-center justify-center">
-        <span className="text-ki-teal opacity-20 font-bold text-4xl tracking-widest select-none">
-          KOP INSIDER
-        </span>
+      <div className="w-full h-96 bg-ki-sand flex items-center justify-center overflow-hidden">
+        {article.image_url ? (
+          <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : (
+          <span className="text-ki-teal opacity-20 font-bold text-4xl tracking-widest select-none">
+            KOP INSIDER
+          </span>
+        )}
       </div>
 
       {/* Body */}

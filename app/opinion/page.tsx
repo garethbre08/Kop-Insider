@@ -180,7 +180,13 @@ export default function Opinion() {
                       className="ki-card flex flex-col animate-fade-in-up"
                       style={{ animationDelay: `${i * 100}ms` }}
                     >
-                      <PlaceholderImage className="ki-card-img-medium" />
+                      {article.image_url ? (
+                        <div className="ki-card-img ki-card-img-medium overflow-hidden">
+                          <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                      ) : (
+                        <PlaceholderImage className="ki-card-img-medium" />
+                      )}
                       <div className="ki-card-body-medium flex flex-col gap-2 flex-1">
                         <span className={`ki-tag ${accentText}`}>{formatCategory(article.category)}</span>
                         <h3 className="ki-headline-small">{article.title}</h3>

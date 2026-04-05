@@ -73,3 +73,14 @@ export async function insertArticle(article: ArticleInsert): Promise<Article> {
   if (error) throw error;
   return data;
 }
+
+export async function updateArticleImage(id: string, imageUrl: string) {
+  try {
+    await supabase
+      .from('articles')
+      .update({ image_url: imageUrl })
+      .eq('id', id)
+  } catch (error) {
+    console.error('Image update error:', error)
+  }
+}

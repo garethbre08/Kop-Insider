@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { insertArticle } from "./articles";
+import { insertArticle, updateArticleImage } from "./articles";
+import { getArticleImage } from "./images";
 import type { ArticleCategory } from "./database.types";
 
 const ANDY_SYSTEM_PROMPT = `You are Andy Anfield, the AI reporter for Kop Insider — a Liverpool FC news website. You write original articles about Liverpool FC based on information provided to you from credible journalism sources.
@@ -82,7 +83,7 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
     const raw = textBlock.text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/,"").trim();
     const parsed = JSON.parse(raw);
 
-    await insertArticle({
+    const saved = await insertArticle({
       title: parsed.title,
       excerpt: parsed.excerpt,
       content: parsed.content,
@@ -97,6 +98,13 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
     });
 
     console.log(`[Andy Anfield] Article generated: "${parsed.title}"`);
+
+    const keywords = parsed.title.split(' ').slice(0, 4).join(' ')
+    const imageUrl = await getArticleImage(keywords)
+    if (imageUrl) {
+      await updateArticleImage(saved.id, imageUrl)
+      console.log(`[Andy Anfield] Image added for: "${parsed.title}"`)
+    }
   } catch (error) {
     console.error("[Andy Anfield] Failed to generate article:", error);
     throw error;

@@ -6,37 +6,19 @@ import { useTheme } from "@/context/ThemeContext";
 import { timeAgo, formatCategory } from "@/lib/utils";
 import type { Article } from "@/lib/database.types";
 
-const leagueTable = [
-  { pos: 1, club: "Liverpool",   p: 24, gd: "+38", pts: 58, isLiverpool: true  },
-  { pos: 2, club: "Arsenal",     p: 24, gd: "+22", pts: 51, isLiverpool: false },
-  { pos: 3, club: "Man City",    p: 24, gd: "+19", pts: 48, isLiverpool: false },
-  { pos: 4, club: "Chelsea",     p: 24, gd: "+11", pts: 44, isLiverpool: false },
-  { pos: 5, club: "Aston Villa", p: 24, gd: "+8",  pts: 40, isLiverpool: false },
-  { pos: 6, club: "Tottenham",   p: 24, gd: "+6",  pts: 38, isLiverpool: false },
-  { pos: 7, club: "Newcastle",   p: 24, gd: "+5",  pts: 36, isLiverpool: false },
-  { pos: 8, club: "Man United",  p: 24, gd: "-2",  pts: 31, isLiverpool: false },
-];
-
-const fixtures = [
-  { venue: "H", opponent: "Everton",   date: "Sat 1 Feb",  time: "12:30" },
-  { venue: "A", opponent: "Tottenham", date: "Sat 8 Feb",  time: "17:30" },
-  { venue: "H", opponent: "Wolves",    date: "Sat 15 Feb", time: "15:00" },
-];
-
 type Props = {
   article: Article;
   related: Article[];
+  sidebar: React.ReactNode;
 };
 
-export default function ArticlePageClient({ article, related }: Props) {
+export default function ArticlePageClient({ article, related, sidebar }: Props) {
   const { theme } = useTheme();
   const isHome = theme === "home";
 
   const pageBg       = isHome ? "bg-ki-gold"    : "bg-ki-cream";
   const accentText   = isHome ? "text-ki-red"   : "text-ki-teal";
-  const accentBg     = isHome ? "bg-ki-red"     : "bg-ki-teal";
   const accentBorder = isHome ? "border-ki-red" : "border-ki-teal";
-  const tableAccent  = isHome ? "text-ki-red"   : "text-ki-teal";
 
   const paragraphs = article.content
     .split(/\n\n+/)
@@ -182,51 +164,7 @@ export default function ArticlePageClient({ article, related }: Props) {
               </div>
             </div>
 
-            {/* Next Fixtures */}
-            <div className="ki-sidebar-card">
-              <h3 className="ki-section-title">Next Fixtures</h3>
-              <div className="flex flex-col">
-                {fixtures.map((fixture, i) => (
-                  <div key={i} className="ki-fixture-row">
-                    <span className={`text-xs font-bold rounded px-2 py-0.5 shrink-0 ${fixture.venue === "H" ? `${accentBg} text-ki-white` : "bg-ki-sand text-ki-charcoal"}`}>
-                      {fixture.venue}
-                    </span>
-                    <span className="text-ki-black text-sm font-medium flex-1 mx-3">{fixture.opponent}</span>
-                    <div className="text-right shrink-0">
-                      <p className="ki-meta">{fixture.date}</p>
-                      <p className="text-ki-charcoal text-xs font-semibold">{fixture.time}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* League Table */}
-            <div className="ki-sidebar-card">
-              <h3 className="ki-section-title">Premier League</h3>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-ki-charcoal opacity-50 text-xs border-b border-ki-sand">
-                    <th className="text-left font-medium pb-2 w-6">#</th>
-                    <th className="text-left font-medium pb-2">Club</th>
-                    <th className="text-center font-medium pb-2 w-6">P</th>
-                    <th className="text-center font-medium pb-2 w-8">GD</th>
-                    <th className="text-center font-medium pb-2 w-8">Pts</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leagueTable.map((row) => (
-                    <tr key={row.pos} className={row.isLiverpool ? "bg-ki-sand" : ""}>
-                      <td className={`py-1 pl-1 text-xs ${row.isLiverpool ? `${tableAccent} font-bold` : "text-ki-charcoal opacity-50"}`}>{row.pos}</td>
-                      <td className={`py-1 text-xs font-medium ${row.isLiverpool ? `${tableAccent} font-bold` : "text-ki-black"}`}>{row.club}</td>
-                      <td className={`py-1 text-center text-xs ${row.isLiverpool ? "text-ki-charcoal" : "text-ki-charcoal opacity-50"}`}>{row.p}</td>
-                      <td className={`py-1 text-center text-xs ${row.isLiverpool ? "text-ki-charcoal" : "text-ki-charcoal opacity-50"}`}>{row.gd}</td>
-                      <td className={`py-1 pr-1 text-center text-xs font-bold ${row.isLiverpool ? tableAccent : "text-ki-black"}`}>{row.pts}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {sidebar}
 
           </aside>
         </div>

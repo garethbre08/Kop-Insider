@@ -1,11 +1,11 @@
-import { getRecentResults, getAllLiverpoolFixtures, getPremierLeagueTable } from '@/lib/football'
+import { getRecentResults, getAllLiverpoolFixtures } from '@/lib/football'
 import MatchCentreClient from './MatchCentreClient'
+import Sidebar from '@/components/Sidebar'
 
 export default async function MatchCentre() {
-  const [results, fixtures, leagueTable] = await Promise.all([
+  const [results, fixtures] = await Promise.all([
     getRecentResults(),
     getAllLiverpoolFixtures(),
-    getPremierLeagueTable(),
   ])
 
   return (
@@ -15,7 +15,12 @@ export default async function MatchCentre() {
           <h1 className="ki-page-title">Match Centre</h1>
           <p className="ki-page-subtitle">Liverpool FC results, fixtures and league table</p>
         </div>
-        <MatchCentreClient results={results} fixtures={fixtures} leagueTable={leagueTable} />
+        <div className="ki-page-layout">
+          <MatchCentreClient results={results} fixtures={fixtures} />
+          <aside className="ki-sidebar">
+            <Sidebar />
+          </aside>
+        </div>
       </div>
     </main>
   )

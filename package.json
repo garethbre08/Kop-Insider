@@ -10,7 +10,8 @@
     "test-andy": "npx tsx --env-file=.env.local scripts/test-andy.ts",
     "crawl": "npx tsx --env-file=.env.local scripts/test-crawler.ts",
     "test-cups": "npx tsx --env-file=.env.local scripts/test-cups.ts",
-    "backfill-images": "npx tsx --env-file=.env.local scripts/backfill-images.ts"
+    "backfill-images": "npx tsx --env-file=.env.local scripts/backfill-images.ts",
+    "refresh-images": "npx tsx --env-file=.env.local scripts/backfill-images.ts --refresh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.82.0",

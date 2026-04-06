@@ -47,7 +47,6 @@ type TableRow = {
 type Props = {
   results: Result[]
   fixtures: Fixture[]
-  leagueTable: TableRow[]
 }
 
 type Filter = 'All' | 'Premier League' | 'Champions League' | 'FA Cup'
@@ -67,7 +66,7 @@ function CompBadge({ label }: { label: string }) {
   )
 }
 
-export default function MatchCentreClient({ results, fixtures, leagueTable }: Props) {
+export default function MatchCentreClient({ results, fixtures }: Props) {
   const [activeFilter, setActiveFilter] = useState<Filter>('All')
 
   const filteredResults = activeFilter === 'All'
@@ -79,7 +78,7 @@ export default function MatchCentreClient({ results, fixtures, leagueTable }: Pr
     : fixtures.filter((f) => f.competition.includes(activeFilter === 'FA Cup' ? 'FA Cup' : activeFilter === 'Champions League' ? 'Champions' : activeFilter))
 
   return (
-    <div className="ki-page-layout">
+    <div className="ki-main">
 
       {/* Main */}
       <div className="ki-main">
@@ -184,42 +183,6 @@ export default function MatchCentreClient({ results, fixtures, leagueTable }: Pr
         </section>
 
       </div>
-
-      {/* Sidebar */}
-      <aside className="ki-sidebar">
-        <div className="ki-sidebar-card">
-          <h3 className="ki-section-title">Premier League 2024/25</h3>
-          {leagueTable.length === 0 ? (
-            <p className="ki-meta">Table unavailable.</p>
-          ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', fontSize: '13px', minWidth: '260px', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr style={{ fontSize: '11px', color: CHARCOAL, opacity: 0.5, borderBottom: `1px solid ${SAND}` }}>
-                    <th style={{ textAlign: 'left', fontWeight: 500, paddingBottom: '8px', width: '24px' }}>#</th>
-                    <th style={{ textAlign: 'left', fontWeight: 500, paddingBottom: '8px' }}>Club</th>
-                    <th style={{ textAlign: 'center', fontWeight: 500, paddingBottom: '8px', width: '24px' }}>P</th>
-                    <th style={{ textAlign: 'center', fontWeight: 500, paddingBottom: '8px', width: '32px' }}>GD</th>
-                    <th style={{ textAlign: 'center', fontWeight: 500, paddingBottom: '8px', width: '32px' }}>Pts</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leagueTable.map((row) => (
-                    <tr key={row.pos} style={{ backgroundColor: row.lfc ? CREAM : 'transparent' }}>
-                      <td style={{ padding: '4px', fontSize: '12px', color: row.lfc ? TEAL : CHARCOAL, fontWeight: row.lfc ? 700 : 400, opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</td>
-                      <td style={{ padding: '4px', fontSize: '12px', fontWeight: row.lfc ? 700 : 500, color: row.lfc ? TEAL : BLACK }}>{row.shortName || row.team}</td>
-                      <td style={{ padding: '4px', textAlign: 'center', fontSize: '12px', color: CHARCOAL, opacity: row.lfc ? 1 : 0.5 }}>{row.p}</td>
-                      <td style={{ padding: '4px', textAlign: 'center', fontSize: '12px', color: CHARCOAL, opacity: row.lfc ? 1 : 0.5 }}>{row.gd}</td>
-                      <td style={{ padding: '4px', textAlign: 'center', fontSize: '12px', fontWeight: 700, color: row.lfc ? TEAL : BLACK }}>{row.pts}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </aside>
-
     </div>
   )
 }

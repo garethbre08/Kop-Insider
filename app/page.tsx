@@ -1,9 +1,9 @@
 import { getLatestArticles, getFeaturedArticle, getOpinionArticles } from '@/lib/articles'
 import { getPremierLeagueTable, getAllLiverpoolFixtures, getLiverpoolLiveScore } from '@/lib/football'
-import { getArticleImages } from '@/lib/images'
 import Link from 'next/link'
 import MobileTabs from '@/components/MobileTabs'
 import LiveScoreBar from '@/components/LiveScoreBar'
+import Sidebar from '@/components/Sidebar'
 
 function timeAgo(dateString: string): string {
   const now = new Date()
@@ -29,9 +29,6 @@ export default async function Home() {
   ])
   const opinionArticle = opinionArticles[0] || null
 
-  const allArticles = [featuredArticle, ...latestArticles, ...opinionArticles].filter(Boolean)
-  const imageMap = await getArticleImages(allArticles)
-
   return (
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
       <LiveScoreBar liveScore={liveScore} />
@@ -48,11 +45,13 @@ export default async function Home() {
               {featuredArticle && (
                 <Link href={`/article/${featuredArticle.id}`} style={{ textDecoration: 'none', display: 'block', marginBottom: '16px' }}>
                   <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }}>
-                    <div style={{ backgroundColor: '#E7DFC9', height: '220px', width: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {imageMap[featuredArticle.id] ? (
-                        <img src={imageMap[featuredArticle.id]} alt={featuredArticle.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{ width: '100%', height: '220px', overflow: 'hidden', borderRadius: '12px 12px 0 0' }}>
+                      {featuredArticle.image_url && featuredArticle.image_url.length > 0 ? (
+                        <img src={featuredArticle.image_url} alt={featuredArticle.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                       ) : (
-                        <span style={{ color: '#01586B', opacity: 0.2, fontSize: '28px', fontWeight: 700 }}>KOP INSIDER</span>
+                        <div style={{ backgroundColor: '#E7DFC9', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <span style={{ color: '#01586B', opacity: 0.2, fontSize: '20px', fontWeight: 700 }}>KOP INSIDER</span>
+                        </div>
                       )}
                     </div>
                     <div style={{ padding: '20px' }}>
@@ -78,9 +77,11 @@ export default async function Home() {
                 {latestArticles.slice(0, 2).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
                     <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%' }}>
-                      <div style={{ backgroundColor: '#E7DFC9', height: '150px', width: '100%', overflow: 'hidden' }}>
-                        {imageMap[article.id] && (
-                          <img src={imageMap[article.id]} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <div style={{ width: '100%', height: '160px', overflow: 'hidden' }}>
+                        {article.image_url && article.image_url.length > 0 ? (
+                          <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        ) : (
+                          <div style={{ backgroundColor: '#E7DFC9', width: '100%', height: '100%' }} />
                         )}
                       </div>
                       <div style={{ padding: '16px' }}>
@@ -104,9 +105,11 @@ export default async function Home() {
                 {latestArticles.slice(2, 5).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
                     <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%' }}>
-                      <div style={{ backgroundColor: '#E7DFC9', height: '100px', width: '100%', overflow: 'hidden' }}>
-                        {imageMap[article.id] && (
-                          <img src={imageMap[article.id]} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <div style={{ width: '100%', height: '110px', overflow: 'hidden' }}>
+                        {article.image_url && article.image_url.length > 0 ? (
+                          <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        ) : (
+                          <div style={{ backgroundColor: '#E7DFC9', width: '100%', height: '100%' }} />
                         )}
                       </div>
                       <div style={{ padding: '12px' }}>
@@ -160,59 +163,8 @@ export default async function Home() {
           </div>
 
           {/* RIGHT SIDEBAR — hidden below 1024px, replaced by MobileTabs Table/Fixtures tabs */}
-          <div className="ki-desktop-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'sticky', top: '24px' }}>
-
-            {/* LEAGUE TABLE */}
-            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px' }}>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: '#111', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9' }}>
-                Premier League Table
-              </div>
-              {tableData.length === 0 ? (
-                <p style={{ fontSize: '13px', color: '#333', opacity: 0.5 }}>Table unavailable</p>
-              ) : (
-                <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', fontSize: '10px', color: '#333', opacity: 0.5, marginBottom: '6px', padding: '0 4px' }}>
-                    <span>#</span><span>Team</span><span style={{ textAlign: 'right' }}>P</span><span style={{ textAlign: 'right' }}>GD</span><span style={{ textAlign: 'right' }}>Pts</span>
-                  </div>
-                  {tableData.slice(0, 5).map((row) => (
-                    <div key={row.pos} style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', alignItems: 'center', padding: '6px 4px', borderRadius: '6px', backgroundColor: row.lfc ? '#F3EEDD' : 'transparent', marginBottom: '2px' }}>
-                      <span style={{ fontSize: '12px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#01586B' : '#333', opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</span>
-                      <span style={{ fontSize: '13px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#01586B' : '#111' }}>{row.shortName || row.team}</span>
-                      <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.p}</span>
-                      <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.gd}</span>
-                      <span style={{ fontSize: '13px', fontWeight: 700, textAlign: 'right', color: row.lfc ? '#01586B' : '#111' }}>{row.pts}</span>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-
-            {/* FIXTURES */}
-            <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px' }}>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: '#111', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9' }}>
-                Next Fixtures
-              </div>
-              {fixtures.length === 0 ? (
-                <p style={{ fontSize: '13px', color: '#333', opacity: 0.5 }}>Fixtures unavailable</p>
-              ) : (
-                fixtures.map((fixture, i) => (
-                  <div key={fixture.id ?? i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < fixtures.length - 1 ? '1px solid #F3EEDD' : 'none' }}>
-                    <div>
-                      <div style={{ fontSize: '13px', fontWeight: 600, color: '#111' }}>
-                        {fixture.isHome ? `Liverpool vs ${fixture.opponent}` : `${fixture.opponent} vs Liverpool`}
-                      </div>
-                      <div style={{ fontSize: '10px', color: '#333', opacity: 0.5, marginTop: '2px' }}>
-                        {fixture.date} · {fixture.time} · {(fixture as any).competitionLabel}
-                      </div>
-                    </div>
-                    <span style={{ fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#E7DFC9' : '#333', color: fixture.isHome ? '#01586B' : '#fff' }}>
-                      {fixture.isHome ? 'Home' : 'Away'}
-                    </span>
-                  </div>
-                ))
-              )}
-            </div>
-
+          <div className="ki-desktop-sidebar">
+            <Sidebar />
           </div>
         </div>
       </div>

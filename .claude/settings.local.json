@@ -6,7 +6,10 @@
       "Skill(claude-api)",
       "Skill(claude-api:*)",
       "Bash(npx tsc:*)",
-      "Bash(taskkill //PID 16908 //F)"
+      "Bash(taskkill //PID 16908 //F)",
+      "Bash(npx tsx -e ':*)",
+      "Bash(npx tsx --env-file=.env.local -e ':*)",
+      "Bash(node -e ':*)"
     ]
   }
 }

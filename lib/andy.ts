@@ -88,13 +88,13 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
       excerpt: parsed.excerpt,
       content: parsed.content,
       category: parsed.category as ArticleCategory,
-      is_opinion: parsed.is_opinion,
-      is_featured: params.isFeatured ?? parsed.is_featured ?? false,
+      is_opinion: parsed.category === 'opinion' || parsed.is_opinion === true,
+      is_featured: params.isFeatured || false,
       source_journalist: params.sourceJournalist,
       source_outlet: params.sourceOutlet,
       source_url: params.sourceUrl,
       image_url: null,
-      match_related: params.articleType === "match-reaction",
+      match_related: false,
     });
 
     console.log(`[Andy Anfield] Article generated: "${parsed.title}"`);

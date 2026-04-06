@@ -592,3 +592,40 @@ p  { font-family: var(--font-body);    font-size: 16px; font-weight: 400; line-h
     font-size: 12px;
   }
 }
+
+/* ─── Honours Section ────────────────────────────────────────────────────── */
+
+.ki-honour-card {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.ki-honour-card:hover {
+  transform: translateY(-4px);
+  background-color: #222222 !important;
+}
+
+.ki-honour-number {
+  transition: color 0.2s ease;
+}
+
+.ki-honour-card:hover .ki-honour-number {
+  color: #007F75 !important;
+}
+
+@media (max-width: 768px) {
+  .ki-honour-card {
+    padding: 24px 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .ki-honours-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ki-honours-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

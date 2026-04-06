@@ -48,11 +48,6 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* SUBSCRIBE — hidden on small screens */}
-            <button style={{ backgroundColor: '#fff', color: bg, border: 'none', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }} className="ki-subscribe-btn">
-              Subscribe
-            </button>
-
             {/* HAMBURGER */}
             <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '5px', padding: '4px' }} className="ki-hamburger">
               <span style={{ display: 'block', width: '22px', height: '2px', backgroundColor: '#fff', transition: 'all 0.2s', transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
@@ -72,11 +67,6 @@ export default function Navbar() {
                 </div>
               </Link>
             ))}
-            <div style={{ padding: '16px 24px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-              <button style={{ backgroundColor: '#fff', color: bg, border: 'none', padding: '10px 20px', borderRadius: '20px', fontSize: '14px', fontWeight: 600, cursor: 'pointer', width: '100%' }}>
-                Subscribe
-              </button>
-            </div>
           </div>
         )}
       </nav>
@@ -87,7 +77,6 @@ export default function Navbar() {
         }
         @media (max-width: 768px) {
           .ki-nav-desktop { display: none !important; }
-          .ki-subscribe-btn { display: none !important; }
         }
       `}</style>
     </>

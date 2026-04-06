@@ -20,8 +20,45 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Kop Insider — Liverpool FC News",
-  description: "The latest Liverpool FC news, opinion, transfer talk and match analysis from Kop Insider.",
+  metadataBase: new URL('https://kopinsider.com'),
+  title: {
+    default: 'Kop Insider — Liverpool FC News',
+    template: '%s | Kop Insider',
+  },
+  description: 'The latest Liverpool FC news, transfer talk, injury updates and opinion from Andy Anfield — Kop Insider AI Reporter.',
+  keywords: ['Liverpool FC', 'LFC', 'Liverpool news', 'Premier League', 'Anfield', 'transfer news', 'injury updates'],
+  authors: [{ name: 'Andy Anfield' }],
+  creator: 'Kop Insider',
+  openGraph: {
+    type: 'website',
+    locale: 'en_GB',
+    url: 'https://kopinsider.com',
+    siteName: 'Kop Insider',
+    title: 'Kop Insider — Liverpool FC News',
+    description: 'The latest Liverpool FC news, transfer talk, injury updates and opinion from Andy Anfield.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Kop Insider — Liverpool FC News',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kop Insider — Liverpool FC News',
+    description: 'The latest Liverpool FC news, transfer talk, injury updates and opinion from Andy Anfield.',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export default function RootLayout({

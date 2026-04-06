@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
 import { getRecentResults, getAllLiverpoolFixtures } from '@/lib/football'
+
+export const metadata: Metadata = {
+  title: 'Match Centre',
+  description: 'Liverpool FC results, upcoming fixtures and live scores across all competitions. Premier League, Champions League, FA Cup and more.',
+}
 import MatchCentreClient from './MatchCentreClient'
 import Sidebar from '@/components/Sidebar'
 

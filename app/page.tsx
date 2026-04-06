@@ -1,4 +1,10 @@
+import type { Metadata } from 'next'
 import { getLatestArticles, getFeaturedArticle, getOpinionArticles } from '@/lib/articles'
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Liverpool FC breaking news, transfer talk, injury updates and Andy Anfield opinion pieces. Updated automatically every 30 minutes.',
+}
 import { getPremierLeagueTable, getAllLiverpoolFixtures, getLiverpoolLiveScore } from '@/lib/football'
 import Link from 'next/link'
 import MobileTabs from '@/components/MobileTabs'

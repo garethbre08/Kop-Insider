@@ -11,10 +11,26 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const article = await getArticleById(id);
-  if (!article) return { title: "Article Not Found — Kop Insider" };
+  if (!article) return { title: 'Article Not Found' };
   return {
-    title: `${article.title} — Kop Insider`,
+    title: article.title,
     description: article.excerpt,
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      type: 'article',
+      publishedTime: article.created_at,
+      authors: ['Andy Anfield'],
+      images: article.image_url
+        ? [{ url: article.image_url, width: 1200, height: 630, alt: article.title }]
+        : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt,
+      images: article.image_url ? [article.image_url] : [],
+    },
   };
 }
 

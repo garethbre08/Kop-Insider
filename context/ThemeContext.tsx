@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 
-type Theme = "away" | "home";
+type Theme = "home" | "home";
 
 interface ThemeContextValue {
   theme: Theme;
@@ -10,12 +10,12 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: "away",
+  theme: "home",
   setTheme: () => {},
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("away");
+  const [theme, setTheme] = useState<Theme>("home");
 
   useEffect(() => {
     document.body.dataset.theme = theme;

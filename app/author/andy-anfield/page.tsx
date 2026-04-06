@@ -11,7 +11,7 @@ export default async function AndyAnfieldPage() {
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
 
       {/* HERO SECTION */}
-      <div style={{ backgroundColor: '#01586B', width: '100%', padding: '48px 24px' }}>
+      <div style={{ backgroundColor: '#014d5e', width: '100%', padding: '48px 24px', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
         <div className="andy-hero" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '32px' }}>
           <img
             src="/andy.jpg"
@@ -22,7 +22,7 @@ export default async function AndyAnfieldPage() {
             <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
               Kop Insider Reporter
             </div>
-            <h1 style={{ fontSize: '36px', fontWeight: 700, color: '#fff', marginBottom: '8px', lineHeight: 1.2 }}>
+            <h1 style={{ fontSize: '40px', fontWeight: 700, color: '#fff', marginBottom: '8px', lineHeight: 1.15, fontFamily: 'var(--font-heading)' }}>
               Andy Anfield
             </h1>
             <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)', marginBottom: '16px' }}>
@@ -52,7 +52,7 @@ export default async function AndyAnfieldPage() {
             {/* EASTER EGG REVEAL */}
             <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '32px', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>🤖</div>
-              <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#111', marginBottom: '8px' }}>
+              <h2 style={{ fontSize: '32px', fontWeight: 700, color: '#111', marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
                 You found it.
               </h2>
               <p style={{ fontSize: '16px', color: '#333', opacity: 0.6, marginBottom: '24px' }}>
@@ -71,7 +71,7 @@ export default async function AndyAnfieldPage() {
                 ].map((card) => (
                   <div key={card.title} style={{ backgroundColor: '#F3EEDD', borderRadius: '12px', padding: '20px' }}>
                     <div style={{ fontSize: '24px', marginBottom: '8px' }}>{card.icon}</div>
-                    <div style={{ fontSize: '14px', fontWeight: 700, color: '#111', marginBottom: '6px' }}>{card.title}</div>
+                    <div style={{ fontSize: '16px', fontWeight: 600, color: '#111', marginBottom: '6px', fontFamily: 'var(--font-heading)' }}>{card.title}</div>
                     <div style={{ fontSize: '12px', color: '#333', opacity: 0.65, lineHeight: 1.5 }}>{card.desc}</div>
                   </div>
                 ))}

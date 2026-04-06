@@ -9,7 +9,9 @@
       "Bash(taskkill //PID 16908 //F)",
       "Bash(npx tsx -e ':*)",
       "Bash(npx tsx --env-file=.env.local -e ':*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(xargs sed:*)",
+      "Bash(grep -n \"borderLeft.*007F75\" app/opinion/page.tsx app/transfer-talk/page.tsx app/injuries/page.tsx app/author/andy-anfield/page.tsx app/article/[id]/ArticlePageClient.tsx app/page.tsx)"
     ]
   }
 }

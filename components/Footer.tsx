@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="ki-footer-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', marginBottom: '40px' }}>
 
           <div>
-            <div style={{ color: '#fff', fontWeight: 700, fontSize: '18px', marginBottom: '12px' }}>Kop Insider</div>
+            <div style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontWeight: 700, fontSize: '20px', marginBottom: '12px' }}>Kop Insider</div>
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '13px', lineHeight: 1.6, marginBottom: '12px' }}>
               The truth about Liverpool, told by someone who actually cares.
             </div>
@@ -22,7 +22,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <div style={{ color: '#fff', fontWeight: 600, fontSize: '14px', marginBottom: '16px' }}>Navigation</div>
+            <div style={{ color: '#fff', fontWeight: 600, fontSize: '14px', marginBottom: '16px', fontFamily: 'var(--font-heading)' }}>Navigation</div>
             {[
               { label: 'Home',          href: '/'             },
               { label: 'Match Centre',  href: '/match-centre' },
@@ -39,7 +39,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <div style={{ color: '#fff', fontWeight: 600, fontSize: '14px', marginBottom: '16px' }}>Follow Us</div>
+            <div style={{ color: '#fff', fontWeight: 600, fontSize: '14px', marginBottom: '16px', fontFamily: 'var(--font-heading)' }}>Follow Us</div>
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '13px', marginBottom: '10px', cursor: 'pointer' }}>
               X / Twitter
             </div>
@@ -51,10 +51,10 @@ export default function Footer() {
         </div>
 
         <div className="ki-footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px' }}>
+          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
             © 2025 Kop Insider. All rights reserved.
           </span>
-          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px' }}>
+          <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
             Built for Reds. By Reds.
           </span>
         </div>

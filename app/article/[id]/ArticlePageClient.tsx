@@ -50,16 +50,16 @@ export default function ArticlePageClient({ article, related, sidebar }: Props) 
       <header className="bg-ki-white mt-4">
         <div style={{ maxWidth: "896px", margin: "0 auto", padding: "40px 24px" }} className="flex flex-col gap-5">
           <span className={`ki-tag ${accentText}`}>{formatCategory(article.category)}</span>
-          <h1 className="text-ki-black font-bold text-3xl sm:text-4xl leading-tight max-w-3xl">
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: 700, color: '#111', lineHeight: 1.2, maxWidth: '720px' }}>
             {article.title}
           </h1>
-          <p className="text-ki-charcoal text-xl max-w-2xl opacity-70 leading-relaxed">
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', color: '#333', opacity: 0.65, lineHeight: 1.7, maxWidth: '640px' }}>
             {article.excerpt}
           </p>
           <div className="flex items-center gap-3 pt-2 border-t border-ki-sand">
             <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover', display: 'block' }} />
             <div className="flex flex-col">
-              <Link href="/author/andy-anfield" className={`font-semibold text-sm ${accentText} hover:underline`}>
+              <Link href="/author/andy-anfield" style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '14px', color: isHome ? '#C8102E' : '#01586B', textDecoration: 'none' }}>
                 Andy Anfield
               </Link>
               <span className="ki-meta">Kop Insider Reporter</span>
@@ -89,8 +89,8 @@ export default function ArticlePageClient({ article, related, sidebar }: Props) 
           <div className="ki-main">
 
             {firstParagraph && (
-              <p className="text-ki-charcoal text-lg leading-relaxed max-w-2xl mb-6">
-                <span className={`text-6xl font-bold ${accentText} float-left leading-none mr-3 mt-1`}>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', color: '#333', lineHeight: 1.8, maxWidth: '680px', marginBottom: '24px' }}>
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '64px', fontWeight: 700, color: isHome ? '#C8102E' : '#01586B', float: 'left', lineHeight: 1, marginRight: '12px', marginTop: '4px' }}>
                   {dropCapChar}
                 </span>
                 {dropCapRest}
@@ -98,7 +98,7 @@ export default function ArticlePageClient({ article, related, sidebar }: Props) 
             )}
 
             {restParagraphs.map((para, i) => (
-              <p key={i} className="text-ki-charcoal text-lg leading-relaxed max-w-2xl mb-6">
+              <p key={i} style={{ fontFamily: 'var(--font-body)', fontSize: '18px', color: '#333', lineHeight: 1.8, maxWidth: '680px', marginBottom: '24px' }}>
                 {para}
               </p>
             ))}
@@ -121,8 +121,8 @@ export default function ArticlePageClient({ article, related, sidebar }: Props) 
 
             {/* Source credit */}
             <div className={`bg-ki-cream border-l-4 ${accentBorder} p-6 rounded-r-xl mt-8 flex flex-col gap-3`}>
-              <p className="text-ki-black font-bold text-sm">Source &amp; Credits</p>
-              <p className="text-ki-charcoal text-sm leading-relaxed">
+              <p style={{ fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: '14px', color: '#111' }}>Source &amp; Credits</p>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#333', lineHeight: 1.6 }}>
                 This article was written by Andy Anfield, Kop Insider AI Reporter, informed by reporting from{" "}
                 <span className="font-semibold text-ki-black">{article.source_journalist}</span> at{" "}
                 <span className="font-semibold text-ki-black">{article.source_outlet}</span>.

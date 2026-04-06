@@ -27,7 +27,7 @@ export default function OpinionStrip({ article }: OpinionStripProps = {}) {
 
       <span className={`text-xs font-bold tracking-widest uppercase ${accentText}`}>Opinion</span>
 
-      <h2 className="text-ki-black font-bold text-2xl leading-snug" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
+      <h2 className="text-ki-black font-bold text-2xl leading-snug" style={{ fontFamily: 'var(--font-heading)' }}>
         {headline}
       </h2>
 

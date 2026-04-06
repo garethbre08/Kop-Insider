@@ -8,7 +8,7 @@ export default async function Sidebar() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'sticky', top: '24px' }}>
 
       {/* LEAGUE TABLE */}
-      <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px' }}>
+      <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
         <div style={{ fontSize: '14px', fontWeight: 700, color: '#111', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9' }}>
           Premier League Table
         </div>
@@ -27,7 +27,7 @@ export default async function Sidebar() {
       </div>
 
       {/* NEXT FIXTURES */}
-      <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px' }}>
+      <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
         <div style={{ fontSize: '14px', fontWeight: 700, color: '#111', marginBottom: '16px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9' }}>
           Next Fixtures
         </div>

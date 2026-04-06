@@ -1,22 +1,20 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import StatusBar from "@/components/StatusBar";
 import { ThemeProvider } from "@/context/ThemeContext";
 
-const dmSans = DM_Sans({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
 });
 
-const playfair = Playfair_Display({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
   weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -67,10 +65,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
       <body className="text-ki-black min-h-screen flex flex-col w-full overflow-x-hidden">
         <ThemeProvider>
-          <StatusBar />
           <Navbar />
           <main className="flex-1 w-full animate-fade-in">{children}</main>
           <Footer />

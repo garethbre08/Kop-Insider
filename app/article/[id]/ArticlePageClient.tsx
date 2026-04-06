@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import ArticleCard from "@/components/ArticleCard";
+import ShareButtons from "@/components/ShareButtons";
 import { useTheme } from "@/context/ThemeContext";
 import { timeAgo, formatCategory } from "@/lib/utils";
 import type { Article } from "@/lib/database.types";
@@ -106,6 +107,22 @@ export default function ArticlePageClient({ article, related, sidebar }: Props) 
               </p>
             ))}
 
+            {/* Share row */}
+            <div style={{ marginTop: '24px' }}>
+              <ShareButtons
+                title={article.title}
+                url={`https://kopinsider.com/article/${article.id}`}
+              />
+            </div>
+
+            {/* Bottom share strip */}
+            <div style={{ borderTop: '1px solid #E7DFC9', paddingTop: '20px', marginTop: '20px' }}>
+              <ShareButtons
+                title={article.title}
+                url={`https://kopinsider.com/article/${article.id}`}
+              />
+            </div>
+
             {/* Source credit */}
             <div className={`bg-ki-cream border-l-4 ${accentBorder} p-6 rounded-r-xl mt-8 flex flex-col gap-3`}>
               <p className="text-ki-black font-bold text-sm">Source &amp; Credits</p>
@@ -125,23 +142,6 @@ export default function ArticlePageClient({ article, related, sidebar }: Props) 
               <p className="ki-meta border-t border-ki-sand pt-3">
                 Kop Insider always credits original journalism. We report independently — facts inform us, words are our own.
               </p>
-            </div>
-
-            {/* Share row */}
-            <div className="flex items-center gap-4 mt-6 flex-wrap">
-              <span className="ki-meta">Share this article</span>
-              <button className={`bg-ki-sand ${accentText} rounded-full px-4 py-2 text-sm font-semibold flex items-center gap-2 hover:opacity-80 transition-opacity`}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-                Share on X
-              </button>
-              <button className={`bg-ki-sand ${accentText} rounded-full px-4 py-2 text-sm font-semibold flex items-center gap-2 hover:opacity-80 transition-opacity`}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                Copy link
-              </button>
             </div>
 
           </div>

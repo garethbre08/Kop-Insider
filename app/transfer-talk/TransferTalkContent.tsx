@@ -43,15 +43,6 @@ function PlaceholderImage({ className = "" }: { className?: string }) {
   );
 }
 
-function Avatar() {
-  return (
-    <div className="ki-avatar">
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-ki-charcoal opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-      </svg>
-    </div>
-  );
-}
 
 export default function TransferTalkContent({ sidebar }: { sidebar: React.ReactNode }) {
   const [transferArticles, setTransferArticles] = useState<Article[]>([]);
@@ -161,7 +152,7 @@ export default function TransferTalkContent({ sidebar }: { sidebar: React.ReactN
               </p>
               <div className="ki-opinion-footer flex-wrap gap-4">
                 <div className="flex items-center gap-3">
-                  <Avatar />
+                  <img src="/andy.jpg" alt="Andy Anfield — Kop Insider Reporter" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', display: 'block' }} />
                   <div>
                     <p className="text-ki-black font-semibold text-sm">Andy Anfield</p>
                     <p className="text-ki-charcoal text-sm opacity-50">Kop Insider Reporter</p>

@@ -15,17 +15,6 @@ const featuredOpinion = {
   date: "2 hours ago",
 };
 
-function Avatar({ size = "sm" }: { size?: "sm" | "lg" }) {
-  const dim  = size === "lg" ? "h-20 w-20" : "h-10 w-10";
-  const icon = size === "lg" ? "h-9 w-9"  : "h-5 w-5";
-  return (
-    <div className={`${dim} rounded-full bg-ki-sand flex items-center justify-center shrink-0`}>
-      <svg xmlns="http://www.w3.org/2000/svg" className={`${icon} text-ki-charcoal opacity-40`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-      </svg>
-    </div>
-  );
-}
 
 export default function OpinionContent({ sidebar }: { sidebar: React.ReactNode }) {
   const { theme } = useTheme();
@@ -58,7 +47,7 @@ export default function OpinionContent({ sidebar }: { sidebar: React.ReactNode }
           <div className="ki-main">
 
             <div className={`ki-card border-l-4 ${isHome ? "border-ki-red" : "border-ki-teal"} p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5`}>
-              <Avatar size="lg" />
+              <img src="/andy.jpg" alt="Andy Anfield — Kop Insider Reporter" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', display: 'block' }} />
               <div className="flex flex-col gap-1.5 flex-1 min-w-0">
                 <span className={`text-xs font-bold tracking-widest ${accentText}`}>KOP INSIDER OPINION</span>
                 <h2 className="text-ki-black font-bold text-3xl leading-tight">Andy Anfield</h2>
@@ -108,7 +97,7 @@ export default function OpinionContent({ sidebar }: { sidebar: React.ReactNode }
                 <p className="ki-excerpt">{opinionArticles[0]?.excerpt || featuredOpinion.excerpt}</p>
                 <div className="flex items-center justify-between flex-wrap gap-4 pt-2 border-t border-ki-sand">
                   <div className="flex items-center gap-3">
-                    <Avatar size="sm" />
+                    <img src="/andy.jpg" alt="Andy Anfield — Kop Insider Reporter" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', display: 'block' }} />
                     <div>
                       <p className="text-ki-black font-semibold text-sm">Andy Anfield</p>
                       <p className="ki-meta">{featuredOpinion.date}</p>
@@ -155,7 +144,7 @@ export default function OpinionContent({ sidebar }: { sidebar: React.ReactNode }
                         <h3 className="ki-headline-small">{article.title}</h3>
                         <p className="ki-excerpt line-clamp-2">{article.excerpt}</p>
                         <div className="flex items-center gap-2 mt-auto pt-2">
-                          <Avatar size="sm" />
+                          <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover', display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }} />
                           <div>
                             <p className="text-ki-black text-xs font-semibold">Andy Anfield</p>
                             <p className="ki-meta">{timeAgo(article.created_at)}</p>

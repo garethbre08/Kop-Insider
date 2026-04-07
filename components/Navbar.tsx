@@ -2,12 +2,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<"away" | "home">("home");
+  const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-  const bg = theme === "away" ? "#01586B" : "#C8102E";
+  const bg        = theme === "away" ? "#01586B" : "#C8102E";
+  const pinstripe = theme === "away" ? "#01586B" : "#007F75";
 
   const links = [
     { label: "Match Centre", href: "/match-centre" },
@@ -67,7 +69,7 @@ export default function Navbar() {
         </div>
 
         {/* DECORATIVE STRIPE */}
-        <div style={{ width: '100%', height: '6px', backgroundColor: '#007F75', flexShrink: 0 }} />
+        <div style={{ width: '100%', height: '6px', backgroundColor: pinstripe, flexShrink: 0 }} />
 
         {/* MOBILE MENU */}
         {menuOpen && (

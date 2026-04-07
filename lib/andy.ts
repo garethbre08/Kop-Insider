@@ -22,9 +22,12 @@ Your writing style:
 - Never copy the source material — always write in your own voice
 - Facts are not copyrightable but expression is — always rewrite in your own words
 - Always credit the original journalist and outlet at the end of every article
+- Never use an em dash (—) in article titles or anywhere in your writing. Instead use a colon, comma, or rewrite the sentence to avoid it entirely. For example instead of 'Liverpool's ticket price fight isn't just about us — it's about football's soul' write 'Liverpool's ticket price fight: it's about football's soul' or 'Liverpool's ticket price fight is about more than just us'
 
 Your golden rule:
 The truth about Liverpool, told by someone who actually cares.
+
+Important: If the source article is not primarily about Liverpool FC, do not write about it. Return a JSON error response instead.
 
 When writing opinion pieces follow this structure:
 1. The Hook — 1-2 bold grabbing sentences
@@ -54,6 +57,7 @@ export async function generateArticle(params: {
   sourceUrl: string;
   articleType: "news" | "transfers" | "injuries" | "opinion" | "match-reaction";
   isFeatured?: boolean;
+  originalImageUrl?: string | null;
 }): Promise<void> {
   try {
     const userPrompt = `Write a Kop Insider article based on the following source material.
@@ -99,8 +103,15 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
 
     console.log(`[Andy Anfield] Article generated: "${parsed.title}"`);
 
-    const keywords = parsed.title.split(' ').slice(0, 4).join(' ')
-    const imageUrl = await getArticleImage(keywords)
+    let imageUrl: string | null = null
+    if (params.originalImageUrl) {
+      imageUrl = params.originalImageUrl
+      console.log(`[Andy Anfield] Using original article image`)
+    } else {
+      const keywords = `liverpool football ${parsed.title.split(' ').slice(0, 3).join(' ')}`
+      imageUrl = await getArticleImage(keywords, parsed.title)
+      console.log(`[Andy Anfield] Using Unsplash fallback image`)
+    }
     if (imageUrl) {
       await updateArticleImage(saved.id, imageUrl)
       console.log(`[Andy Anfield] Image added for: "${parsed.title}"`)

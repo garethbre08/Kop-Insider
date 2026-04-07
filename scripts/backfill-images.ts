@@ -7,18 +7,23 @@ const supabase = createClient(
 
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY
 
-async function getImage(query: string): Promise<string | null> {
+async function getImage(query: string, seed?: string): Promise<string | null> {
   const queries = [
     `liverpool football ${query}`,
-    `liverpool fc anfield`,
-    `premier league football`,
+    `liverpool fc anfield stadium`,
+    `premier league football match`,
   ]
+
+  const seedNumber = seed
+    ? seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    : Math.floor(Math.random() * 10)
+
+  const page = (seedNumber % 8) + 1
 
   for (const searchQuery of queries) {
     const encoded = encodeURIComponent(searchQuery)
-    const randomPage = Math.floor(Math.random() * 3) + 1
     const res = await fetch(
-      `https://api.unsplash.com/search/photos?query=${encoded}&per_page=10&page=${randomPage}&orientation=landscape`,
+      `https://api.unsplash.com/search/photos?query=${encoded}&per_page=10&page=${page}&orientation=landscape`,
       {
         headers: {
           Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
@@ -31,8 +36,8 @@ async function getImage(query: string): Promise<string | null> {
     }
     const data = await res.json()
     if (data.results && data.results.length > 0) {
-      const randomIndex = Math.floor(Math.random() * data.results.length)
-      return data.results[randomIndex].urls.regular
+      const index = seedNumber % data.results.length
+      return data.results[index].urls.regular
     }
   }
   return null
@@ -56,13 +61,44 @@ async function backfillImages() {
   }
 
   console.log(`Found ${articles.length} total articles`)
-  const needsImage = articles.filter(a => !a.image_url)
+
+  // Find duplicate image URLs
+  const imageUrlCounts: Record<string, number> = {}
+  articles.forEach(a => {
+    if (a.image_url) {
+      imageUrlCounts[a.image_url] = (imageUrlCounts[a.image_url] || 0) + 1
+    }
+  })
+
+  const duplicateUrls = Object.entries(imageUrlCounts)
+    .filter(([_, count]) => count > 1)
+    .map(([url]) => url)
+
+  console.log(`Found ${duplicateUrls.length} duplicate image URLs`)
+
+  // Reset duplicate images
+  for (const article of articles) {
+    if (article.image_url && duplicateUrls.includes(article.image_url)) {
+      await supabase
+        .from('articles')
+        .update({ image_url: null })
+        .eq('id', article.id)
+      console.log(`Reset duplicate image for: ${article.title}`)
+    }
+  }
+
+  // Refetch images for articles with no image
+  const { data: needsImageArticles } = await supabase
+    .from('articles')
+    .select('id, title, category, image_url')
+
+  const needsImage = needsImageArticles?.filter(a => !a.image_url) || []
   console.log(`${needsImage.length} articles need images`)
 
   for (const article of needsImage) {
     console.log(`Processing: ${article.title}`)
     const keywords = `${article.category} ${article.title.split(' ').slice(0, 3).join(' ')}`
-    const image = await getImage(keywords)
+    const image = await getImage(keywords, article.title)
 
     if (image) {
       const { error: updateError } = await supabase

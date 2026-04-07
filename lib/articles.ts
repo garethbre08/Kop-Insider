@@ -13,16 +13,24 @@ export async function getLatestArticles(limit: number): Promise<Article[]> {
 }
 
 export async function getFeaturedArticle(): Promise<Article | null> {
-  const { data, error } = await supabase
-    .from("articles")
-    .select("*")
-    .eq("is_featured", true)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single()
 
-  if (error && error.code !== "PGRST116") throw error;
-  return data ?? null;
+    if (error) {
+      console.error('getFeaturedArticle error:', error)
+      return null
+    }
+
+    return data
+  } catch (error) {
+    console.error('getFeaturedArticle exception:', error)
+    return null
+  }
 }
 
 export async function getArticlesByCategory(

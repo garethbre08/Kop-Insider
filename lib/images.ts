@@ -4,15 +4,20 @@ export async function getArticleImage(query: string, seed?: string): Promise<str
   try {
     const queries = [
       `liverpool football ${query}`,
-      `liverpool fc anfield`,
-      `premier league football`,
+      `liverpool fc anfield stadium`,
+      `premier league football match`
     ]
+
+    const seedNumber = seed
+      ? seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      : Math.floor(Math.random() * 10)
+
+    const page = (seedNumber % 8) + 1
 
     for (const searchQuery of queries) {
       const encoded = encodeURIComponent(searchQuery)
-      const randomPage = Math.floor(Math.random() * 5) + 1
       const res = await fetch(
-        `https://api.unsplash.com/search/photos?query=${encoded}&per_page=10&page=${randomPage}&orientation=landscape`,
+        `https://api.unsplash.com/search/photos?query=${encoded}&per_page=10&page=${page}&orientation=landscape`,
         {
           headers: {
             Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
@@ -23,8 +28,8 @@ export async function getArticleImage(query: string, seed?: string): Promise<str
       if (!res.ok) continue
       const data = await res.json()
       if (data.results && data.results.length > 0) {
-        const randomIndex = Math.floor(Math.random() * data.results.length)
-        return data.results[randomIndex].urls.regular
+        const index = seedNumber % data.results.length
+        return data.results[index].urls.regular
       }
     }
     return null

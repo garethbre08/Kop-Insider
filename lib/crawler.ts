@@ -6,12 +6,6 @@ const parser = new RSSParser();
 
 const SOURCES = [
   {
-    journalist: "James Pearce",
-    outlet: "The Athletic",
-    rssUrl: "https://theathletic.com/author/james-pearce/feed/",
-    twitterHandle: "JamesPearceLFC",
-  },
-  {
     journalist: "Ian Doyle",
     outlet: "Liverpool Echo",
     rssUrl: "https://www.liverpoolecho.co.uk/sport/football/football-news/?service=rss",
@@ -24,20 +18,38 @@ const SOURCES = [
     twitterHandle: "ptgorst",
   },
   {
-    journalist: "Paul Joyce",
-    outlet: "The Times",
-    rssUrl: "https://www.thetimes.co.uk/sport/football/premier-league/liverpool/?format=rss",
-    twitterHandle: "_pauljoyce",
+    journalist: "Liverpool Echo",
+    outlet: "Liverpool Echo",
+    rssUrl: "https://www.liverpoolecho.co.uk/sport/football/football-news/?service=rss",
+    twitterHandle: "LivEchoLFC",
   },
   {
-    journalist: "Simon Hughes",
-    outlet: "The Athletic",
-    rssUrl: "https://theathletic.com/author/simon-hughes/feed/",
-    twitterHandle: "simon_hughes__",
+    journalist: "Sky Sports",
+    outlet: "Sky Sports",
+    rssUrl: "https://www.skysports.com/rss/12040",
+    twitterHandle: "SkySportsLFC",
+  },
+  {
+    journalist: "BBC Sport",
+    outlet: "BBC Sport",
+    rssUrl: "https://feeds.bbci.co.uk/sport/football/teams/liverpool/rss.xml",
+    twitterHandle: "BBCSport",
+  },
+  {
+    journalist: "Dominic King",
+    outlet: "Daily Mail",
+    rssUrl: "https://www.dailymail.co.uk/sport/football/index.rss",
+    twitterHandle: "DominicKing_DM",
   },
 ];
 
-const LIVERPOOL_KEYWORDS = ["liverpool", "lfc", "anfield", "slot", "reds"];
+const PRIMARY_KEYWORDS = [
+  "Liverpool",
+  "LFC",
+  "Anfield",
+  "Arne Slot",
+  "the Reds",
+];
 
 const TRANSFER_KEYWORDS = ["transfer", "signing", "bid", "deal", "window"];
 const INJURY_KEYWORDS = ["injury", "injured", "out", "return", "fitness"];
@@ -50,7 +62,33 @@ type CrawledItem = {
   content: string;
   link: string;
   pubDate: string;
+  imageUrl: string | null;
 };
+
+function extractImageFromFeedItem(item: any): string | null {
+  try {
+    if (item.enclosure?.url && item.enclosure.url.match(/\.(jpg|jpeg|png|webp)/i)) {
+      return item.enclosure.url;
+    }
+    if (item['media:content']?.['$']?.url) {
+      return item['media:content']['$'].url;
+    }
+    if (item['media:thumbnail']?.['$']?.url) {
+      return item['media:thumbnail']['$'].url;
+    }
+    if (item.content) {
+      const imgMatch = item.content.match(/<img[^>]+src=["']([^"']+)["']/i);
+      if (imgMatch) return imgMatch[1];
+    }
+    if (item.contentSnippet) {
+      const imgMatch = item.contentSnippet.match(/https?:\/\/[^\s]+\.(jpg|jpeg|png|webp)/i);
+      if (imgMatch) return imgMatch[0];
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 type Source = (typeof SOURCES)[number];
 
@@ -61,8 +99,15 @@ export async function crawlRSSFeed(source: Source): Promise<CrawledItem[]> {
     const items = (feed.items ?? [])
       .slice(0, 10)
       .filter((item) => {
-        const text = `${item.title ?? ""} ${item.contentSnippet ?? ""} ${item.content ?? ""}`.toLowerCase();
-        return LIVERPOOL_KEYWORDS.some((kw) => text.includes(kw));
+        const isLiverpoolRelated = PRIMARY_KEYWORDS.some((kw) =>
+          item.title?.toLowerCase().includes(kw.toLowerCase()) ||
+          item.contentSnippet?.toLowerCase().includes(kw.toLowerCase()) ||
+          item.content?.toLowerCase().includes(kw.toLowerCase())
+        );
+        if (!isLiverpoolRelated) {
+          console.log(`[Crawler] Skipping non-Liverpool article: ${item.title}`);
+        }
+        return isLiverpoolRelated;
       })
       .slice(0, 3)
       .map((item) => ({
@@ -70,6 +115,7 @@ export async function crawlRSSFeed(source: Source): Promise<CrawledItem[]> {
         content: item.contentSnippet ?? item.content ?? item.summary ?? "",
         link: item.link ?? "",
         pubDate: item.pubDate ?? item.isoDate ?? new Date().toISOString(),
+        imageUrl: extractImageFromFeedItem(item),
       }));
 
     return items;
@@ -143,6 +189,8 @@ export async function runCrawler(): Promise<{
           sourceOutlet: source.outlet,
           sourceUrl: item.link,
           articleType,
+          isFeatured: false,
+          originalImageUrl: item.imageUrl,
         });
         articlesGenerated++;
         console.log(`[Crawler] Article generated successfully`);

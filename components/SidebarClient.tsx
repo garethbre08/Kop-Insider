@@ -10,11 +10,11 @@ export default function SidebarClient({ tableData, fixtures }: Props) {
   const { theme } = useTheme();
   const isHome = theme === 'home';
 
-  const lfcHighlight  = isHome ? 'rgba(243, 238, 221, 0.7)' : 'rgba(1, 86, 107, 0.08)';
-  const homeBadgeBg   = isHome ? '#C8102E' : '#01586B';
-  const awayBadgeBg   = isHome ? '#00A398' : '#01586B';
-  const honourCount   = isHome ? '#C8102E' : '#01586B';
-  const honourTotal   = isHome ? '#C9A227' : '#01586B';
+  const lfcHighlight  = 'rgba(243, 238, 221, 0.7)';
+  const homeBadgeBg   = '#C8102E';
+  const awayBadgeBg   = '#00A398';
+  const honourCount   = isHome ? '#C8102E' : 'rgb(0, 163, 152)';
+  const honourTotal   = '#D4AF37';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'sticky', top: '24px' }}>
@@ -92,7 +92,7 @@ export default function SidebarClient({ tableData, fixtures }: Props) {
           <span style={{ fontSize: '12px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)' }}>
             Total Major Trophies
           </span>
-          <span style={{ fontSize: '22px', fontWeight: 700, color: honourTotal, fontFamily: 'var(--font-heading)' }}>
+          <span style={{ fontSize: '22px', fontWeight: 700, color: honourTotal, fontFamily: 'var(--font-heading)', minWidth: '32px', textAlign: 'right', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
             52
           </span>
         </div>

@@ -32,10 +32,10 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
   const { theme } = useTheme();
   const isHome = theme === 'home';
 
-  const pageBg        = isHome ? '#F5E6C8' : '#F3EEDD';
-  const opinionBorder = isHome ? '#007F75' : '#01586B';
-  const opinionLabel  = isHome ? '#007F75' : '#01586B';
-  const buttonBg      = isHome ? '#C8102E' : '#01586B';
+  const pageBg        = '#F5E6C8';
+  const opinionBorder = isHome ? '#007F75' : '#C8102E';
+  const opinionLabel  = isHome ? '#007F75' : '#C8102E';
+  const buttonBg      = isHome ? '#C8102E' : 'rgb(0, 163, 152)';
 
   return (
     <main style={{ backgroundColor: pageBg, minHeight: '100vh', transition: 'background-color 0.3s ease' }}>

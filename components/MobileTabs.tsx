@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useTheme } from '@/context/ThemeContext'
 
 type Tab = 'articles' | 'table' | 'fixtures'
 
@@ -31,6 +32,8 @@ type Props = {
 
 export default function MobileTabs({ children, tableData, fixtures }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>('articles')
+  const { theme } = useTheme()
+  const teal = theme === 'away' ? 'rgb(0, 163, 152)' : '#01586B'
 
   const tabs = [
     { id: 'articles' as Tab, label: 'News'     },
@@ -58,7 +61,7 @@ export default function MobileTabs({ children, tableData, fixtures }: Props) {
               fontSize: '13px',
               fontWeight: 600,
               transition: 'all 0.2s',
-              backgroundColor: activeTab === tab.id ? '#01586B' : 'transparent',
+              backgroundColor: activeTab === tab.id ? teal : 'transparent',
               color: activeTab === tab.id ? '#fff' : '#333',
             }}
           >
@@ -87,11 +90,11 @@ export default function MobileTabs({ children, tableData, fixtures }: Props) {
               </div>
               {tableRows.map((row) => (
                 <div key={row.pos} style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', alignItems: 'center', padding: '8px 4px', borderRadius: '6px', backgroundColor: row.lfc ? '#F3EEDD' : 'transparent', marginBottom: '2px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#01586B' : '#333', opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</span>
-                  <span style={{ fontSize: '13px', fontWeight: row.lfc ? 700 : 500, color: row.lfc ? '#01586B' : '#111' }}>{row.shortName || row.team}</span>
+                  <span style={{ fontSize: '12px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? teal : '#333', opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</span>
+                  <span style={{ fontSize: '13px', fontWeight: row.lfc ? 700 : 500, color: row.lfc ? teal : '#111' }}>{row.shortName || row.team}</span>
                   <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.p}</span>
                   <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.gd}</span>
-                  <span style={{ fontSize: '13px', fontWeight: 700, textAlign: 'right', color: row.lfc ? '#01586B' : '#111' }}>{row.pts}</span>
+                  <span style={{ fontSize: '13px', fontWeight: 700, textAlign: 'right', color: row.lfc ? teal : '#111' }}>{row.pts}</span>
                 </div>
               ))}
             </>
@@ -118,7 +121,7 @@ export default function MobileTabs({ children, tableData, fixtures }: Props) {
                     {fixture.date} · {fixture.time} · {fixture.competitionLabel}
                   </div>
                 </div>
-                <span style={{ fontSize: '10px', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#E7DFC9' : '#333', color: fixture.isHome ? '#01586B' : '#fff' }}>
+                <span style={{ fontSize: '10px', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#E7DFC9' : '#333', color: fixture.isHome ? teal : '#fff' }}>
                   {fixture.isHome ? 'Home' : 'Away'}
                 </span>
               </div>

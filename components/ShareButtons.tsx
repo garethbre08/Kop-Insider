@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useTheme } from '@/context/ThemeContext'
 
 type Props = {
   title: string
@@ -8,6 +9,8 @@ type Props = {
 
 export default function ShareButtons({ title, url }: Props) {
   const [copied, setCopied] = useState(false)
+  const { theme } = useTheme()
+  const teal = theme === 'away' ? 'rgb(0, 163, 152)' : '#01586B'
 
   const encodedTitle = encodeURIComponent(title)
   const encodedUrl = encodeURIComponent(url)
@@ -58,28 +61,28 @@ export default function ShareButtons({ title, url }: Props) {
 
       <button
         onClick={shareTwitter}
-        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#E7DFC9', color: '#01586B', border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'opacity 0.2s' }}
+        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#E7DFC9', color: teal, border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'opacity 0.2s' }}
       >
         X / Twitter
       </button>
 
       <button
         onClick={shareWhatsApp}
-        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#E7DFC9', color: '#01586B', border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'opacity 0.2s' }}
+        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#E7DFC9', color: teal, border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'opacity 0.2s' }}
       >
         WhatsApp
       </button>
 
       <button
         onClick={shareFacebook}
-        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#E7DFC9', color: '#01586B', border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'opacity 0.2s' }}
+        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#E7DFC9', color: teal, border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'opacity 0.2s' }}
       >
         Facebook
       </button>
 
       <button
         onClick={copyLink}
-        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: copied ? '#01586B' : '#E7DFC9', color: copied ? '#fff' : '#01586B', border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
+        style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: copied ? teal : '#E7DFC9', color: copied ? '#fff' : teal, border: 'none', padding: '8px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
       >
         {copied ? 'Copied!' : 'Copy Link'}
       </button>

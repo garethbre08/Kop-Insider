@@ -137,7 +137,7 @@ body {
 }
 
 body[data-theme="away"] { background-color: var(--color-ki-cream); }
-body[data-theme="home"]  { background-color: var(--color-ki-gold);  }
+body[data-theme="home"]  { background-color: var(--color-ki-cream); }
 
 h1 { font-family: var(--font-heading); font-size: 40px; font-weight: 700; line-height: 1.15; }
 h2 { font-family: var(--font-heading); font-size: 32px; font-weight: 700; line-height: 1.2;  }
@@ -247,11 +247,11 @@ p  { font-family: var(--font-body);    font-size: 16px; font-weight: 400; line-h
 .ki-tag {
   font-family: var(--font-body);
   display: inline-block;
-  background-color: #E7DFC9;
-  color: #01586B;
-  font-size: 10px;
+  background-color: #F3EEDD;
+  color: #C8102E;
+  font-size: 11px;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 4px;
   letter-spacing: 0.8px;
   text-transform: uppercase;

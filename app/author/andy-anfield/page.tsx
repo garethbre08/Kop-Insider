@@ -106,7 +106,7 @@ export default async function AndyAnfieldPage() {
                         )}
                       </div>
                       <div style={{ padding: '16px', flex: 1 }}>
-                        <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                        <span style={{ display: 'inline-block', backgroundColor: 'rgba(243, 238, 221, 0.8)', color: '#C8102E', fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
                           {article.category}
                         </span>
                         <div style={{ fontSize: '15px', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: '8px' }}>

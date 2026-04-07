@@ -17,11 +17,11 @@ export default async function Sidebar() {
         </div>
         {tableData.slice(0, 8).map((row: any) => (
           <div key={row.pos} style={{ display: 'grid', gridTemplateColumns: '24px 1fr 28px 28px 32px', gap: '4px', alignItems: 'center', padding: '6px 4px', paddingLeft: row.lfc ? '10px' : '4px', paddingRight: row.lfc ? '10px' : '4px', marginLeft: row.lfc ? '-4px' : '0', marginRight: row.lfc ? '-4px' : '0', borderRadius: '6px', backgroundColor: row.lfc ? 'rgba(243, 238, 221, 0.7)' : 'transparent', marginBottom: '2px' }}>
-            <span style={{ fontSize: '12px', fontWeight: row.lfc ? 700 : 400, color: row.lfc ? '#C8102E' : '#333', opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</span>
-            <span style={{ fontSize: '13px', fontWeight: row.lfc ? 700 : 500, color: row.lfc ? '#C8102E' : '#111' }}>{row.shortName || row.team}</span>
+            <span style={{ fontSize: '12px', fontWeight: row.lfc ? 700 : 400, color: '#111', opacity: row.lfc ? 1 : 0.5 }}>{row.pos}</span>
+            <span style={{ fontSize: '13px', fontWeight: row.lfc ? 700 : 500, color: '#111' }}>{row.shortName || row.team}</span>
             <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.p}</span>
             <span style={{ fontSize: '12px', textAlign: 'right', color: '#333', opacity: 0.6 }}>{row.gd}</span>
-            <span style={{ fontSize: '13px', fontWeight: 700, textAlign: 'right', color: row.lfc ? '#C8102E' : '#111' }}>{row.pts}</span>
+            <span style={{ fontSize: '13px', fontWeight: 700, textAlign: 'right', color: '#111' }}>{row.pts}</span>
           </div>
         ))}
       </div>
@@ -41,7 +41,7 @@ export default async function Sidebar() {
                 {fixture.date} · {fixture.time} · {fixture.short || fixture.competition}
               </div>
             </div>
-            <span style={{ fontSize: '11px', fontWeight: 700, padding: '5px 12px', borderRadius: '4px', backgroundColor: fixture.isHome ? 'rgba(231, 223, 201, 0.7)' : '#333', color: fixture.isHome ? '#C8102E' : '#fff', whiteSpace: 'nowrap', marginLeft: '8px', fontFamily: 'var(--font-body)', letterSpacing: '0.3px' }}>
+            <span style={{ fontSize: '11px', fontWeight: 700, padding: '5px 12px', borderRadius: '4px', backgroundColor: fixture.isHome ? '#C8102E' : '#00A398', color: '#fff', whiteSpace: 'nowrap', marginLeft: '8px', fontFamily: 'var(--font-body)', letterSpacing: '0.3px' }}>
               {fixture.isHome ? 'Home' : 'Away'}
             </span>
           </div>
@@ -80,7 +80,7 @@ export default async function Sidebar() {
           <span style={{ fontSize: '12px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)' }}>
             Total Major Trophies
           </span>
-          <span style={{ fontSize: '22px', fontWeight: 700, color: '#007F75', fontFamily: 'var(--font-heading)' }}>
+          <span style={{ fontSize: '22px', fontWeight: 700, color: '#C9A227', fontFamily: 'var(--font-heading)' }}>
             52
           </span>
         </div>

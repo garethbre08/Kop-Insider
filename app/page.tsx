@@ -38,11 +38,11 @@ export default async function Home() {
   return (
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
       <LiveScoreBar liveScore={liveScore} />
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 24px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 24px 48px 24px' }}>
         <div className="ki-home-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '40px', alignItems: 'start' }}>
 
           {/* LEFT COLUMN */}
-          <div className="ki-mobile-tabs-wrapper" style={{ marginBottom: '48px' }}>
+          <div className="ki-mobile-tabs-wrapper">
             <MobileTabs tableData={tableData} fixtures={fixtures}>
 
               {/* HERO CARD */}
@@ -59,7 +59,7 @@ export default async function Home() {
                       )}
                     </div>
                     <div style={{ padding: '24px' }}>
-                      <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '12px' }}>
+                      <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '12px' }}>
                         {featuredArticle.category}
                       </span>
                       <div style={{ fontSize: '26px', fontWeight: 700, color: '#111', lineHeight: 1.3, marginBottom: '10px', fontFamily: 'var(--font-heading)' }}>
@@ -79,7 +79,7 @@ export default async function Home() {
               {/* OPINION STRIP */}
               {opinionArticle && (
                 <div style={{ backgroundColor: '#FDFCF8', borderRadius: '12px', borderLeft: '4px solid #007F75', padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#01586B', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '13px', fontWeight: 700, color: '#007F75', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
                     Opinion · Andy Anfield
                   </span>
                   <div style={{ fontSize: '22px', fontWeight: 700, color: '#111', lineHeight: 1.3, fontFamily: 'var(--font-heading)' }}>
@@ -97,7 +97,7 @@ export default async function Home() {
                       </div>
                     </div>
                     <Link href={`/article/${opinionArticle.id}`}>
-                      <button style={{ backgroundColor: '#01586B', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>
+                      <button style={{ backgroundColor: '#C8102E', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>
                         Read Full Article
                       </button>
                     </Link>
@@ -118,7 +118,7 @@ export default async function Home() {
                         )}
                       </div>
                       <div style={{ padding: '16px' }}>
-                        <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                        <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '8px' }}>
                           {article.category}
                         </span>
                         <div style={{ fontSize: '16px', fontWeight: 700, color: '#111', lineHeight: 1.35, marginBottom: '8px' }}>
@@ -146,7 +146,7 @@ export default async function Home() {
                         )}
                       </div>
                       <div style={{ padding: '12px' }}>
-                        <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '6px' }}>
+                        <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '6px' }}>
                           {article.category}
                         </span>
                         <div style={{ fontSize: '14px', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: '6px' }}>
@@ -184,7 +184,7 @@ export default async function Home() {
                           Andy Anfield · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                         </div>
                       </div>
-                      <span style={{ display: 'inline-block', backgroundColor: '#E7DFC9', color: '#01586B', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', flexShrink: 0 }}>
+                      <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', flexShrink: 0 }}>
                         {article.category}
                       </span>
                     </div>

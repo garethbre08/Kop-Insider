@@ -54,7 +54,7 @@ export default async function OpinionPage() {
                     )}
                   </div>
                   <div style={{ padding: '20px' }}>
-                    <span style={{ fontSize: '10px', fontWeight: 700, color: '#01586B', letterSpacing: '1px', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#C8102E', letterSpacing: '1px', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
                       Featured Opinion
                     </span>
                     <div style={{ fontSize: '22px', fontWeight: 700, color: '#111', lineHeight: 1.3, marginBottom: '10px' }}>
@@ -98,7 +98,7 @@ export default async function OpinionPage() {
                           )}
                         </div>
                         <div style={{ padding: '16px' }}>
-                          <span style={{ fontSize: '10px', fontWeight: 700, color: '#01586B', letterSpacing: '1px', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
+                          <span style={{ fontSize: '11px', fontWeight: 700, color: '#C8102E', letterSpacing: '1px', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
                             Opinion
                           </span>
                           <div style={{ fontSize: '15px', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: '8px' }}>

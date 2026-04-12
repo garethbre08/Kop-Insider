@@ -1,16 +1,6 @@
 'use client'
 import { useState } from 'react'
 
-const TEAL     = '#01586B'
-const SAND     = '#E7DFC9'
-const CREAM    = '#F3EEDD'
-const BLACK    = '#111111'
-const CHARCOAL = '#333333'
-const RED      = '#C8102E'
-const WHITE    = '#FFFFFF'
-
-const outcomeBorderColor: Record<string, string> = { W: TEAL, D: SAND, L: RED }
-
 type Result = {
   id: number
   opponent: string
@@ -34,16 +24,6 @@ type Fixture = {
   venue: string
 }
 
-type TableRow = {
-  pos: number
-  team: string
-  shortName?: string
-  p: number
-  gd: string
-  pts: number
-  lfc: boolean
-}
-
 type Props = {
   results: Result[]
   fixtures: Fixture[]
@@ -51,20 +31,6 @@ type Props = {
 
 type Filter = 'All' | 'Premier League' | 'Champions League' | 'FA Cup'
 const FILTERS: Filter[] = ['All', 'Premier League', 'Champions League', 'FA Cup']
-
-function CrestCircle({ variant }: { variant: 'liverpool' | 'opponent' }) {
-  return (
-    <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: variant === 'liverpool' ? TEAL : SAND, flexShrink: 0 }} />
-  )
-}
-
-function CompBadge({ label }: { label: string }) {
-  return (
-    <span style={{ fontSize: '10px', fontWeight: 700, color: CHARCOAL, opacity: 0.5 }}>
-      {label}
-    </span>
-  )
-}
 
 export default function MatchCentreClient({ results, fixtures }: Props) {
   const [activeFilter, setActiveFilter] = useState<Filter>('All')
@@ -78,111 +44,158 @@ export default function MatchCentreClient({ results, fixtures }: Props) {
     : fixtures.filter((f) => f.competition.includes(activeFilter === 'FA Cup' ? 'FA Cup' : activeFilter === 'Champions League' ? 'Champions' : activeFilter))
 
   return (
-    <div className="ki-main">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
 
-      {/* Main */}
-      <div className="ki-main">
+      {/* FILTER PILLS */}
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        {FILTERS.map((filter) => {
+          const isActive = activeFilter === filter
+          return (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '20px',
+                border: isActive ? 'none' : '1.5px solid #E7DFC9',
+                backgroundColor: isActive ? 'var(--ki-accent)' : '#fff',
+                color: isActive ? '#fff' : '#333',
+                fontSize: '13px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontFamily: 'var(--font-body)',
+                transition: 'all 0.2s',
+              }}
+            >
+              {filter}
+            </button>
+          )
+        })}
+      </div>
 
-        {/* Filter Bar */}
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
-          {FILTERS.map((filter) => {
-            const isActive = activeFilter === filter
-            return (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
+      {/* RECENT RESULTS */}
+      <section>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+          <div style={{ width: '3px', height: '20px', backgroundColor: 'var(--ki-accent)', borderRadius: '2px', flexShrink: 0 }} />
+          <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)', margin: 0 }}>
+            Recent Results
+          </h2>
+        </div>
+        {filteredResults.length === 0 ? (
+          <p style={{ fontSize: '13px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)' }}>No results for this competition.</p>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+            {filteredResults.map((result) => (
+              <div
+                key={result.id}
                 style={{
-                  padding: '8px 16px',
-                  borderRadius: '20px',
-                  border: isActive ? 'none' : `1px solid ${SAND}`,
-                  backgroundColor: isActive ? TEAL : WHITE,
-                  color: isActive ? WHITE : CHARCOAL,
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
+                  backgroundColor: '#FDFCFA',
+                  borderRadius: '12px',
+                  padding: '16px 20px',
+                  marginBottom: '10px',
+                  boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+                  border: '1px solid rgba(0,0,0,0.04)',
+                  borderLeft: result.result === 'W' ? '4px solid #007F75' : result.result === 'L' ? '4px solid #C8102E' : '4px solid #E7DFC9',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '16px',
                 }}
               >
-                {filter}
-              </button>
-            )
-          })}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, justifyContent: 'center' }}>
+                  <span style={{ fontSize: '14px', fontWeight: 600, color: '#111', textAlign: 'right', flex: 1, fontFamily: 'var(--font-body)' }}>
+                    Liverpool
+                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '28px', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)', minWidth: '24px', textAlign: 'center' }}>
+                      {result.lfcScore}
+                    </span>
+                    <span style={{ fontSize: '16px', color: '#333', opacity: 0.4 }}>—</span>
+                    <span style={{ fontSize: '28px', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)', minWidth: '24px', textAlign: 'center' }}>
+                      {result.oppScore}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '14px', fontWeight: 600, color: '#111', flex: 1, fontFamily: 'var(--font-body)' }}>
+                    {result.opponent}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+                  <span style={{ fontSize: '11px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)', whiteSpace: 'nowrap' }}>
+                    {result.competitionLabel} · {result.date}
+                  </span>
+                  <span style={{
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    padding: '4px 10px',
+                    borderRadius: '4px',
+                    backgroundColor: result.result === 'W' ? 'rgba(0,127,117,0.1)' : result.result === 'L' ? 'rgba(200,16,46,0.1)' : 'rgba(0,0,0,0.06)',
+                    color: result.result === 'W' ? '#007F75' : result.result === 'L' ? '#C8102E' : '#333333',
+                    fontFamily: 'var(--font-body)',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {result.result === 'W' ? 'Win' : result.result === 'L' ? 'Loss' : 'Draw'}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* UPCOMING FIXTURES */}
+      <section>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+          <div style={{ width: '3px', height: '20px', backgroundColor: 'var(--ki-accent)', borderRadius: '2px', flexShrink: 0 }} />
+          <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)', margin: 0 }}>
+            Upcoming Fixtures
+          </h2>
         </div>
-
-        {/* Recent Results */}
-        <section>
-          <h2 className="ki-section-title">Recent Results</h2>
-          {filteredResults.length === 0 ? (
-            <p className="ki-meta">No results for this competition.</p>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {filteredResults.map((result) => (
-                <div
-                  key={result.id}
-                  style={{ backgroundColor: WHITE, borderRadius: '12px', borderLeft: `4px solid ${outcomeBorderColor[result.result] ?? SAND}`, padding: '16px', display: 'flex', alignItems: 'center', gap: '16px' }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, justifyContent: 'flex-end' }}>
-                    <span style={{ fontWeight: 600, fontSize: '14px', color: BLACK }}>Liverpool</span>
-                    <CrestCircle variant="liverpool" />
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-                    <span style={{ fontWeight: 700, fontSize: '24px', color: BLACK, width: '24px', textAlign: 'center' }}>{result.lfcScore}</span>
-                    <span style={{ fontWeight: 700, fontSize: '18px', color: CHARCOAL, opacity: 0.4 }}>–</span>
-                    <span style={{ fontWeight: 700, fontSize: '24px', color: BLACK, width: '24px', textAlign: 'center' }}>{result.oppScore}</span>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, justifyContent: 'flex-start' }}>
-                    <CrestCircle variant="opponent" />
-                    <span style={{ fontWeight: 600, fontSize: '14px', color: BLACK }}>{result.opponent}</span>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0, minWidth: '80px', gap: '4px' }}>
-                    <CompBadge label={result.competitionLabel} />
-                    <span className="ki-meta">{result.date}</span>
-                  </div>
+        {filteredFixtures.length === 0 ? (
+          <p style={{ fontSize: '13px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)' }}>No fixtures for this competition.</p>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+            {filteredFixtures.map((fixture, i) => (
+              <div
+                key={fixture.id ?? i}
+                style={{
+                  backgroundColor: '#FDFCFA',
+                  borderRadius: '12px',
+                  padding: '16px 20px',
+                  marginBottom: '10px',
+                  boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+                  border: '1px solid rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '16px',
+                }}
+              >
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#111', fontFamily: 'var(--font-body)', flex: 1 }}>
+                  {fixture.isHome ? `Liverpool vs ${fixture.opponent}` : `${fixture.opponent} vs Liverpool`}
+                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                  <span style={{ fontSize: '12px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)', whiteSpace: 'nowrap' }}>
+                    {fixture.date} · {fixture.time} · {fixture.competitionLabel}
+                  </span>
+                  <span style={{
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    padding: '4px 10px',
+                    borderRadius: '4px',
+                    backgroundColor: fixture.isHome ? '#C8102E' : '#00A398',
+                    color: '#fff',
+                    fontFamily: 'var(--font-body)',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {fixture.isHome ? 'Home' : 'Away'}
+                  </span>
                 </div>
-              ))}
-            </div>
-          )}
-        </section>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
-        {/* Upcoming Fixtures */}
-        <section>
-          <h2 className="ki-section-title">Upcoming Fixtures</h2>
-          {filteredFixtures.length === 0 ? (
-            <p className="ki-meta">No fixtures for this competition.</p>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {filteredFixtures.map((fixture, i) => (
-                <div key={fixture.id ?? i} style={{ backgroundColor: WHITE, borderRadius: '12px', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, justifyContent: 'flex-end' }}>
-                    <span style={{ fontWeight: 600, fontSize: '14px', color: BLACK }}>Liverpool</span>
-                    <CrestCircle variant="liverpool" />
-                  </div>
-
-                  <span style={{ fontWeight: 700, fontSize: '14px', color: CHARCOAL, opacity: 0.4, flexShrink: 0 }}>vs</span>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, justifyContent: 'flex-start' }}>
-                    <CrestCircle variant="opponent" />
-                    <span style={{ fontWeight: 600, fontSize: '14px', color: BLACK }}>{fixture.opponent}</span>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px', flexShrink: 0, minWidth: '140px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 700, borderRadius: '4px', padding: '2px 8px', backgroundColor: fixture.isHome ? SAND : CHARCOAL, color: fixture.isHome ? TEAL : WHITE }}>
-                        {fixture.isHome ? 'Home' : 'Away'}
-                      </span>
-                      <CompBadge label={fixture.competitionLabel} />
-                    </div>
-                    <span className="ki-meta">{fixture.date} · {fixture.time}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-      </div>
     </div>
   )
 }

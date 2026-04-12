@@ -11,7 +11,9 @@
     "crawl": "npx tsx --env-file=.env.local scripts/test-crawler.ts",
     "test-cups": "npx tsx --env-file=.env.local scripts/test-cups.ts",
     "backfill-images": "npx tsx --env-file=.env.local scripts/backfill-images.ts",
-    "refresh-images": "npx tsx --env-file=.env.local scripts/backfill-images.ts --refresh"
+    "refresh-images": "npx tsx --env-file=.env.local scripts/backfill-images.ts --refresh",
+    "test-transfers": "npx tsx --env-file=.env.local scripts/test-transfer.ts",
+    "test-injuries": "npx tsx --env-file=.env.local scripts/test-injuries.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.82.0",

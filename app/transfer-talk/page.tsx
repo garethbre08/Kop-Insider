@@ -12,27 +12,24 @@ export default async function TransferTalkPage() {
   const transferArticles = await getArticlesByCategory('transfers', 6)
 
   return (
-    <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
 
       {/* PAGE HEADER */}
-      <div style={{ backgroundColor: '#014d5e', width: '100%', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
-        <div style={{ width: '100%', height: '3px', backgroundColor: 'var(--ki-accent)' }} />
-        <div style={{ padding: '32px 24px' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
-              Kop Insider
-            </div>
-            <h1 style={{ fontSize: '36px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px 0' }}>
+        <div style={{ marginBottom: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+            <div style={{ width: '3px', height: '24px', backgroundColor: 'var(--ki-accent)', borderRadius: '2px' }} />
+            <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)' }}>
               Transfer Talk
             </h1>
-            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)' }}>
-              The latest Liverpool FC transfer news, rumours and analysis from Andy Anfield.
-            </p>
           </div>
+          <p style={{ fontSize: '16px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)', paddingLeft: '13px' }}>
+            The latest Liverpool FC transfer news, rumours and analysis from Andy Anfield
+          </p>
         </div>
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px 32px' }}>
         <div className="transfer-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '32px', alignItems: 'start' }}>
 
           {/* LEFT COLUMN */}
@@ -41,7 +38,7 @@ export default async function TransferTalkPage() {
             {/* FEATURED TRANSFER */}
             {transferArticles[0] && (
               <Link href={`/article/${transferArticles[0].id}`} style={{ textDecoration: 'none' }}>
-                <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }}>
+                <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
                   <div style={{ width: '100%', height: '240px', overflow: 'hidden' }}>
                     {transferArticles[0].image_url ? (
                       <img src={transferArticles[0].image_url} alt={transferArticles[0].title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -52,34 +49,37 @@ export default async function TransferTalkPage() {
                     )}
                   </div>
                   <div style={{ padding: '20px' }}>
-                    <span style={{ display: 'inline-block', backgroundColor: 'rgba(243, 238, 221, 0.8)', color: '#C8102E', fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '10px' }}>
+                    <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '10px' }}>
                       Transfers
                     </span>
-                    <div style={{ fontSize: '22px', fontWeight: 700, color: '#111', lineHeight: 1.3, marginBottom: '10px' }}>
+                    <div style={{ fontSize: '22px', fontWeight: 700, color: '#111', lineHeight: 1.3, marginBottom: '10px', fontFamily: 'var(--font-heading)' }}>
                       {transferArticles[0].title}
                     </div>
-                    <div style={{ fontSize: '14px', color: '#333', opacity: 0.65, lineHeight: 1.5, marginBottom: '12px' }}>
+                    <div style={{ fontSize: '14px', color: '#333', opacity: 0.65, lineHeight: 1.5, marginBottom: '12px', fontFamily: 'var(--font-body)' }}>
                       {transferArticles[0].excerpt}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }} />
-                      <span style={{ fontSize: '12px', color: '#333', opacity: 0.45 }}>Andy Anfield · {new Date(transferArticles[0].created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
+                      <span style={{ fontSize: '12px', color: '#333', opacity: 0.45, fontFamily: 'var(--font-body)' }}>Andy Anfield · {new Date(transferArticles[0].created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
                     </div>
                   </div>
                 </div>
               </Link>
             )}
 
-            {/* TRANSFER GRID */}
+            {/* MORE TRANSFER NEWS */}
             {transferArticles.length > 1 && (
               <>
-                <div style={{ fontSize: '16px', fontWeight: 700, color: '#111', marginTop: '8px' }}>
-                  More Transfer News
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px', marginTop: '8px' }}>
+                  <div style={{ width: '3px', height: '20px', backgroundColor: 'var(--ki-accent)', borderRadius: '2px' }} />
+                  <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111', fontFamily: 'var(--font-heading)', margin: 0 }}>
+                    More Transfer News
+                  </h2>
                 </div>
                 <div className="transfer-cards" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   {transferArticles.slice(1, 5).map((article) => (
                     <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
-                      <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%' }}>
+                      <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
                         <div style={{ width: '100%', height: '150px', overflow: 'hidden' }}>
                           {article.image_url ? (
                             <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -88,15 +88,15 @@ export default async function TransferTalkPage() {
                           )}
                         </div>
                         <div style={{ padding: '16px' }}>
-                          <span style={{ display: 'inline-block', backgroundColor: 'rgba(243, 238, 221, 0.8)', color: '#C8102E', fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                          <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '8px' }}>
                             Transfers
                           </span>
-                          <div style={{ fontSize: '15px', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: '8px' }}>
+                          <div style={{ fontSize: '15px', fontWeight: 700, color: '#111', lineHeight: 1.3, marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
                             {article.title}
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '20px', height: '20px', borderRadius: '50%', objectFit: 'cover' }} />
-                            <span style={{ fontSize: '11px', color: '#333', opacity: 0.45 }}>Andy Anfield · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
+                            <span style={{ fontSize: '11px', color: '#333', opacity: 0.45, fontFamily: 'var(--font-body)' }}>Andy Anfield · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
                           </div>
                         </div>
                       </div>
@@ -108,10 +108,10 @@ export default async function TransferTalkPage() {
 
             {/* NO ARTICLES FALLBACK */}
             {transferArticles.length === 0 && (
-              <div style={{ backgroundColor: '#fff', borderRadius: '12px', padding: '48px', textAlign: 'center' }}>
+              <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', padding: '48px', textAlign: 'center', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.04)' }}>
                 <div style={{ fontSize: '32px', marginBottom: '16px' }}>📰</div>
-                <div style={{ fontSize: '18px', fontWeight: 700, color: '#111', marginBottom: '8px' }}>No transfer news yet</div>
-                <div style={{ fontSize: '14px', color: '#333', opacity: 0.5 }}>Andy is monitoring the latest sources. Check back soon.</div>
+                <div style={{ fontSize: '18px', fontWeight: 700, color: '#111', marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>No transfer news yet</div>
+                <div style={{ fontSize: '14px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)' }}>Andy is monitoring the latest sources. Check back soon.</div>
               </div>
             )}
 
@@ -131,6 +131,6 @@ export default async function TransferTalkPage() {
           .transfer-cards { grid-template-columns: 1fr !important; }
         }
       `}</style>
-    </main>
+    </div>
   )
 }

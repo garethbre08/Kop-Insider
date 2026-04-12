@@ -51,9 +51,15 @@ const PRIMARY_KEYWORDS = [
   "the Reds",
 ];
 
-const TRANSFER_KEYWORDS = ["transfer", "signing", "bid", "deal", "window"];
-const INJURY_KEYWORDS = ["injury", "injured", "out", "return", "fitness"];
-const MATCH_KEYWORDS = ["match", "result", "goal", "win", "loss", "draw", "preview"];
+const TRANSFER_KEYWORDS = ["transfer", "signing", "bid", "deal", "window", "fee", "contract", "sign", "linked", "target", "move", "million"];
+const INJURY_KEYWORDS = [
+  "injured", "injury", "out for", "sidelined", "fitness concern",
+  "fitness doubt", "scan", "medical", "muscle", "hamstring", "knee injury",
+  "ankle injury", "fracture", "surgery", "rehabilitation", "rehab",
+  "ruled out", "race against time", "treatment room", "physio",
+  "expected return", "weeks out", "months out",
+];
+const MATCH_KEYWORDS = ["match report", "player ratings", "post match", "full time", "final whistle", "after the game", "reaction", "win over", "loss to", "defeat to", "victory over", "draw with", "goals", "scored", "equaliser", "penalty", "red card", "result", "goal", "win", "loss", "draw", "preview"];
 
 type ArticleType = "news" | "transfers" | "injuries" | "opinion" | "match-reaction";
 
@@ -140,11 +146,18 @@ export async function isArticleAlreadyCrawled(url: string): Promise<boolean> {
   return (data?.length ?? 0) > 0;
 }
 
-function detectArticleType(title: string): ArticleType {
-  const lower = title.toLowerCase();
-  if (TRANSFER_KEYWORDS.some((kw) => lower.includes(kw))) return "transfers";
-  if (INJURY_KEYWORDS.some((kw) => lower.includes(kw))) return "injuries";
-  if (MATCH_KEYWORDS.some((kw) => lower.includes(kw))) return "match-reaction";
+function detectArticleType(title: string, content: string = ""): ArticleType {
+  const titleLower = title.toLowerCase();
+  const contentLower = content.toLowerCase();
+  const fullText = `${titleLower} ${contentLower}`;
+
+  const isInjury = INJURY_KEYWORDS.some((kw) => fullText.includes(kw));
+  const isTransfer = TRANSFER_KEYWORDS.some((kw) => fullText.includes(kw));
+  const isMatchReaction = MATCH_KEYWORDS.some((kw) => fullText.includes(kw));
+
+  if (isInjury) return "injuries";
+  if (isTransfer) return "transfers";
+  if (isMatchReaction) return "match-reaction";
   return "news";
 }
 
@@ -178,7 +191,7 @@ export async function runCrawler(): Promise<{
       newArticlesFound++;
       console.log(`[Crawler] New article found: "${item.title}"`);
 
-      const articleType = detectArticleType(item.title);
+      const articleType = detectArticleType(item.title, item.content);
       console.log(`[Crawler] Detected type: ${articleType} — Generating article...`);
 
       try {

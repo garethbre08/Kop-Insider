@@ -10,15 +10,18 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const [featuredArticle, latestArticles, opinionArticles, tableData, fixtures, liveScore] = await Promise.all([
+  const [featuredArticle, opinionArticles, allLatest, tableData, fixtures, liveScore] = await Promise.all([
     getFeaturedArticle(),
-    getLatestArticles(9),
     getOpinionArticles(1),
+    getLatestArticles(12),
     getPremierLeagueTable(),
     getAllLiverpoolFixtures(),
     getLiverpoolLiveScore(),
   ])
   const opinionArticle = opinionArticles[0] || null
+
+  const usedIds = [featuredArticle?.id, opinionArticle?.id].filter(Boolean)
+  const latestArticles = allLatest.filter(article => !usedIds.includes(article.id)).slice(0, 9)
 
   return (
     <HomePageContent

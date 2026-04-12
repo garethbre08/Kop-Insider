@@ -50,6 +50,7 @@ export default function ArticlePageClient({ article, related, sidebar }: Props) 
       <header className="bg-ki-white mt-4">
         <div style={{ maxWidth: "896px", margin: "0 auto", padding: "40px 24px" }} className="flex flex-col gap-5">
           <span className={`ki-tag ${accentText}`}>{formatCategory(article.category)}</span>
+          <div style={{ width: '48px', height: '3px', backgroundColor: 'var(--ki-accent)', borderRadius: '2px', marginBottom: '16px' }} />
           <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: 700, color: '#111', lineHeight: 1.2, maxWidth: '720px' }}>
             {article.title}
           </h1>

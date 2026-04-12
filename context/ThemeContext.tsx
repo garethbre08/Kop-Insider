@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 
-type Theme = "home" | "home";
+type Theme = "home" | "away";
 
 interface ThemeContextValue {
   theme: Theme;
@@ -19,6 +19,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.body.dataset.theme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   return (

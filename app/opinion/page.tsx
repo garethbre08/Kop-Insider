@@ -17,7 +17,9 @@ export default async function OpinionPage() {
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
 
       {/* PAGE HEADER */}
-      <div style={{ backgroundColor: '#014d5e', width: '100%', padding: '32px 24px', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+      <div style={{ backgroundColor: '#014d5e', width: '100%', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+        <div style={{ width: '100%', height: '3px', backgroundColor: 'var(--ki-accent)' }} />
+        <div style={{ padding: '32px 24px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '24px' }}>
           <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '72px', height: '72px', borderRadius: '50%', objectFit: 'cover', border: '3px solid rgba(255,255,255,0.3)', flexShrink: 0 }} />
           <div>
@@ -32,6 +34,7 @@ export default async function OpinionPage() {
             </p>
           </div>
         </div>
+        </div>
       </div>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
@@ -43,7 +46,7 @@ export default async function OpinionPage() {
             {/* FEATURED OPINION */}
             {articles[0] && (
               <Link href={`/article/${articles[0].id}`} style={{ textDecoration: 'none' }}>
-                <div style={{ backgroundColor: '#fff', borderRadius: '12px', borderLeft: '4px solid #007F75', overflow: 'hidden', cursor: 'pointer' }}>
+                <div style={{ backgroundColor: '#fff', borderRadius: '12px', borderLeft: '4px solid var(--ki-accent)', overflow: 'hidden', cursor: 'pointer' }}>
                   <div style={{ width: '100%', height: '240px', overflow: 'hidden' }}>
                     {articles[0].image_url ? (
                       <img src={articles[0].image_url} alt={articles[0].title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />

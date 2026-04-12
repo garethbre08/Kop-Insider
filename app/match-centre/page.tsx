@@ -16,6 +16,7 @@ export default async function MatchCentre() {
 
   return (
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+      <div style={{ width: '100%', height: '3px', backgroundColor: 'var(--ki-accent)' }} />
       <div className="ki-container">
         <div className="ki-page-header">
           <h1 className="ki-page-title">Match Centre</h1>

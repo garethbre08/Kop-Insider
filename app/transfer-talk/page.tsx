@@ -15,17 +15,20 @@ export default async function TransferTalkPage() {
     <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
 
       {/* PAGE HEADER */}
-      <div style={{ backgroundColor: '#014d5e', width: '100%', padding: '32px 24px', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
-            Kop Insider
+      <div style={{ backgroundColor: '#014d5e', width: '100%', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+        <div style={{ width: '100%', height: '3px', backgroundColor: 'var(--ki-accent)' }} />
+        <div style={{ padding: '32px 24px' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <div style={{ fontSize: '11px', fontWeight: 700, color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
+              Kop Insider
+            </div>
+            <h1 style={{ fontSize: '36px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>
+              Transfer Talk
+            </h1>
+            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)' }}>
+              The latest Liverpool FC transfer news, rumours and analysis from Andy Anfield.
+            </p>
           </div>
-          <h1 style={{ fontSize: '36px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>
-            Transfer Talk
-          </h1>
-          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)' }}>
-            The latest Liverpool FC transfer news, rumours and analysis from Andy Anfield.
-          </p>
         </div>
       </div>
 

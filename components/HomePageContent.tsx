@@ -30,12 +30,10 @@ type Props = {
 
 export default function HomePageContent({ featuredArticle, latestArticles, opinionArticle, tableData, fixtures, liveScore, sidebar }: Props) {
   const { theme } = useTheme();
-  const isHome = theme === 'home';
-
-  const pageBg        = '#F5E6C8';
-  const opinionBorder = isHome ? '#007F75' : '#C8102E';
-  const opinionLabel  = isHome ? '#007F75' : '#C8102E';
-  const buttonBg      = isHome ? '#C8102E' : 'rgb(0, 163, 152)';
+  const pageBg        = theme === 'home' ? '#F0DFC0' : '#F3EEDD';
+  const opinionBorder = 'var(--ki-accent)';
+  const opinionLabel  = 'var(--ki-accent)';
+  const buttonBg      = theme === 'home' ? '#C8102E' : 'rgb(0, 163, 152)';
 
   return (
     <main style={{ backgroundColor: pageBg, minHeight: '100vh', transition: 'background-color 0.3s ease' }}>
@@ -50,7 +48,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
               {/* HERO CARD */}
               {featuredArticle && (
                 <Link href={`/article/${featuredArticle.id}`} style={{ textDecoration: 'none', display: 'block', marginBottom: '16px' }}>
-                  <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }} className="ki-home-hero-card">
+                  <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.06)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }} className="ki-home-hero-card">
                     <div style={{ width: '100%', height: '280px', overflow: 'hidden' }}>
                       {featuredArticle.image_url && featuredArticle.image_url.length > 0 ? (
                         <img src={featuredArticle.image_url} alt={featuredArticle.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -80,7 +78,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
 
               {/* OPINION STRIP */}
               {opinionArticle && (
-                <div style={{ backgroundColor: '#FDFCF8', borderRadius: '12px', borderLeft: `4px solid ${opinionBorder}`, padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: '16px' }}>
+                <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', borderTop: '1px solid rgba(0,0,0,0.06)', borderRight: '1px solid rgba(0,0,0,0.06)', borderBottom: '1px solid rgba(0,0,0,0.06)', borderLeft: `4px solid ${opinionBorder}`, marginBottom: '16px' }}>
                   <span style={{ fontSize: '13px', fontWeight: 700, color: opinionLabel, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
                     Opinion · Andy Anfield
                   </span>
@@ -99,7 +97,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                       </div>
                     </div>
                     <Link href={`/article/${opinionArticle.id}`}>
-                      <button style={{ backgroundColor: buttonBg, color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'background-color 0.3s ease' }}>
+                      <button style={{ backgroundColor: buttonBg, color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-body)' }}>
                         Read Full Article
                       </button>
                     </Link>
@@ -107,11 +105,14 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                 </div>
               )}
 
+              {/* GREEN DIVIDER */}
+              <div style={{ height: '2px', backgroundColor: 'var(--ki-accent)', borderRadius: '1px', opacity: 0.4, marginBottom: '16px' }} />
+
               {/* 2 MEDIUM CARDS — ROW 1 */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 {latestArticles.slice(0, 2).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
-                    <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }} className="ki-home-card">
+                    <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.06)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }} className="ki-home-card">
                       <div style={{ width: '100%', height: '160px', overflow: 'hidden' }}>
                         {article.image_url && article.image_url.length > 0 ? (
                           <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -140,7 +141,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   {latestArticles.slice(2, 5).map((article) => (
                     <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
-                      <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }} className="ki-home-card">
+                      <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.06)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }} className="ki-home-card">
                         <div style={{ width: '100%', height: '110px', overflow: 'hidden' }}>
                           {article.image_url && article.image_url.length > 0 ? (
                             <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -152,10 +153,10 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                           <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '6px' }}>
                             {article.category}
                           </span>
-                          <div style={{ fontSize: '14px', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: '6px' }}>
+                          <div style={{ fontSize: '14px', fontWeight: 700, color: '#111111', lineHeight: 1.3, marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
                             {article.title}
                           </div>
-                          <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
+                          <div style={{ fontSize: '11px', color: '#333333', opacity: 0.4, fontFamily: 'var(--font-body)', marginTop: '6px' }}>
                             Andy Anfield · {timeAgo(article.created_at)}
                           </div>
                         </div>
@@ -170,7 +171,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                   {latestArticles.slice(5, 7).map((article) => (
                     <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
-                      <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }} className="ki-home-card">
+                      <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.06)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }} className="ki-home-card">
                         <div style={{ width: '100%', height: '160px', overflow: 'hidden' }}>
                           {article.image_url && article.image_url.length > 0 ? (
                             <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -182,7 +183,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                           <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '8px' }}>
                             {article.category}
                           </span>
-                          <div style={{ fontSize: '16px', fontWeight: 700, color: '#111', lineHeight: 1.35, marginBottom: '8px' }}>
+                          <div style={{ fontSize: '16px', fontWeight: 700, color: '#111111', lineHeight: 1.3, marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
                             {article.title}
                           </div>
                           <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
@@ -196,13 +197,13 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
               )}
 
               {/* MORE FROM KOP INSIDER */}
-              <div style={{ marginTop: '8px' }}>
-                <div style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '12px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <div style={{ borderTop: '2px solid var(--ki-accent)', paddingTop: '20px', marginTop: '32px' }}>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', fontFamily: 'var(--font-body)' }}>
                   More from Kop Insider
                 </div>
                 {latestArticles.slice(7, 10).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
-                    <div style={{ display: 'flex', gap: '16px', paddingTop: '12px', paddingBottom: '12px', paddingLeft: '0', paddingRight: '0', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '16px', paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', alignItems: 'center', backgroundColor: '#FDFCFA', borderRadius: '10px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.06)', marginBottom: '8px' }}>
                       <div style={{ width: '80px', height: '60px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
                         {article.image_url ? (
                           <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -242,11 +243,11 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
           .ki-home-grid { grid-template-columns: 1fr !important; }
         }
         .ki-home-hero-card:hover {
-          box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
           transform: translateY(-2px);
         }
         .ki-home-card:hover {
-          box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
           transform: translateY(-2px);
         }
       `}</style>

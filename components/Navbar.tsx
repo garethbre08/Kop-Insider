@@ -8,8 +8,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-  const bg        = theme === "away" ? "rgb(0, 163, 152)" : "#C8102E";
-  const pinstripe = theme === "away" ? "#ffffff" : "#007F75";
+  const bg = theme === "away" ? "rgb(0, 163, 152)" : "#C8102E";
 
   const links = [
     { label: "Match Centre", href: "/match-centre" },
@@ -69,7 +68,7 @@ export default function Navbar() {
         </div>
 
         {/* DECORATIVE STRIPE */}
-        <div style={{ width: '100%', height: '6px', backgroundColor: pinstripe, flexShrink: 0 }} />
+        <div style={{ width: '100%', height: '5px', backgroundColor: theme === 'away' ? '#ffffff' : '#007F75', flexShrink: 0 }} />
 
         {/* MOBILE MENU */}
         {menuOpen && (

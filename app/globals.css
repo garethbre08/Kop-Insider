@@ -48,6 +48,17 @@
   to   { transform: scaleY(1); }
 }
 
+@keyframes ki-ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ki-ticker-content {
+    animation: none;
+  }
+}
+
 /* ─── Theme tokens ──────────────────────────────────────────────────────── */
 
 @theme {
@@ -81,12 +92,10 @@
   --font-heading: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
   --font-body:    var(--font-inter), 'Inter', sans-serif;
   --ki-accent: #007F75;
-  --ki-stripe: #C8102E;
 }
 
 [data-theme='away'] {
   --ki-accent: #C8102E;
-  --ki-stripe: rgb(0, 163, 152);
 }
 
 /* ─── Animation delay utilities ─────────────────────────────────────────── */

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeContext";
@@ -8,6 +8,27 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+
+  const [headlines, setHeadlines] = useState<string[]>([
+    'Liverpool FC News — Kop Insider',
+    'Loading latest headlines...',
+  ]);
+
+  useEffect(() => {
+    fetch('/api/headlines')
+      .then(res => res.json())
+      .then(data => {
+        if (data.headlines && data.headlines.length > 0) {
+          setHeadlines(data.headlines);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const tickerBg = theme === 'away' ? '#ffffff' : '#007F75';
+  const tickerText = theme === 'away' ? '#111111' : '#ffffff';
+  const separator = '|';
+  const tickerContent = headlines.join(` ${separator} `) + ` ${separator} `;
   const bg = theme === "away" ? "rgb(0, 163, 152)" : "#C8102E";
 
   const links = [
@@ -67,8 +88,19 @@ export default function Navbar() {
 
         </div>
 
-        {/* DECORATIVE STRIPE */}
-        <div style={{ width: '100%', height: '5px', backgroundColor: theme === 'away' ? '#ffffff' : '#007F75', flexShrink: 0 }} />
+        {/* NEWS TICKER */}
+        <div style={{ width: '100%', height: '44px', backgroundColor: tickerBg, overflow: 'hidden', display: 'flex', alignItems: 'center', flexShrink: 0, borderTop: '1px solid rgba(255,255,255,0.15)', borderBottom: theme === 'away' ? '1px solid rgba(0,0,0,0.08)' : 'none' }}>
+          {/* LABEL */}
+          <div style={{ backgroundColor: theme === 'away' ? '#F3EEDD' : 'rgba(0,0,0,0.2)', color: theme === 'away' ? '#111111' : '#ffffff', fontSize: '11px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', padding: '0 12px', height: '100%', display: 'flex', alignItems: 'center', flexShrink: 0, borderRight: theme === 'away' ? '1px solid rgba(0,0,0,0.08)' : '1px solid rgba(255,255,255,0.15)', fontFamily: 'var(--font-body)', whiteSpace: 'nowrap' }}>
+            Latest News
+          </div>
+          {/* SCROLLING TEXT */}
+          <div style={{ overflow: 'hidden', flex: 1, height: '100%', display: 'flex', alignItems: 'center' }}>
+            <div className="ki-ticker-content" style={{ whiteSpace: 'nowrap', animation: 'ki-ticker 45s linear infinite', fontSize: '14px', fontWeight: 500, color: tickerText, fontFamily: 'var(--font-body)', letterSpacing: '0.2px', paddingLeft: '24px' }}>
+              {tickerContent} {tickerContent} {tickerContent}
+            </div>
+          </div>
+        </div>
 
         {/* MOBILE MENU */}
         {menuOpen && (

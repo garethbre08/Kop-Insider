@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: '#333333', width: '100%', borderTop: '5px solid var(--ki-stripe)' }}>
+    <footer style={{ backgroundColor: '#333333', width: '100%', marginTop: '0' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '48px 24px 32px' }}>
         <div className="ki-footer-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', marginBottom: '40px' }}>
 

@@ -107,7 +107,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                 </div>
               )}
 
-              {/* 2 MEDIUM CARDS */}
+              {/* 2 MEDIUM CARDS — ROW 1 */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 {latestArticles.slice(0, 2).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
@@ -136,39 +136,71 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
               </div>
 
               {/* 3 SMALL CARDS */}
-              <div className={latestArticles.slice(2, 5).length === 2 ? 'ki-grid-2' : 'ki-grid-3'} style={{ marginBottom: '16px' }}>
-                {latestArticles.slice(2, 5).map((article) => (
-                  <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
-                    <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }} className="ki-home-card">
-                      <div style={{ width: '100%', height: '110px', overflow: 'hidden' }}>
-                        {article.image_url && article.image_url.length > 0 ? (
-                          <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                        ) : (
-                          <div style={{ backgroundColor: '#E7DFC9', width: '100%', height: '100%' }} />
-                        )}
-                      </div>
-                      <div style={{ padding: '12px' }}>
-                        <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '6px' }}>
-                          {article.category}
-                        </span>
-                        <div style={{ fontSize: '14px', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: '6px' }}>
-                          {article.title}
+              {latestArticles.length > 2 && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                  {latestArticles.slice(2, 5).map((article) => (
+                    <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
+                      <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }} className="ki-home-card">
+                        <div style={{ width: '100%', height: '110px', overflow: 'hidden' }}>
+                          {article.image_url && article.image_url.length > 0 ? (
+                            <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                          ) : (
+                            <div style={{ backgroundColor: '#E7DFC9', width: '100%', height: '100%' }} />
+                          )}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
-                          Andy Anfield · {timeAgo(article.created_at)}
+                        <div style={{ padding: '12px' }}>
+                          <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '6px' }}>
+                            {article.category}
+                          </span>
+                          <div style={{ fontSize: '14px', fontWeight: 600, color: '#111', lineHeight: 1.35, marginBottom: '6px' }}>
+                            {article.title}
+                          </div>
+                          <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
+                            Andy Anfield · {timeAgo(article.created_at)}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {/* 2 MEDIUM CARDS — ROW 2 */}
+              {latestArticles.length > 5 && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                  {latestArticles.slice(5, 7).map((article) => (
+                    <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
+                      <div style={{ backgroundColor: '#fff', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', transition: 'box-shadow 0.2s, transform 0.2s' }} className="ki-home-card">
+                        <div style={{ width: '100%', height: '160px', overflow: 'hidden' }}>
+                          {article.image_url && article.image_url.length > 0 ? (
+                            <img src={article.image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                          ) : (
+                            <div style={{ backgroundColor: '#E7DFC9', width: '100%', height: '100%' }} />
+                          )}
+                        </div>
+                        <div style={{ padding: '16px' }}>
+                          <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.8px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                            {article.category}
+                          </span>
+                          <div style={{ fontSize: '16px', fontWeight: 700, color: '#111', lineHeight: 1.35, marginBottom: '8px' }}>
+                            {article.title}
+                          </div>
+                          <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
+                            Andy Anfield · {timeAgo(article.created_at)}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
 
               {/* MORE FROM KOP INSIDER */}
               <div style={{ marginTop: '8px' }}>
                 <div style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '12px', paddingBottom: '10px', borderBottom: '1px solid #E7DFC9', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                   More from Kop Insider
                 </div>
-                {latestArticles.slice(5, 8).map((article) => (
+                {latestArticles.slice(7, 10).map((article) => (
                   <Link key={article.id} href={`/article/${article.id}`} style={{ textDecoration: 'none' }}>
                     <div style={{ display: 'flex', gap: '16px', paddingTop: '12px', paddingBottom: '12px', paddingLeft: '0', paddingRight: '0', alignItems: 'center' }}>
                       <div style={{ width: '80px', height: '60px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>

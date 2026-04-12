@@ -21,7 +21,7 @@ export default async function Home() {
   const opinionArticle = opinionArticles[0] || null
 
   const usedIds = [featuredArticle?.id, opinionArticle?.id].filter(Boolean)
-  const latestArticles = allLatest.filter(article => !usedIds.includes(article.id)).slice(0, 9)
+  const latestArticles = allLatest.filter(article => !usedIds.includes(article.id)).slice(0, 12)
 
   return (
     <HomePageContent

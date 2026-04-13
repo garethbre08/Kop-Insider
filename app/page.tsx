@@ -18,9 +18,12 @@ export default async function Home() {
     getAllLiverpoolFixtures(),
     getLiverpoolLiveScore(),
   ])
-  const opinionArticle = opinionArticles[0] || null
+  const opinionArticle = opinionArticles.length > 0 ? opinionArticles[0] : null
 
-  const usedIds = [featuredArticle?.id, opinionArticle?.id].filter(Boolean)
+  const usedIds = [
+    featuredArticle?.id,
+    opinionArticle?.id,
+  ].filter(Boolean)
   const latestArticles = allLatest.filter(article => !usedIds.includes(article.id)).slice(0, 12)
 
   return (

@@ -131,19 +131,35 @@ export async function crawlRSSFeed(source: Source): Promise<CrawledItem[]> {
   }
 }
 
-export async function isArticleAlreadyCrawled(url: string): Promise<boolean> {
-  const { data, error } = await supabase
-    .from("articles")
-    .select("id")
-    .eq("source_url", url)
-    .limit(1);
-
-  if (error) {
-    console.error("[Crawler] Supabase check error:", error);
-    return false;
+function normalizeUrl(url: string): string {
+  try {
+    const u = new URL(url.trim())
+    return `${u.hostname}${u.pathname}`.toLowerCase().replace(/\/$/, '')
+  } catch {
+    return url.trim().toLowerCase()
   }
+}
 
-  return (data?.length ?? 0) > 0;
+export async function isArticleAlreadyCrawled(url: string, _title: string): Promise<boolean> {
+  try {
+    // Exact URL match
+    const { data: exactMatch } = await supabase
+      .from('articles')
+      .select('id, source_url')
+      .limit(200)
+      .order('created_at', { ascending: false })
+
+    if (!exactMatch) return false
+
+    const normalizedUrl = normalizeUrl(url)
+    const found = exactMatch.some(article =>
+      normalizeUrl(article.source_url) === normalizedUrl
+    )
+
+    return found
+  } catch {
+    return false
+  }
 }
 
 function detectArticleType(title: string, content: string = ""): ArticleType {
@@ -182,7 +198,7 @@ export async function runCrawler(): Promise<{
     for (const item of items) {
       if (!item.link) continue;
 
-      const alreadyCrawled = await isArticleAlreadyCrawled(item.link);
+      const alreadyCrawled = await isArticleAlreadyCrawled(item.link, item.title);
       if (alreadyCrawled) {
         console.log(`[Crawler] Skipping (already crawled): "${item.title}"`);
         continue;

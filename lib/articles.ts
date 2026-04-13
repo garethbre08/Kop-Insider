@@ -62,22 +62,6 @@ export async function getOpinionArticles(limit: number = 5): Promise<Article[]> 
       return []
     }
 
-    if (!data || data.length === 0) {
-      console.log('No opinion articles found — fetching latest articles as fallback')
-      const { data: fallback, error: fallbackError } = await supabase
-        .from('articles')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(limit)
-
-      if (fallbackError) {
-        console.error('Fallback error:', fallbackError)
-        return []
-      }
-
-      return fallback || []
-    }
-
     return data || []
   } catch (error) {
     console.error('getOpinionArticles exception:', error)

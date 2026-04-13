@@ -35,7 +35,8 @@
       "Bash(curl -k -s \"https://www.telegraph.co.uk/robots.txt\" --max-time 15 -A \"Mozilla/5.0 Chrome/120\")",
       "Bash(curl -k -s -o /dev/null -w 'HTTP %{http_code}  %{url_effective}\\\\n' https://www.telegraph.co.uk/football/rss.xml https://www.telegraph.co.uk/sport/football/rss.xml https://www.telegraph.co.uk/news/rss.xml --max-time 10 -A 'Mozilla/5.0 Chrome/120' -L)",
       "WebFetch(domain:newsloth.com)",
-      "Read(//c/Users/Gareth/Documents/Kop Insider/app/article/[id/]/**)"
+      "Read(//c/Users/Gareth/Documents/Kop Insider/app/article/[id/]/**)",
+      "Bash(npx tsx:*)"
     ]
   }
 }

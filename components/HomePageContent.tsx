@@ -77,7 +77,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
               )}
 
               {/* OPINION STRIP */}
-              {opinionArticle && (
+              {opinionArticle && opinionArticle.id !== featuredArticle?.id && (
                 <div style={{ backgroundColor: '#FDFCFA', borderRadius: '12px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', borderTop: '1px solid rgba(0,0,0,0.06)', borderRight: '1px solid rgba(0,0,0,0.06)', borderBottom: '1px solid rgba(0,0,0,0.06)', borderLeft: `4px solid ${opinionBorder}`, marginBottom: '16px' }}>
                   <span style={{ fontSize: '13px', fontWeight: 700, color: opinionLabel, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
                     Opinion · Andy Anfield

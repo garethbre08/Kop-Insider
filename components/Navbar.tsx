@@ -68,9 +68,16 @@ export default function Navbar() {
           {/* CENTRE — Logo absolutely positioned */}
           <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
-              <span style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontWeight: 700, fontSize: '24px', letterSpacing: '-0.3px', whiteSpace: 'nowrap' }}>
-                Kop Insider
-              </span>
+              <img
+                src="/logo.png"
+                alt="Kop Insider"
+                style={{
+                  height: '60px',
+                  width: 'auto',
+                  display: 'block',
+                  objectFit: 'contain'
+                }}
+              />
             </Link>
           </div>
 

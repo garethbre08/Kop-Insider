@@ -2,7 +2,13 @@ import RSSParser from "rss-parser";
 import { supabase } from "./supabase";
 import { generateArticle } from "./andy";
 
-const parser = new RSSParser();
+const parser = new RSSParser({
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'application/rss+xml, application/xml, text/xml, */*',
+  },
+  timeout: 10000,
+});
 
 const SOURCES = [
   {
@@ -40,6 +46,12 @@ const SOURCES = [
     outlet: "Daily Mail",
     rssUrl: "https://www.dailymail.co.uk/sport/football/index.rss",
     twitterHandle: "DominicKing_DM",
+  },
+  {
+    journalist: 'DaveOCKOP',
+    outlet: 'DaveOCKOP.com',
+    rssUrl: 'https://www.daveockop.com/feed/',
+    twitterHandle: 'DaveOCKOP',
   },
 ];
 

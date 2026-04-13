@@ -7,7 +7,17 @@ export default function Footer() {
         <div className="ki-footer-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', marginBottom: '40px' }}>
 
           <div>
-            <div style={{ fontFamily: 'var(--font-heading)', color: '#fff', fontWeight: 700, fontSize: '20px', marginBottom: '12px' }}>Kop Insider</div>
+            <img
+              src="/logo.png"
+              alt="Kop Insider"
+              style={{
+                height: '60px',
+                width: 'auto',
+                display: 'block',
+                objectFit: 'contain',
+                marginBottom: '12px'
+              }}
+            />
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '13px', lineHeight: 1.6, marginBottom: '12px' }}>
               The truth about Liverpool, told by someone who actually cares.
             </div>

@@ -550,6 +550,16 @@ p  { font-family: var(--font-body);    font-size: 16px; font-weight: 400; line-h
   margin: 16px 0;
 }
 
+/* ─── Desktop/Mobile visibility ─────────────────────────────────────────── */
+
+.ki-desktop-only { display: block; }
+.ki-mobile-only  { display: none;  }
+
+@media (max-width: 1023px) {
+  .ki-desktop-only { display: none !important; }
+  .ki-mobile-only  { display: block !important; }
+}
+
 /* ─── Mobile ─────────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {

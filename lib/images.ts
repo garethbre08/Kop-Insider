@@ -1,11 +1,9 @@
-const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY
-
 export async function getArticleImage(query: string, seed?: string): Promise<string | null> {
   try {
     const queries = [
-      `liverpool football ${query}`,
+      `liverpool fc ${query}`,
       `liverpool fc anfield stadium`,
-      `premier league football match`
+      `liverpool fc players anfield`,
     ]
 
     const seedNumber = seed
@@ -20,9 +18,9 @@ export async function getArticleImage(query: string, seed?: string): Promise<str
         `https://api.unsplash.com/search/photos?query=${encoded}&per_page=10&page=${page}&orientation=landscape`,
         {
           headers: {
-            Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
+            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`
           },
-          next: { revalidate: 86400 },
+          next: { revalidate: 86400 }
         }
       )
       if (!res.ok) continue

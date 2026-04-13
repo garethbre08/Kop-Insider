@@ -47,12 +47,13 @@ export default function MatchCentreClient({ results, fixtures }: Props) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
 
       {/* FILTER PILLS */}
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      <div className="filter-pills" style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
         {FILTERS.map((filter) => {
           const isActive = activeFilter === filter
           return (
             <button
               key={filter}
+              className="filter-pill"
               onClick={() => setActiveFilter(filter)}
               style={{
                 padding: '8px 16px',
@@ -101,8 +102,9 @@ export default function MatchCentreClient({ results, fixtures }: Props) {
                   justifyContent: 'space-between',
                   gap: '16px',
                 }}
+                className="result-card-inner"
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, justifyContent: 'center' }}>
+                <div className="result-card-score" style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, justifyContent: 'center' }}>
                   <span style={{ fontSize: '14px', fontWeight: 600, color: '#111', textAlign: 'right', flex: 1, fontFamily: 'var(--font-body)' }}>
                     Liverpool
                   </span>
@@ -119,7 +121,7 @@ export default function MatchCentreClient({ results, fixtures }: Props) {
                     {result.opponent}
                   </span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+                <div className="result-card-meta" style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
                   <span style={{ fontSize: '11px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)', whiteSpace: 'nowrap' }}>
                     {result.competitionLabel} · {result.date}
                   </span>
@@ -169,6 +171,7 @@ export default function MatchCentreClient({ results, fixtures }: Props) {
                   justifyContent: 'space-between',
                   gap: '16px',
                 }}
+                className="fixture-card-inner"
               >
                 <span style={{ fontSize: '14px', fontWeight: 600, color: '#111', fontFamily: 'var(--font-body)', flex: 1 }}>
                   {fixture.isHome ? `Liverpool vs ${fixture.opponent}` : `${fixture.opponent} vs Liverpool`}
@@ -177,7 +180,7 @@ export default function MatchCentreClient({ results, fixtures }: Props) {
                   <span style={{ fontSize: '12px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)', whiteSpace: 'nowrap' }}>
                     {fixture.date} · {fixture.time} · {fixture.competitionLabel}
                   </span>
-                  <span style={{
+                  <span className="fixture-card-badge" style={{
                     fontSize: '11px',
                     fontWeight: 700,
                     padding: '4px 10px',
@@ -196,6 +199,44 @@ export default function MatchCentreClient({ results, fixtures }: Props) {
         )}
       </section>
 
+      <style>{`
+        @media (max-width: 768px) {
+          .filter-pills {
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: none !important;
+          }
+          .filter-pills::-webkit-scrollbar { display: none; }
+          .filter-pill {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            padding: 6px 10px !important;
+            font-size: 11px !important;
+          }
+          .result-card-inner {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+          .result-card-score {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+          .result-card-meta {
+            width: 100% !important;
+            justify-content: space-between !important;
+          }
+          .fixture-card-inner {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+          .fixture-card-badge {
+            align-self: flex-start !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }

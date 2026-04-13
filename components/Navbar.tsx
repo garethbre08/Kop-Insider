@@ -66,7 +66,7 @@ export default function Navbar() {
           </button>
 
           {/* CENTRE — Logo absolutely positioned */}
-          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          <div className="ki-nav-logo" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
               <img
                 src="/logo.png"
@@ -130,6 +130,7 @@ export default function Navbar() {
         }
         @media (max-width: 768px) {
           .ki-nav-desktop { display: none !important; }
+          .ki-nav-logo img { height: 36px !important; }
         }
         .ki-nav-link:hover span { font-weight: 600 !important; color: #fff !important; }
       `}</style>

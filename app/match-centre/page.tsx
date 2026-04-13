@@ -31,7 +31,7 @@ export default async function MatchCentre() {
         </div>
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px 32px' }}>
+      <div className="match-centre-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px 32px' }}>
         <div className="match-centre-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '32px', alignItems: 'start' }}>
           <MatchCentreClient results={results} fixtures={fixtures} />
           <aside className="ki-desktop-sidebar">
@@ -44,6 +44,9 @@ export default async function MatchCentre() {
         @media (max-width: 1023px) {
           .match-centre-grid { grid-template-columns: 1fr !important; }
           .ki-desktop-sidebar { display: none !important; }
+        }
+        @media (max-width: 768px) {
+          .match-centre-container { padding: 16px !important; }
         }
       `}</style>
     </div>

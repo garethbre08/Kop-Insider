@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { getSmartImageQuery, getArticleImage } from '../lib/images'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -48,7 +49,7 @@ async function backfillImages() {
 
   const { data: articles, error } = await supabase
     .from('articles')
-    .select('id, title, category, image_url')
+    .select('id, title, category, image_url, content')
 
   if (error) {
     console.error('Supabase error:', error)
@@ -90,15 +91,15 @@ async function backfillImages() {
   // Refetch images for articles with no image
   const { data: needsImageArticles } = await supabase
     .from('articles')
-    .select('id, title, category, image_url')
+    .select('id, title, category, image_url, content')
 
   const needsImage = needsImageArticles?.filter(a => !a.image_url) || []
   console.log(`${needsImage.length} articles need images`)
 
   for (const article of needsImage) {
     console.log(`Processing: ${article.title}`)
-    const keywords = `${article.category} ${article.title.split(' ').slice(0, 3).join(' ')}`
-    const image = await getImage(keywords, article.title)
+    const smartQuery = await getSmartImageQuery(article.title, article.content || '', article.category)
+    const image = await getArticleImage(smartQuery, article.id)
 
     if (image) {
       const { error: updateError } = await supabase
@@ -109,13 +110,13 @@ async function backfillImages() {
       if (updateError) {
         console.error(`Failed to save image for ${article.title}:`, updateError)
       } else {
-        console.log(`✓ Image saved for: ${article.title}`)
+        console.log(`✓ Image saved for: ${article.title} — query: ${smartQuery}`)
       }
     } else {
       console.log(`✗ No image found for: ${article.title}`)
     }
 
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise(resolve => setTimeout(resolve, 2000))
   }
 
   console.log('\nVerifying saves...')

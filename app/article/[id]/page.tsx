@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getArticleById, getLatestArticles } from "@/lib/articles";
 import ArticlePageClient from "./ArticlePageClient";
-import Sidebar from "@/components/Sidebar";
 
 export async function generateMetadata({
   params,
@@ -64,5 +63,5 @@ export default async function ArticlePage({
 
   const related = latest.filter((a) => a.id !== id).slice(0, 3);
 
-  return <ArticlePageClient article={article} related={related} sidebar={<Sidebar />} />;
+  return <ArticlePageClient article={article} related={related} />;
 }

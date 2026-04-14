@@ -80,15 +80,24 @@ export async function getArticleById(id: string): Promise<Article | null> {
   return data ?? null;
 }
 
-export async function insertArticle(article: ArticleInsert): Promise<Article> {
-  const { data, error } = await supabase
-    .from("articles")
-    .insert(article)
-    .select()
-    .single();
+export async function insertArticle(article: ArticleInsert): Promise<Article | null> {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('articles')
+      .insert(article)
+      .select()
+      .single()
 
-  if (error) throw error;
-  return data;
+    if (error) {
+      console.error('Insert error:', error)
+      return null
+    }
+
+    return data
+  } catch (error) {
+    console.error('Insert exception:', error)
+    return null
+  }
 }
 
 export async function updateArticleImage(id: string, imageUrl: string) {

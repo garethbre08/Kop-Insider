@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <>
       <nav style={{ backgroundColor: bg, width: '100%', position: 'sticky', top: 0, zIndex: 50, transition: 'background-color 0.3s ease', boxShadow: '0 4px 12px rgba(0,0,0,0.18)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px', height: '76px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
+        <div className="ki-nav-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px', height: '76px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
 
           {/* LEFT — Nav Links */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="ki-nav-desktop">
@@ -82,7 +82,7 @@ export default function Navbar() {
           </div>
 
           {/* RIGHT — Home/Away Toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div className="ki-nav-right" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ display: 'flex', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '24px', padding: '6px' }}>
               <button onClick={() => setTheme('home')} style={{ padding: '6px 16px', borderRadius: '18px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', border: 'none', backgroundColor: theme === 'home' ? '#fff' : 'transparent', color: theme === 'home' ? bg : 'rgba(255,255,255,0.8)', transition: 'all 0.2s', fontFamily: 'var(--font-body)' }}>
                 Home
@@ -130,7 +130,20 @@ export default function Navbar() {
         }
         @media (max-width: 768px) {
           .ki-nav-desktop { display: none !important; }
+          .ki-nav-inner {
+            display: grid !important;
+            grid-template-columns: 1fr auto 1fr !important;
+            align-items: center !important;
+            position: static !important;
+          }
+          .ki-nav-logo {
+            position: static !important;
+            transform: none !important;
+            display: flex !important;
+            justify-content: center !important;
+          }
           .ki-nav-logo img { height: 36px !important; }
+          .ki-nav-right { justify-self: end !important; }
         }
         .ki-nav-link:hover span { font-weight: 600 !important; color: #fff !important; }
       `}</style>

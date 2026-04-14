@@ -71,7 +71,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                       <div style={{ fontSize: '14px', color: '#333', opacity: 0.6, lineHeight: 1.6, marginBottom: '12px' }}>
                         {featuredArticle.excerpt}
                       </div>
-                      <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
+                      <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
                         Andy Anfield · {timeAgo(featuredArticle.created_at)}
                       </div>
                     </div>
@@ -130,7 +130,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                         <div style={{ fontSize: '16px', fontWeight: 700, color: '#111', lineHeight: 1.35, marginBottom: '8px' }}>
                           {article.title}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
+                        <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
                           Andy Anfield · {timeAgo(article.created_at)}
                         </div>
                       </div>
@@ -159,7 +159,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                           <div style={{ fontSize: '14px', fontWeight: 700, color: '#111111', lineHeight: 1.3, marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
                             {article.title}
                           </div>
-                          <div style={{ fontSize: '11px', color: '#333333', opacity: 0.4, fontFamily: 'var(--font-body)', marginTop: '6px' }}>
+                          <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333333', opacity: 0.4, fontFamily: 'var(--font-body)', marginTop: '6px' }}>
                             Andy Anfield · {timeAgo(article.created_at)}
                           </div>
                         </div>
@@ -189,7 +189,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                           <div style={{ fontSize: '16px', fontWeight: 700, color: '#111111', lineHeight: 1.3, marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
                             {article.title}
                           </div>
-                          <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
+                          <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
                             Andy Anfield · {timeAgo(article.created_at)}
                           </div>
                         </div>
@@ -266,7 +266,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                   <div style={{ fontSize: '14px', color: '#333', opacity: 0.6, lineHeight: 1.6, marginBottom: '12px' }}>
                     {featuredArticle.excerpt}
                   </div>
-                  <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
+                  <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
                     Andy Anfield · {timeAgo(featuredArticle.created_at)}
                   </div>
                 </div>
@@ -319,7 +319,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                     <div style={{ fontSize: '13px', fontWeight: 700, color: '#111', lineHeight: 1.35, marginBottom: '6px', fontFamily: 'var(--font-heading)' }}>
                       {article.title}
                     </div>
-                    <div style={{ fontSize: '10px', color: '#333', opacity: 0.4 }}>
+                    <div suppressHydrationWarning style={{ fontSize: '10px', color: '#333', opacity: 0.4 }}>
                       {timeAgo(article.created_at)}
                     </div>
                   </div>

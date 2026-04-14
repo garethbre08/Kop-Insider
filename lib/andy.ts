@@ -1,7 +1,28 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { insertArticle, updateArticleImage } from "./articles";
-import { getArticleImage } from "./images";
+import { getArticleImage, getSmartImageQuery } from "./images";
 import type { ArticleCategory } from "./database.types";
+
+async function fetchAndSaveImage(articleId: string, title: string, category: string, content: string): Promise<void> {
+  const maxRetries = 3
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`[Andy Anfield] Fetching image attempt ${attempt} for: "${title}"`)
+      const smartQuery = await getSmartImageQuery(title, content, category)
+      const image = await getArticleImage(smartQuery, articleId)
+      if (image) {
+        await updateArticleImage(articleId, image)
+        console.log(`[Andy Anfield] Image saved successfully for: "${title}"`)
+        return
+      }
+    } catch (error) {
+      console.error(`[Andy Anfield] Image fetch attempt ${attempt} failed:`, error)
+    }
+    await new Promise(resolve => setTimeout(resolve, 2000))
+  }
+  console.log(`[Andy Anfield] Could not fetch image after ${maxRetries} attempts for: "${title}"`)
+}
 
 const ANDY_SYSTEM_PROMPT = `You are Andy Anfield, the AI reporter for Kop Insider — a Liverpool FC news website. You write original articles about Liverpool FC based on information provided to you from credible journalism sources.
 
@@ -23,6 +44,11 @@ Your writing style:
 - Facts are not copyrightable but expression is — always rewrite in your own words
 - Always credit the original journalist and outlet at the end of every article
 - Never use an em dash (—) in article titles or anywhere in your writing. Instead use a colon, comma, or rewrite the sentence to avoid it entirely. For example instead of 'Liverpool's ticket price fight isn't just about us — it's about football's soul' write 'Liverpool's ticket price fight: it's about football's soul' or 'Liverpool's ticket price fight is about more than just us'
+- Always write in UK English. Use British spellings throughout: colour not color, favourite not favorite, defence not defense, organised not organized, recognise not recognize, travelling not traveling, centre not center, licence not license, practise not practice (verb), cheque not check, tyre not tire, programme not program, whilst not while, amongst not among
+- Use British football terminology: match not game, pitch not field, nil not zero for scores, boots not cleats, kit not uniform, manager not coach, fixture not schedule, supporter not fan where appropriate
+- Refer to competitions correctly: Premier League, Champions League, FA Cup, Carabao Cup — never use Soccer or other American terms
+- Use British date format where needed: day month year
+- Never use Americanisms in any article
 
 Your golden rule:
 The truth about Liverpool, told by someone who actually cares.
@@ -89,7 +115,7 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
     const raw = textBlock.text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/,"").trim();
     const parsed = JSON.parse(raw);
 
-    const saved = await insertArticle({
+    const insertedArticle = await insertArticle({
       title: parsed.title,
       excerpt: parsed.excerpt,
       content: parsed.content,
@@ -105,18 +131,14 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
 
     console.log(`[Andy Anfield] Article generated: "${parsed.title}"`);
 
-    let imageUrl: string | null = null
-    if (params.originalImageUrl) {
-      imageUrl = params.originalImageUrl
-      console.log(`[Andy Anfield] Using original article image`)
-    } else {
-      const keywords = `liverpool football ${parsed.title.split(' ').slice(0, 3).join(' ')}`
-      imageUrl = await getArticleImage(keywords, parsed.title)
-      console.log(`[Andy Anfield] Using Unsplash fallback image`)
-    }
-    if (imageUrl) {
-      await updateArticleImage(saved.id, imageUrl)
-      console.log(`[Andy Anfield] Image added for: "${parsed.title}"`)
+    if (insertedArticle?.id) {
+      if (params.originalImageUrl) {
+        console.log(`[Andy Anfield] Using original article image`)
+        await updateArticleImage(insertedArticle.id, params.originalImageUrl)
+        console.log(`[Andy Anfield] Image added for: "${parsed.title}"`)
+      } else {
+        await fetchAndSaveImage(insertedArticle.id, parsed.title, parsed.category, parsed.content)
+      }
     }
   } catch (error) {
     console.error("[Andy Anfield] Failed to generate article:", error);

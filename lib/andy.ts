@@ -129,6 +129,10 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
     const raw = textBlock.text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/,"").trim();
     const parsed = JSON.parse(raw);
 
+    if (!parsed.title || !parsed.content || !parsed.excerpt) {
+      throw new Error(`[Andy Anfield] Incomplete article response — missing title, content or excerpt. Skipping.`);
+    }
+
     const insertedArticle = await insertArticle({
       title: parsed.title,
       excerpt: parsed.excerpt,

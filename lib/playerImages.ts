@@ -3,6 +3,7 @@ const PLAYER_NAMES: Record<string, string> = {
   'bradley': '/images/players/bradley.jpg',
   'chiesa': '/images/players/chiesa.jpg',
   'ekitike': '/images/players/ekitike.jpg',
+  'ekitiké': '/images/players/ekitike.jpg',
   'endo': '/images/players/endo.jpg',
   'frimpong': '/images/players/frimpong.jpg',
   'gakpo': '/images/players/gakpo.jpg',

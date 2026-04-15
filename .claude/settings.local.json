@@ -38,7 +38,8 @@
       "Read(//c/Users/Gareth/Documents/Kop Insider/app/article/[id/]/**)",
       "Bash(npx tsx:*)",
       "Bash(curl -s --max-time 10 -I \"https://www.daveockop.com/feed/\")",
-      "Bash(curl -s --max-time 15 \"https://www.daveockop.com/feed/\")"
+      "Bash(curl -s --max-time 15 \"https://www.daveockop.com/feed/\")",
+      "Bash(node -e ' *)"
     ]
   }
 }

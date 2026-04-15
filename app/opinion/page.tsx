@@ -105,8 +105,8 @@ export default async function OpinionPage() {
                             {article.title}
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '20px', height: '20px', borderRadius: '50%', objectFit: 'cover' }} />
-                            <span style={{ fontSize: '11px', color: '#333', opacity: 0.45, fontFamily: 'var(--font-body)' }}>Andy Anfield · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
+                            <img src="/logo.png" alt="Kop Insider" style={{ width: '20px', height: '20px', borderRadius: '4px', objectFit: 'contain' }} />
+                            <span style={{ fontSize: '11px', color: '#333', opacity: 0.45, fontFamily: 'var(--font-body)' }}>Kop Insider · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
                           </div>
                         </div>
                       </div>

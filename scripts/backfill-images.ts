@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { getSmartImageQuery, getArticleImage } from '../lib/images'
+import { getPlayerImageFromText, getRandomPlayerImage } from '../lib/playerImages'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -98,25 +99,28 @@ async function backfillImages() {
 
   for (const article of needsImage) {
     console.log(`Processing: ${article.title}`)
+
     const smartQuery = await getSmartImageQuery(article.title, article.content || '', article.category)
     const image = await getArticleImage(smartQuery, article.id)
 
     if (image) {
-      const { error: updateError } = await supabase
-        .from('articles')
-        .update({ image_url: image })
-        .eq('id', article.id)
-
-      if (updateError) {
-        console.error(`Failed to save image for ${article.title}:`, updateError)
-      } else {
-        console.log(`✓ Image saved for: ${article.title} — query: ${smartQuery}`)
+      const { error } = await supabase.from('articles').update({ image_url: image }).eq('id', article.id)
+      if (!error) {
+        console.log(`✓ Unsplash image saved for: ${article.title} — query: ${smartQuery}`)
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        continue
       }
-    } else {
-      console.log(`✗ No image found for: ${article.title}`)
     }
 
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    const playerImage = getPlayerImageFromText(article.title, article.content || '')
+    const fallbackImage = playerImage || getRandomPlayerImage()
+
+    const { error } = await supabase.from('articles').update({ image_url: fallbackImage }).eq('id', article.id)
+    if (!error) {
+      console.log(`✓ Player fallback image used for: ${article.title} — ${fallbackImage}`)
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 1500))
   }
 
   console.log('\nVerifying saves...')

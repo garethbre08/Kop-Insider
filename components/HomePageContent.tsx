@@ -33,7 +33,6 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
   const opinionBorder = 'var(--ki-accent)';
   const opinionLabel  = 'var(--ki-accent)';
   const buttonBg      = theme === 'home' ? '#C8102E' : 'rgb(0, 163, 152)';
-  const teal          = theme === 'away' ? 'rgb(0, 163, 152)' : '#01586B';
   const tableRows     = tableData.slice(0, 8);
 
   return (
@@ -72,7 +71,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                         {featuredArticle.excerpt}
                       </div>
                       <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
-                        Andy Anfield · {timeAgo(featuredArticle.created_at)}
+                        Kop Insider · {timeAgo(featuredArticle.created_at)}
                       </div>
                     </div>
                   </div>
@@ -131,7 +130,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                           {article.title}
                         </div>
                         <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
-                          Andy Anfield · {timeAgo(article.created_at)}
+                          Kop Insider · {timeAgo(article.created_at)}
                         </div>
                       </div>
                     </div>
@@ -160,7 +159,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                             {article.title}
                           </div>
                           <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333333', opacity: 0.4, fontFamily: 'var(--font-body)', marginTop: '6px' }}>
-                            Andy Anfield · {timeAgo(article.created_at)}
+                            Kop Insider · {timeAgo(article.created_at)}
                           </div>
                         </div>
                       </div>
@@ -190,7 +189,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                             {article.title}
                           </div>
                           <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
-                            Andy Anfield · {timeAgo(article.created_at)}
+                            Kop Insider · {timeAgo(article.created_at)}
                           </div>
                         </div>
                       </div>
@@ -219,7 +218,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                           {article.title}
                         </div>
                         <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
-                          Andy Anfield · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                          Kop Insider · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                         </div>
                       </div>
                       <span style={{ display: 'inline-block', backgroundColor: '#333333', color: '#fff', fontSize: '10px', fontWeight: 700, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.5px', textTransform: 'uppercase', flexShrink: 0 }}>
@@ -267,7 +266,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                     {featuredArticle.excerpt}
                   </div>
                   <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>
-                    Andy Anfield · {timeAgo(featuredArticle.created_at)}
+                    Kop Insider · {timeAgo(featuredArticle.created_at)}
                   </div>
                 </div>
               </div>
@@ -408,7 +407,7 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                       {article.title}
                     </div>
                     <div style={{ fontSize: '10px', color: '#333', opacity: 0.4 }}>
-                      Andy Anfield · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                      Kop Insider · {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                     </div>
                   </div>
                 </div>

@@ -30,28 +30,40 @@ const SOURCES = [
     twitterHandle: "LivEchoLFC",
   },
   {
-    journalist: "Sky Sports",
-    outlet: "Sky Sports",
-    rssUrl: "https://www.skysports.com/rss/12040",
-    twitterHandle: "SkySportsLFC",
-  },
-  {
-    journalist: "BBC Sport",
-    outlet: "BBC Sport",
-    rssUrl: "https://feeds.bbci.co.uk/sport/football/teams/liverpool/rss.xml",
-    twitterHandle: "BBCSport",
-  },
-  {
     journalist: "Dominic King",
     outlet: "Daily Mail",
     rssUrl: "https://www.dailymail.co.uk/sport/football/index.rss",
     twitterHandle: "DominicKing_DM",
   },
   {
-    journalist: 'DaveOCKOP',
-    outlet: 'DaveOCKOP.com',
-    rssUrl: 'https://www.daveockop.com/feed/',
-    twitterHandle: 'DaveOCKOP',
+    journalist: 'David Lynch',
+    outlet: 'David Lynch LFC',
+    rssUrl: 'https://www.davidlynchlfc.co.uk/feed',
+    twitterHandle: 'davidlynchlfc',
+  },
+  {
+    journalist: 'Andy Hunter',
+    outlet: 'The Guardian',
+    rssUrl: 'https://www.theguardian.com/football/liverpool/rss',
+    twitterHandle: 'AHunterGuardian',
+  },
+  {
+    journalist: 'Empire of the Kop',
+    outlet: 'Empire of the Kop',
+    rssUrl: 'https://www.empireofthekop.com/feed/',
+    twitterHandle: 'empireofthekop',
+  },
+  {
+    journalist: 'This Is Anfield',
+    outlet: 'This Is Anfield',
+    rssUrl: 'https://www.thisisanfield.com/feed/',
+    twitterHandle: 'thisisanfield',
+  },
+  {
+    journalist: 'Anfield Index',
+    outlet: 'Anfield Index',
+    rssUrl: 'https://anfieldindex.com/feed',
+    twitterHandle: 'AnfieldIndex',
   },
 ];
 

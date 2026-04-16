@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import { getSmartImageQuery, getArticleImage } from './images'
 
 const STATE_FILE = path.join(process.cwd(), 'lib', 'imageLoopState.json')
 const IMAGES_DIR = path.join(process.cwd(), 'public', 'images')
@@ -10,10 +9,12 @@ const SUBJECT_NAMES = [
   'fenway sports group', 'xabi alonso', 'steven gerrard', 'jurgen klopp', 'arne slot',
   'john henry', 'tom werner', 'michael edwards', 'richard hughes', 'billy hogan',
   'harvey elliott', 'van dijk', 'mac allister', 'mac-allister', 'macallister',
-  'alisson', 'bradley', 'chiesa', 'ekitiké', 'ekitike', 'endo', 'frimpong',
-  'gakpo', 'gomez', 'gravenberch', 'isak', 'jones', 'jota', 'kerkez',
+  'jamie carragher', 'thiago alcantara',
+  'alisson', 'bradley', 'carragher', 'chiesa', 'ekitiké', 'ekitike', 'endo', 'frimpong',
+  'tsimikas', 'kostas tsimikas',
+  'anthony gordon', 'gakpo', 'gomez', 'gordon', 'gravenberch', 'hillsborough', 'isak', 'jones', 'jota', 'kerkez',
   'konaté', 'konate', 'leoni', 'mamardashvili', 'ndiaye', 'ngumoha',
-  'robertson', 'salah', 'szoboszlai', 'wirtz', 'woodman', 'wright',
+  'robertson', 'salah', 'szoboszlai', 'thiago', 'wirtz', 'woodman', 'wright',
   'slot', 'gerrard', 'alonso', 'klopp',
   'fenway', 'fsg', 'henry', 'werner', 'edwards', 'hughes', 'hogan',
   'harvey', 'elliott',
@@ -39,12 +40,16 @@ const NAME_TO_KEY: Record<string, string> = {
   'mac-allister': 'mac-allister',
   'ekitiké': 'ekitike',
   'konaté': 'konate',
+  'jamie carragher': 'carragher',
+  'thiago alcantara': 'thiago',
+  'kostas tsimikas': 'tsimikas',
+  'anthony gordon': 'gordon',
 }
 
 const CONTEXT_KEYWORDS = [
   'injury', 'injured', 'transfer', 'signing', 'contract', 'goal',
   'debut', 'return', 'ban', 'sale', 'bid', 'deal', 'farewell',
-  'tribute', 'memorial', 'hillsborough',
+  'tribute', 'memorial',
 ]
 
 // Normalise a string to a filename-safe key
@@ -79,34 +84,28 @@ function writeState(state: Record<string, number>): void {
 // --- Image library ---
 
 // Returns Record<key, sorted array of public paths>
-// Files named `salah-1.jpg`, `salah-2.jpg` → key "salah" → ["/images/players/salah-1.jpg", ...]
-// Files named `salah.jpg` (no number) → key "salah" → ["/images/players/salah.jpg"]
+// Files named `salah-1.jpg`, `salah-2.jpg` → key "salah" → ["/images/salah-1.jpg", ...]
+// Files named `salah.jpg` (no number) → key "salah" → ["/images/salah.jpg"]
 function scanImageLibrary(): Record<string, string[]> {
   const result: Record<string, string[]> = {}
 
-  function scanDir(dir: string, urlBase: string) {
-    if (!fs.existsSync(dir)) return
-    let entries: fs.Dirent[]
-    try {
-      entries = fs.readdirSync(dir, { withFileTypes: true })
-    } catch { return }
+  if (!fs.existsSync(IMAGES_DIR)) return result
+  let entries: fs.Dirent[]
+  try {
+    entries = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+  } catch { return result }
 
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        scanDir(path.join(dir, entry.name), `${urlBase}/${entry.name}`)
-      } else if (entry.isFile() && /\.(jpg|jpeg|png|webp)$/i.test(entry.name)) {
-        const basename = entry.name.replace(/\.(jpg|jpeg|png|webp)$/i, '')
-        const numbered = basename.match(/^(.+)-(\d+)$/)
-        const rawKey = numbered ? numbered[1] : basename
-        const key = normaliseKey(rawKey)
-        const fullPath = `${urlBase}/${entry.name}`
-        if (!result[key]) result[key] = []
-        result[key].push(fullPath)
-      }
+  for (const entry of entries) {
+    if (entry.isFile() && /\.(jpg|jpeg|png|webp)$/i.test(entry.name)) {
+      const basename = entry.name.replace(/\.(jpg|jpeg|png|webp)$/i, '')
+      const numbered = basename.match(/^(.+)-(\d+)$/)
+      const rawKey = numbered ? numbered[1] : basename
+      const key = normaliseKey(rawKey)
+      const fullPath = `/images/${entry.name}`
+      if (!result[key]) result[key] = []
+      result[key].push(fullPath)
     }
   }
-
-  scanDir(IMAGES_DIR, '/images')
 
   for (const key in result) {
     result[key].sort()
@@ -205,16 +204,14 @@ export async function selectArticleImage(
     }
   }
 
-  // Step 4 — Unsplash
-  try {
-    const smartQuery = await getSmartImageQuery(title, content, category)
-    const image = await getArticleImage(smartQuery, articleId)
+  // Step 4 — fallback to liverpool-team or anfield images
+  const FALLBACK_KEYS = ['liverpool-team', 'anfield']
+  for (const key of FALLBACK_KEYS) {
+    const image = getNextImageForKey(key, library)
     if (image) {
-      console.log(`[ImageUtils] Unsplash: ${image}`)
+      console.log(`[ImageUtils] Fallback: ${image}`)
       return image
     }
-  } catch (err) {
-    console.error('[ImageUtils] Unsplash error:', err)
   }
 
   console.log(`[ImageUtils] No image found for: "${title}"`)

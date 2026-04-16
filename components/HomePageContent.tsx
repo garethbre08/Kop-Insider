@@ -92,7 +92,9 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <img src="/andy.jpg" alt="Andy Anfield — Kop Insider Reporter" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', display: 'block' }} />
+                      <Link href="/author/andy-anfield" style={{ textDecoration: 'none', flexShrink: 0 }}>
+                        <img src="/andy.jpg" alt="Andy Anfield — Kop Insider Reporter" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', display: 'block', cursor: 'pointer' }} />
+                      </Link>
                       <div>
                         <div style={{ fontSize: '13px', fontWeight: 600, color: '#111' }}>Andy Anfield</div>
                         <div style={{ fontSize: '11px', color: '#333', opacity: 0.4 }}>Kop Insider Reporter</div>
@@ -284,7 +286,9 @@ export default function HomePageContent({ featuredArticle, latestArticles, opini
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }} />
+                  <Link href="/author/andy-anfield" style={{ textDecoration: 'none', flexShrink: 0 }}>
+                    <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer' }} />
+                  </Link>
                   <div style={{ fontSize: '12px', fontWeight: 600, color: '#111' }}>Andy Anfield</div>
                 </div>
                 <Link href={`/article/${opinionArticle.id}`}>

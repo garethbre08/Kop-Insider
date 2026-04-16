@@ -62,7 +62,11 @@ export default async function OpinionPage() {
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
+                        <img
+                          src="/andy.jpg"
+                          alt="Andy Anfield"
+                          style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }}
+                        />
                         <div>
                           <div style={{ fontSize: '13px', fontWeight: 600, color: '#111', fontFamily: 'var(--font-body)' }}>Andy Anfield</div>
                           <div style={{ fontSize: '11px', color: '#333', opacity: 0.45, fontFamily: 'var(--font-body)' }}>{new Date(articles[0].created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</div>

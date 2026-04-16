@@ -1,41 +1,16 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { insertArticle, updateArticleImage } from "./articles";
-import { getArticleImage, getSmartImageQuery } from "./images";
-import { getPlayerImageFromText, getRandomPlayerImage } from "./playerImages";
+import { selectArticleImage } from "./imageUtils";
 import type { ArticleCategory } from "./database.types";
 
 async function fetchAndSaveImage(articleId: string, title: string, category: string, content: string): Promise<void> {
-  const maxRetries = 3
-
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`[Andy Anfield] Fetching image attempt ${attempt} for: "${title}"`)
-      const smartQuery = await getSmartImageQuery(title, content, category)
-      const image = await getArticleImage(smartQuery, articleId)
-      if (image) {
-        await updateArticleImage(articleId, image)
-        console.log(`[Andy Anfield] Unsplash image saved for: "${title}"`)
-        return
-      }
-    } catch (error) {
-      console.error(`[Andy Anfield] Image fetch attempt ${attempt} failed:`, error)
-    }
-    await new Promise(resolve => setTimeout(resolve, 2000))
+  const image = await selectArticleImage(title, content, category, articleId)
+  if (image) {
+    await updateArticleImage(articleId, image)
+    console.log(`[Andy Anfield] Image saved for: "${title}" — ${image}`)
+  } else {
+    console.log(`[Andy Anfield] No image found for: "${title}"`)
   }
-
-  console.log(`[Andy Anfield] Unsplash failed — trying player image fallback for: "${title}"`)
-
-  const playerImage = getPlayerImageFromText(title, content)
-
-  if (playerImage) {
-    await updateArticleImage(articleId, playerImage)
-    console.log(`[Andy Anfield] Player image fallback used: ${playerImage}`)
-    return
-  }
-
-  const randomPlayerImage = getRandomPlayerImage()
-  await updateArticleImage(articleId, randomPlayerImage)
-  console.log(`[Andy Anfield] Random player image fallback used: ${randomPlayerImage}`)
 }
 
 const ANDY_SYSTEM_PROMPT = `You are Andy Anfield, the AI reporter for Kop Insider — a Liverpool FC news website. You write original articles about Liverpool FC based on information provided to you from credible journalism sources.

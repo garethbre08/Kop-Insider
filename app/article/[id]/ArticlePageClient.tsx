@@ -46,7 +46,9 @@ export default function ArticlePageClient({ article, related }: Props) {
               </p>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingTop: '16px', borderTop: '1px solid #E7DFC9' }}>
-                <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
+                <Link href="/author/andy-anfield" style={{ textDecoration: 'none', flexShrink: 0 }}>
+                  <img src="/andy.jpg" alt="Andy Anfield" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer' }} />
+                </Link>
                 <div>
                   <div style={{ fontSize: '13px', fontWeight: 600, color: '#111', fontFamily: 'var(--font-body)' }}>Andy Anfield</div>
                   <div suppressHydrationWarning style={{ fontSize: '11px', color: '#333', opacity: 0.5, fontFamily: 'var(--font-body)' }}>

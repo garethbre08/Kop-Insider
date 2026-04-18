@@ -62,7 +62,7 @@ export default function Footer() {
 
         <div className="ki-footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
-            © 2025 Kop Insider. All rights reserved.
+            © 2026 Kop Insider. All rights reserved.
           </span>
           <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
             Built for Reds. By Reds.

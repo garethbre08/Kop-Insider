@@ -1,6 +1,7 @@
 import { getOpinionArticles, getLatestArticles } from '@/lib/articles'
 import Sidebar from '@/components/Sidebar'
 import Link from 'next/link'
+import ThemedPageWrapper from '@/components/ThemedPageWrapper'
 
 export default async function AndyAnfieldPage() {
   const opinionArticles = await getOpinionArticles(3)
@@ -8,7 +9,7 @@ export default async function AndyAnfieldPage() {
   const articles = opinionArticles.length > 0 ? opinionArticles : latestArticles
 
   return (
-    <div style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+    <ThemedPageWrapper>
 
       {/* PAGE HEADER */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px 0' }}>
@@ -127,6 +128,6 @@ export default async function AndyAnfieldPage() {
         }
       `}</style>
 
-    </div>
+    </ThemedPageWrapper>
   )
 }

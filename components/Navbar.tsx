@@ -47,7 +47,7 @@ export default function Navbar() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="ki-nav-desktop">
             {links.map((link) => (
               <Link key={link.href} href={link.href} className="ki-nav-link" style={{ textDecoration: 'none' }}>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: pathname === link.href ? 600 : 500, letterSpacing: '0.2px', color: pathname === link.href ? '#fff' : 'rgba(255,255,255,0.75)', textDecoration: 'none', borderBottom: pathname === link.href ? '2px solid #fff' : '2px solid transparent', paddingBottom: '4px', transition: 'all 0.2s' }}>
+                <span className={`pb-2 border-b-2 ${pathname === link.href ? 'border-ki-white' : 'border-transparent hover:border-ki-white'}`} style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: pathname === link.href ? 600 : 500, letterSpacing: '0.2px', color: '#fff', textDecoration: 'none', transition: 'all 0.2s' }}>
                   {link.label}
                 </span>
               </Link>
@@ -114,7 +114,7 @@ export default function Navbar() {
           <div style={{ backgroundColor: bg, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
             {links.map((link) => (
               <Link key={link.href} href={link.href} style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
-                <div style={{ padding: '16px 24px', fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: pathname === link.href ? 600 : 500, letterSpacing: '0.2px', color: pathname === link.href ? '#fff' : 'rgba(255,255,255,0.75)', textDecoration: 'none', borderBottom: '1px solid rgba(255,255,255,0.1)', transition: 'all 0.2s' }}>
+                <div style={{ padding: '16px 24px', fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: pathname === link.href ? 600 : 500, letterSpacing: '0.2px', color: '#fff', textDecoration: 'none', borderBottom: '1px solid rgba(255,255,255,0.1)', transition: 'all 0.2s' }}>
                   {link.label}
                 </div>
               </Link>

@@ -84,6 +84,7 @@ const INJURY_KEYWORDS = [
   "expected return", "weeks out", "months out",
 ];
 const MATCH_KEYWORDS = ["match report", "player ratings", "post match", "full time", "final whistle", "after the game", "reaction", "win over", "loss to", "defeat to", "victory over", "draw with", "goals", "scored", "equaliser", "penalty", "red card", "result", "goal", "win", "loss", "draw", "preview"];
+const OPINION_KEYWORDS = ["verdict", "opinion", "column", "mailbag", "my take", "i think", "we need", "why liverpool", "why arne", "why slot", "must ", "should ", "hard truth", "brutal truth", "honest truth", "unpopular", "concern", "concerns", "worry", "worrying", "damning", "case for", "case against", "time to", "enough is enough", "wake up", "reality check", "talking point", "the truth about", "what liverpool", "what slot"];
 
 type ArticleType = "news" | "transfers" | "injuries" | "opinion" | "match-reaction";
 
@@ -195,9 +196,12 @@ function detectArticleType(title: string, content: string = ""): ArticleType {
   const isTransfer = TRANSFER_KEYWORDS.some((kw) => fullText.includes(kw));
   const isMatchReaction = MATCH_KEYWORDS.some((kw) => fullText.includes(kw));
 
+  const isOpinion = OPINION_KEYWORDS.some((kw) => titleLower.includes(kw));
+
   if (isInjury) return "injuries";
   if (isTransfer) return "transfers";
   if (isMatchReaction) return "match-reaction";
+  if (isOpinion) return "opinion";
   return "news";
 }
 

@@ -1,14 +1,18 @@
 {
-  "ekitike-injury": 29,
+  "ekitike-injury": 34,
   "ekitike": 10,
-  "slot": 17,
+  "slot": 62,
   "szoboszlai": 5,
   "__random__": 5,
   "thiago": 3,
-  "hillsborough": 10,
-  "liverpool-team": 16,
-  "robertson": 4,
-  "hughes": 4,
-  "tsimikas": 2,
-  "gordon": 2
+  "hillsborough": 15,
+  "liverpool-team": 40,
+  "robertson": 9,
+  "hughes": 9,
+  "tsimikas": 7,
+  "gordon": 12,
+  "carragher": 6,
+  "isak": 6,
+  "quansah": 3,
+  "jones": 3
 }

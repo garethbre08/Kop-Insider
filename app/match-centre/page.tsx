@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getRecentResults, getAllLiverpoolFixtures } from '@/lib/football'
 import MatchCentreClient from './MatchCentreClient'
 import Sidebar from '@/components/Sidebar'
+import ThemedPageWrapper from '@/components/ThemedPageWrapper'
 
 export const metadata: Metadata = {
   title: 'Match Centre',
@@ -15,7 +16,7 @@ export default async function MatchCentre() {
   ])
 
   return (
-    <div style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+    <ThemedPageWrapper>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px 0' }}>
         <div style={{ marginBottom: '24px' }}>
@@ -49,6 +50,6 @@ export default async function MatchCentre() {
           .match-centre-container { padding: 16px !important; }
         }
       `}</style>
-    </div>
+    </ThemedPageWrapper>
   )
 }

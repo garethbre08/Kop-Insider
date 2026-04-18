@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getArticlesByCategory } from '@/lib/articles'
 import InjurySidebar from '@/components/InjurySidebar'
 import Link from 'next/link'
+import ThemedPageWrapper from '@/components/ThemedPageWrapper'
 
 export const metadata: Metadata = {
   title: 'Injury Updates',
@@ -12,7 +13,7 @@ export default async function InjuriesPage() {
   const injuryArticles = await getArticlesByCategory('injuries', 6)
 
   return (
-    <div style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+    <ThemedPageWrapper>
 
       {/* PAGE HEADER */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px 0' }}>
@@ -131,6 +132,6 @@ export default async function InjuriesPage() {
           .injuries-cards { grid-template-columns: 1fr !important; }
         }
       `}</style>
-    </div>
+    </ThemedPageWrapper>
   )
 }

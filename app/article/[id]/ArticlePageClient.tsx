@@ -4,6 +4,7 @@ import Link from "next/link";
 import ShareButtons from "@/components/ShareButtons";
 import { timeAgo } from "@/lib/utils";
 import type { Article } from "@/lib/database.types";
+import { useTheme } from "@/context/ThemeContext";
 
 type Props = {
   article: Article;
@@ -11,13 +12,14 @@ type Props = {
 };
 
 export default function ArticlePageClient({ article, related }: Props) {
+  const { theme } = useTheme();
   const paragraphs = article.content
     .split(/\n\n+/)
     .map((p) => p.trim())
     .filter(Boolean);
 
   return (
-    <main style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+    <main style={{ backgroundColor: theme === 'home' ? '#F5E6C8' : '#F3EEDD', minHeight: '100vh', transition: 'background-color 0.3s ease' }}>
 
       {/* BACK LINK */}
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '16px 24px 0', fontFamily: 'var(--font-body)' }}>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getOpinionArticles, getLatestArticles } from '@/lib/articles'
 import Sidebar from '@/components/Sidebar'
 import Link from 'next/link'
+import ThemedPageWrapper from '@/components/ThemedPageWrapper'
 
 export const metadata: Metadata = {
   title: 'Opinion — Andy Anfield',
@@ -14,7 +15,7 @@ export default async function OpinionPage() {
   const articles = opinionArticles.length > 0 ? opinionArticles : fallbackArticles
 
   return (
-    <div style={{ backgroundColor: '#F3EEDD', minHeight: '100vh' }}>
+    <ThemedPageWrapper>
 
       {/* PAGE HEADER */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px 0' }}>
@@ -149,6 +150,6 @@ export default async function OpinionPage() {
           .opinion-cards { grid-template-columns: 1fr !important; }
         }
       `}</style>
-    </div>
+    </ThemedPageWrapper>
   )
 }

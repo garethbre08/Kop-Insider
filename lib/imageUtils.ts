@@ -13,7 +13,7 @@ const SUBJECT_NAMES = [
   'alisson', 'bradley', 'carragher', 'chiesa', 'ekitiké', 'ekitike', 'endo', 'frimpong',
   'tsimikas', 'kostas tsimikas',
   'anthony gordon', 'gakpo', 'gomez', 'gordon', 'gravenberch', 'hillsborough', 'isak', 'jones', 'jota', 'kerkez',
-  'konaté', 'konate', 'leoni', 'mamardashvili', 'ndiaye', 'ngumoha',
+  'konaté', 'konate', 'leoni', 'mamardashvili', 'ndiaye', 'ngumoha', 'pimblett', 'quansah',
   'robertson', 'salah', 'szoboszlai', 'thiago', 'wirtz', 'woodman', 'wright',
   'slot', 'gerrard', 'alonso', 'klopp',
   'fenway', 'fsg', 'henry', 'werner', 'edwards', 'hughes', 'hogan',

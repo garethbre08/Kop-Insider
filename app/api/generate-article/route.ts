@@ -34,9 +34,11 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : undefined;
     console.error("[API] Generate article error:", error);
     return NextResponse.json(
-      { error: "Failed to generate article" },
+      { error: "Failed to generate article", message, stack },
       { status: 500 }
     );
   }

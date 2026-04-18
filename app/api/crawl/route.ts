@@ -35,7 +35,12 @@ async function runAndRespond() {
       { status: 200 }
     );
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : undefined;
     console.error("[/api/crawl] Crawler failed:", error);
-    return NextResponse.json({ error: "Crawler failed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Crawler failed", message, stack },
+      { status: 500 }
+    );
   }
 }

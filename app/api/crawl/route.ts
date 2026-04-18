@@ -2,20 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { runCrawler } from "@/lib/crawler";
 
-// Vercel cron sends GET with Authorization: Bearer [CRON_SECRET]
-export async function GET(req: NextRequest) {
+function checkAuth(req: NextRequest): boolean {
   const auth = req.headers.get("authorization");
-  const expected = `Bearer ${process.env.CRON_SECRET}`;
-  if (!auth || auth !== expected) {
+  return auth === `Bearer ${process.env.CRON_SECRET}`;
+}
+
+export async function GET(req: NextRequest) {
+  if (!checkAuth(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   return runAndRespond();
 }
 
-// Manual trigger sends POST with x-api-key: [CRON_SECRET]
 export async function POST(req: NextRequest) {
-  const apiKey = req.headers.get("x-api-key");
-  if (!apiKey || apiKey !== process.env.CRON_SECRET) {
+  if (!checkAuth(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   return runAndRespond();

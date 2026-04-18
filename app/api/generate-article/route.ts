@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateArticle } from "@/lib/andy";
 
 export async function POST(req: NextRequest) {
-  const apiKey = req.headers.get("x-api-key");
-  if (!apiKey || apiKey !== process.env.CRON_SECRET) {
+  const auth = req.headers.get("authorization");
+  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

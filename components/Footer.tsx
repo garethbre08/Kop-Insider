@@ -10,6 +10,7 @@ export default function Footer() {
             <img
               src="/logo.png"
               alt="Kop Insider"
+              className="ki-footer-logo"
               style={{
                 height: '60px',
                 width: 'auto',
@@ -74,6 +75,7 @@ export default function Footer() {
         @media (max-width: 768px) {
           .ki-footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
           .ki-footer-bottom { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
+          .ki-footer-logo { height: 30px !important; }
         }
       `}</style>
     </footer>

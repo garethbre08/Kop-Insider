@@ -39,7 +39,14 @@
       "Bash(npx tsx:*)",
       "Bash(curl -s --max-time 10 -I \"https://www.daveockop.com/feed/\")",
       "Bash(curl -s --max-time 15 \"https://www.daveockop.com/feed/\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const {getCldImageUrl} = require\\('./node_modules/next-cloudinary/dist/index.js'\\); console.log\\(getCldImageUrl\\({src:'test/image', width:800, height:400, crop:{type:'fill',gravity:'face'}}\\)\\)\")",
+      "Bash(cat next.config.js)",
+      "Bash(cat next.config.ts)",
+      "Bash(cat next.config.mjs)",
+      "Bash(ls next.config*)",
+      "Bash(node -e \"const url='https://i2-prod.liverpoolecho.co.uk/image.jpg'; console.log\\('encoded:', encodeURIComponent\\(url\\)\\); console.log\\('raw:', url\\)\")",
+      "Bash(grep -rn \"<img src={getCloudinaryUrl\" components/HomePageContent.tsx app/article/[id]/ArticlePageClient.tsx app/opinion/page.tsx app/transfer-talk/page.tsx app/injuries/page.tsx app/author/andy-anfield/page.tsx)"
     ]
   }
 }

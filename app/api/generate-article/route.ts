@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateArticle } from "@/lib/andy";
+import { runCrawler } from "@/lib/crawler";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: NextRequest) {
   const auth = req.headers.get("authorization");
@@ -7,12 +9,42 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const raw = await req.text();
+
+  // No body — run the full crawler pipeline
+  if (!raw || raw.trim() === "") {
+    console.log("[API] No body provided — running full crawler pipeline");
+    try {
+      const summary = await runCrawler();
+      console.log(`[API] Crawler complete. New: ${summary.newArticlesFound} | Generated: ${summary.articlesGenerated}`);
+
+      if (summary.newArticlesFound === 0) {
+        return NextResponse.json(
+          { message: "No headlines available to process", ...summary, crawledAt: new Date().toISOString() },
+          { status: 200 }
+        );
+      }
+
+      revalidatePath("/");
+      revalidatePath("/transfer-talk");
+      revalidatePath("/injuries");
+      revalidatePath("/opinion");
+
+      return NextResponse.json(
+        { message: "Crawler ran successfully", ...summary, crawledAt: new Date().toISOString() },
+        { status: 200 }
+      );
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      const stack = error instanceof Error ? error.stack : undefined;
+      console.error("[API] Crawler failed:", error);
+      return NextResponse.json({ error: "Crawler failed", message, stack }, { status: 500 });
+    }
+  }
+
+  // Body present — generate a single article from the provided source data
   let body: Record<string, unknown>;
   try {
-    const raw = await req.text();
-    if (!raw || raw.trim() === '') {
-      throw new Error('Empty response received: request body is empty');
-    }
     body = JSON.parse(raw);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

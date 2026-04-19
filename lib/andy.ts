@@ -102,6 +102,10 @@ Remember: write entirely in your own voice as Andy Anfield. Do not copy the sour
     }
 
     const raw = textBlock.text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/,"").trim();
+    console.log(`[Andy Anfield] Raw Claude response (first 300 chars): ${raw.slice(0, 300)}`);
+    if (!raw || raw.trim() === '') {
+      throw new Error('Empty response received: Claude returned no text content');
+    }
     const parsed = JSON.parse(raw);
 
     if (!parsed.title || !parsed.content || !parsed.excerpt) {

@@ -25,6 +25,15 @@ async function runAndRespond() {
   try {
     const summary = await runCrawler();
 
+    console.log(`[/api/crawl] Headlines found before generation: ${summary.newArticlesFound}`);
+
+    if (summary.newArticlesFound === 0) {
+      return NextResponse.json(
+        { message: "No headlines available to process", ...summary, crawledAt: new Date().toISOString() },
+        { status: 200 }
+      );
+    }
+
     revalidatePath("/");
     revalidatePath("/transfer-talk");
     revalidatePath("/injuries");

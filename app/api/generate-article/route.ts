@@ -7,8 +7,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  let body: Record<string, unknown>;
   try {
-    const body = await req.json();
+    const raw = await req.text();
+    if (!raw || raw.trim() === '') {
+      throw new Error('Empty response received: request body is empty');
+    }
+    body = JSON.parse(raw);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("[API] Failed to parse request body:", error);
+    return NextResponse.json({ error: "Invalid request body", message }, { status: 400 });
+  }
+
+  try {
     const {
       sourceHeadline,
       sourceContent,
@@ -17,7 +29,16 @@ export async function POST(req: NextRequest) {
       sourceUrl,
       articleType,
       isFeatured,
-    } = body;
+    } = body as {
+      sourceHeadline: string;
+      sourceContent: string;
+      sourceJournalist: string;
+      sourceOutlet: string;
+      sourceUrl: string;
+      articleType: "news" | "transfers" | "injuries" | "opinion" | "match-reaction";
+      isFeatured?: boolean;
+    };
+    console.log(`[API] Generating article for headline: "${sourceHeadline}" (type: ${articleType})`);
 
     await generateArticle({
       sourceHeadline,
